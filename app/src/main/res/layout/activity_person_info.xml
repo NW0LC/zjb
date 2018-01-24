@@ -86,7 +86,7 @@
                         android:background="@color/White"
                         android:gravity="center_vertical"
                         android:padding="@dimen/margin_15"
-                        android:text="姓名"
+                        android:text="昵称"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
 
@@ -101,6 +101,7 @@
                         android:paddingEnd="@dimen/margin_10"
                         android:paddingStart="0dp"
                         android:text=""
+                        android:drawableEnd="@mipmap/icon_next"
                         android:drawablePadding="@dimen/margin_5"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14"

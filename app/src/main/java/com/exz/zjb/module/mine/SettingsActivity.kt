@@ -3,7 +3,9 @@ package com.exz.zjb.module.mine
 import android.content.Intent
 import android.view.View
 import com.blankj.utilcode.util.AppUtils
+import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
+import com.exz.zjb.config.Urls
 import com.exz.zjb.module.LoginActivity
 import com.exz.zjb.utils.DataCleanManager
 import com.exz.zjb.widget.MyWebActivity
@@ -80,19 +82,19 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
             bt_help -> {
                 val intent = Intent(this, MyWebActivity::class.java)
                 intent.putExtra(MyWebActivity.Intent_Title, "使用帮助")
-                intent.putExtra(MyWebActivity.Intent_Url, "")
+                intent.putExtra(MyWebActivity.Intent_Url, Urls.Help)
                 startActivity(intent)
             }
             bt_protocol -> {
                 val intent = Intent(this, MyWebActivity::class.java)
                 intent.putExtra(MyWebActivity.Intent_Title, "用户协议")
-                intent.putExtra(MyWebActivity.Intent_Url, "")
+                intent.putExtra(MyWebActivity.Intent_Url,  Urls.Information)
                 startActivity(intent)
             }
             bt_about -> {
                 val intent = Intent(this, MyWebActivity::class.java)
                 intent.putExtra(MyWebActivity.Intent_Title,"关于我们")
-                intent.putExtra(MyWebActivity.Intent_Url, "")
+                intent.putExtra(MyWebActivity.Intent_Url, Urls.Information2)
                 startActivity(intent)
             }
             bt_return -> {
@@ -102,10 +104,15 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                 DialogUtils.Call(this,"")
             }
             bt_exit -> {
-                PreferencesService.saveAccount(this, PreferencesService.getAccountKey(this) ?: "", "")
-                MyApplication.user = null
-                setResult(LoginActivity.RESULT_LOGIN_CANCELED)
-                onBackPressed()
+                DataCtrlClassX.exit(mContext,{
+                    if(it!=null){
+                        PreferencesService.saveAccount(this, PreferencesService.getAccountKey(this) ?: "", "")
+                        MyApplication.user = null
+                        setResult(LoginActivity.RESULT_LOGIN_CANCELED)
+                        onBackPressed()
+                    }
+                })
+
             }
             else -> {
             }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exz.zjb">
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -9,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".app.ToolApplication"
         android:allowBackup="true"
@@ -24,9 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.MainActivity"  android:configChanges="orientation|screenSize"/>
-        <activity android:name=".module.SearchActivity"  android:configChanges="orientation|screenSize"/>
-        <activity android:name=".widget.MyWebActivity"  android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".module.MainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".module.SearchActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".widget.MyWebActivity"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".module.LoginActivity" />
         <activity android:name=".module.RegisterActivity" />
         <activity android:name=".module.ForgetPwdActivity" />
@@ -44,6 +52,9 @@
         <activity android:name=".module.mine.SettingsActivity" />
         <activity android:name=".module.mine.IdeaActivity" />
         <activity android:name=".module.mine.CenterActivity" />
+        <activity
+            android:name=".module.mine.ReAccountPwdActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

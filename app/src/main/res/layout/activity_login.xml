@@ -116,6 +116,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/margin_15"
                         android:background="@drawable/ed_bg"
+                        android:inputType="textPassword"
                         android:hint="请输入登录密码"
                         android:textColorHint="@color/MaterialGrey400"
                         android:textSize="@dimen/sp_14" />

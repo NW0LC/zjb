@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.adapter.PushAdapter
-import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.bean.ProvincesBean
 import com.exz.zjb.config.Urls.editBuy
 import com.exz.zjb.config.Urls.editJobWanted
@@ -23,18 +22,12 @@ import com.exz.zjb.config.Urls.editLease
 import com.exz.zjb.config.Urls.editRecruiter
 import com.exz.zjb.config.Urls.editRent
 import com.exz.zjb.config.Urls.editSell
-import com.exz.zjb.config.Urls.jobWantedInfo
-import com.exz.zjb.config.Urls.machineBuyInfo
-import com.exz.zjb.config.Urls.machineLeaseInfo
-import com.exz.zjb.config.Urls.machineRentInfo
-import com.exz.zjb.config.Urls.machineSellInfo
 import com.exz.zjb.config.Urls.publishBuy
 import com.exz.zjb.config.Urls.publishJobWanted
 import com.exz.zjb.config.Urls.publishLease
 import com.exz.zjb.config.Urls.publishRecruiter
 import com.exz.zjb.config.Urls.publishRent
 import com.exz.zjb.config.Urls.publishSell
-import com.exz.zjb.config.Urls.recruiterInfo
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
@@ -78,8 +71,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
     private var photos = ArrayList<String>()
     private var deleteHttpPhotos = ArrayList<String>()
 
-    private lateinit var postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>
-    private lateinit var postRequestGoodsBean: Request<NetEntity<GoodsBean>, PostRequest<NetEntity<GoodsBean>>>
+
     private var isEdit = false
     override fun initToolbar(): Boolean {
         toolbar.setNavigationOnClickListener { finish() }
@@ -101,85 +93,24 @@ class PushActivity : BaseActivity(), View.OnClickListener {
         initPicker()
     }
 
-    private fun initData() {
-        val id = intent.getStringExtra("id") ?: ""
-        if (id.isNotEmpty()) {
-            val params = HashMap<String, String>()
-            params["userId"] = MyApplication.loginUserId
-            when (intent.getStringExtra(Intent_Push_Type)) {
-                "1" -> {//发布-发布出售
-                    params["sellId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineSellInfo).params(params)
-                }
-                "2" -> {//发布-发布求购
-                    params["buyId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineBuyInfo).params(params)
-                }
-                "3" -> {//发布-发布出租
-                    params["leaseId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineLeaseInfo).params(params)
-                }
-                "4" -> {//发布-发布求租
-                    params["rentId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineRentInfo).params(params)
-                }
-                "5" -> {//发布-招聘
-                    params["recruiterId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(recruiterInfo).params(params)
-                }
-                "6" -> {//发布-求职
-                    params["jobWantedId"] = id
-                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(jobWantedInfo).params(params)
-                }
-                else -> {
-                }
-            }
-            DataCtrlClass.pushEdit(this, postRequestGoodsBean) {
-                if (it != null) {
-                    photos.addAll(it.carImageUrl ?: ArrayList())
-                    ed_title.setText(it.title)
-                    provinceId = it.provinceId
-                    cityId = it.cityId
-                    optionsAddress1 = listAddress?.indexOfFirst { it.key == provinceId } ?: 0
-                    optionsAddress2 = listAddress?.get(optionsAddress1)?.CityList?.indexOfFirst { it.key == cityId } ?: 0
-                    tv_address.text = String.format(listAddress?.get(optionsAddress1)?.value + "-" + listAddress?.get(optionsAddress1)?.CityList?.get(optionsAddress2)?.value)
-                    ed_date.setText(it.factoryYear)
-                    ed_type.setText(it.modelName)
-                    ed_description.setText(it.description)
-                    ed_phone.setText(it.mobile)
-                    intent.putExtra(Intent_Push_Type, it.typeId)
-                    val salarys = it.salary.split("-")
-                    if (salarys.size == 2) {
-                        ed_pay.setText(salarys[0])
-                        ed_pay_height.setText(salarys[1])
-                    } else
-                        ed_pay.setText(it.salary)
-
-
-                }
-            }
-        }
-    }
-
-
+    private lateinit var postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>
     private fun initView() {
         ed_description.setClearIconVisible(false)
-        isEdit = (intent.getStringExtra("id") ?: "").isNotEmpty()
-        bt_push.text = if (isEdit) {"确定"} else "发布"
+        isEdit=intent.getBooleanExtra(Intent_Push_IsEdit,false)
         when (intent.getStringExtra(Intent_Push_Type)) {
             "1" -> {//发布-发布出售
-                mTitle.text = if (isEdit) {"编辑出售"} else "发布出售"
+                mTitle.text = "发布出售"
                 lay_pay.visibility = View.GONE
             }
             "2" -> {//发布-发布求购
-                mTitle.text = if (isEdit) {"编辑求购"} else "发布求购"
+                mTitle.text = "发布求购"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "3" -> {//发布-发布出租
-                mTitle.text = if (isEdit) {"编辑出租"} else "发布出租"
+                mTitle.text = "发布出租"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE

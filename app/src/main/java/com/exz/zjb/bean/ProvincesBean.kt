@@ -1,4 +1,5 @@
 package com.exz.zjb.bean
+import com.exz.zjb.bean.KeyAndValueBean
 
 open class ProvincesBean(var ProvinceId: String? = null, var ProvinceName: String? = null) : KeyAndValueBean() {
 //    "data":[{

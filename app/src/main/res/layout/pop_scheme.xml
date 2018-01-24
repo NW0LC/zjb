@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_a7000000"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/mAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_30"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:orientation="vertical"
+            app:rv_backgroundColor="@color/White"
+            app:rv_cornerRadius="@dimen/dp_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_scheme_pop"
+                android:gravity="center"
+                android:padding="@dimen/margin_15"
+                android:text="拒绝原因"
+                android:textColor="@color/White"
+                android:textSize="@dimen/sp_16" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingExtra="2dp"
+                android:padding="@dimen/margin_15"
+                android:textColor="@color/MaterialGrey600" />
+            </ScrollView>
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/icon_close_pop"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+</RelativeLayout>

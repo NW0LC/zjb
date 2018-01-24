@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
+import com.exz.zjb.pop.SchemePop
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
@@ -29,7 +30,7 @@ import org.jetbrains.anko.toast
 class IDProveActivity : BaseActivity(), View.OnClickListener {
     private var imgOn = ""
     private var imgOff = ""
-    private var checkState=""
+    private var checkState = ""
     override fun onClick(p0: View?) {
         if (p0 == img_on) {
             PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), 100, false)
@@ -43,6 +44,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
+        StatusBarUtil.setPaddingSmart(this, scrollView)
 
         mTitle.text = "实名认证"
         blurView.setOverlayColor(ContextCompat.getColor(this, R.color.White))
@@ -79,7 +81,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
         img_off.setOnClickListener(this)
         DataCtrlClass.checkAuthentication(this) {
             if (it != null) {
-                checkState=it.checkState
+                checkState = it.checkState
                 when (it.checkState) {//'-1:未提交审核信息 0未审核(审核中) 1审核通过 2拒绝
                     "-1" -> {
 
@@ -90,6 +92,12 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
 
                     }
                     "2" -> {
+
+                        if (!it.checkResult!!.reason!!.isEmpty()) {
+                            var pop = SchemePop(this@IDProveActivity)
+                            pop.data = it.checkResult!!.reason!!
+                            pop.showPopupWindow()
+                        }
                         if (it.checkResult?.userName?.check != "1") {
                             ed_name.setTextColor(ContextCompat.getColor(this, R.color.MaterialRed400))
                         }
@@ -104,7 +112,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                         if (it.checkResult?.IDCardReverse?.check != "1")
                             GlideApp.with(this).load(it.checkResult?.IDCardReverse?.value
                                     ?: "").into(img_off)
-                        ed_name.addTextChangedListener(object:TextWatcher{
+                        ed_name.addTextChangedListener(object : TextWatcher {
                             override fun afterTextChanged(p0: Editable?) {
                                 ed_name.setTextColor(ContextCompat.getColor(this@IDProveActivity, R.color.MaterialGrey700))
                             }
@@ -115,7 +123,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                             }
                         })
-                        ed_id.addTextChangedListener(object:TextWatcher{
+                        ed_id.addTextChangedListener(object : TextWatcher {
                             override fun afterTextChanged(p0: Editable?) {
                                 ed_id.setTextColor(ContextCompat.getColor(this@IDProveActivity, R.color.MaterialGrey700))
                             }
@@ -141,7 +149,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
             imgOn.isEmpty() -> toast("请传入身份证正面")
             imgOff.isEmpty() -> toast("请传入身份证正面")
             else -> {
-                if (checkState=="2") {
+                if (checkState == "2") {
                     DataCtrlClass.editAuthentication(this, ed_name.text.toString(), ed_id.text.toString(),
                             EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
                             EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
@@ -170,9 +178,10 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                 if (requestCode == 100) {
                     imgOn = ("file:///" + (images[0] as ImageItem).path)
                     GlideApp.with(this).load(imgOn).into(img_on)
-                } else
+                } else if (requestCode == 200) {
                     imgOff = ("file:///" + (images[0] as ImageItem).path)
-                GlideApp.with(this).load(imgOff).into(img_off)
+                    GlideApp.with(this).load(imgOff).into(img_off)
+                }
             }
         } catch (e: Exception) {
         }

@@ -21,7 +21,8 @@ class TabActivity : BaseActivity() {
     private val mFragments = ArrayList<Fragment>()
     override fun initToolbar(): Boolean {
         mTitles = when (intent.getStringExtra(Intent_Tab)) {
-            "1"-> {mFragments.add(MainTabFragment.newInstance("11"))
+            "1" -> {
+                mFragments.add(MainTabFragment.newInstance("11"))
                 mFragments.add(MainTabFragment.newInstance("12"))
                 arrayListOf(TabEntity("出租信息"), TabEntity("求租信息"))
             }
@@ -60,6 +61,7 @@ class TabActivity : BaseActivity() {
     override fun init() {
         initEvent()
     }
+
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus

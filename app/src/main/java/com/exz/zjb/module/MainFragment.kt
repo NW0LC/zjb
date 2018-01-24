@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.header_main.view.*
  */
 
 class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, OnBannerListener {
-
+    var   newsStr=ArrayList<String>()
     private var mScrollY=0
     private lateinit var mAdapter: MainAdapter<GoodsBean>
     private lateinit var headerView: View
@@ -63,17 +63,24 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         DataCtrlClass.banner(context){
             if (it != null) {
                 banners=it
+                headerView.banner.setImages(banners).start()
             }
         }
         DataCtrlClass.topNews(context){
             if (it != null) {
-                headerView.marqueeView.startWithList(listOf("热烈祝贺桩机宝APP上线运营","热烈祝贺桩机宝APP上线运营"))
+                newsStr.clear()
+                for(topNewsBean in it){
+
+                    newsStr.add(topNewsBean.title)
+                }
+                headerView.marqueeView.startWithList(newsStr)
                 headerView.notice.setOnClickListener { startActivity(Intent(context,NewsActivity::class.java)) }
+
                 headerView.marqueeView.setOnItemClickListener { position, _ ->
 
                     val intent = Intent(context, MyWebActivity::class.java)
                     intent.putExtra(Intent_Url, it[position].url)
-                    intent.putExtra(Intent_Title, "")
+                    intent.putExtra(Intent_Title, it[position].title)
                     startActivity(intent)
                 }
             }
@@ -147,9 +154,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     }
 
     private fun initHeaderAndFooter() {
-        val array=ArrayList<String>()
         val array2=ArrayList<String>()
-        array.add("http://b.hiphotos.baidu.com/zhidao/pic/item/a5c27d1ed21b0ef47a3cc0a7dbc451da80cb3e76.jpg")
         array2.add(Uri.parse("android.resource://" + activity?.packageName + "/" +R.mipmap.icon_main_banner).toString())
 
 
@@ -162,7 +167,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         headerView.banner.setDelayTime(3000)
         //设置指示器位置（当banner模式中有指示器时）
         headerView.banner.setIndicatorGravity(BannerConfig.CENTER)
-        headerView.banner.setImages(array).start()
+
 
         headerView.banner2.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         //设置图片加载器

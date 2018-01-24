@@ -237,4 +237,44 @@ object Urls{
      * 删除求职信息
      */
     var deleteJobWanted =url+ "App/Job/DeleteJobWanted.aspx"
+
+    /**
+     * 用户协议
+     */
+    var Information =url+ "APP/BasicData/Information.aspx?i=1"
+
+    /**
+     * 使用帮助
+     */
+    var Help =url+ "APP/BasicData/Help.aspx"
+
+    /**
+     * 使用帮助
+     */
+    var Information2 =url+ "APP/BasicData/Information.aspx?i=2"
+
+    /**
+     * 获取用户信息
+     */
+    var GetUserInfo =url+ "App/Account/GetUserInfo.aspx"
+
+    /**
+     * 修改用户资料
+     */
+    var ModifyUserInfo =url+ "App/Account/ModifyUserInfo.aspx"
+
+    /**
+     * 修改密码
+     */
+    var ModifyPassword =url+ "App/Account/ModifyPassword.aspx"
+
+    /**
+     * 意见反馈
+     */
+    var SubmitFeedback =url+ "App/Account/SubmitFeedback.aspx"
+
+    /**
+     * 退出
+     */
+    var Exit =url+ "App/Account/Exit.aspx"
 }
