@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bt_changePwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@color/White"
+                    android:drawableEnd="@mipmap/icon_next"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_15"
+                    android:text="修改密码"
+                    android:textColor="@color/MaterialGrey800"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                <LinearLayout
+                    android:id="@+id/bt_clear"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+
+
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/margin_15"
+                        android:text="清理缓存"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                    <TextView
+                        android:id="@+id/tv_clear"
+                        android:padding="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14"
+                        android:text="0M"
+                        android:drawableEnd="@mipmap/icon_next"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/bt_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:background="@color/White"
+                    android:drawableEnd="@mipmap/icon_next"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_15"
+                    android:text="使用帮助"
+                    android:textColor="@color/MaterialGrey800"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                <TextView
+                    android:id="@+id/bt_protocol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:drawableEnd="@mipmap/icon_next"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_15"
+                    android:text="用户协议"
+                    android:textColor="@color/MaterialGrey800"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                <TextView
+                    android:id="@+id/bt_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:drawableEnd="@mipmap/icon_next"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_15"
+                    android:text="关于我们"
+                    android:textColor="@color/MaterialGrey800"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                <TextView
+                    android:id="@+id/bt_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:drawableEnd="@mipmap/icon_next"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_15"
+                    android:text="意见反馈"
+                    android:textColor="@color/MaterialGrey800"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                <LinearLayout
+                    android:id="@+id/bt_service"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+
+
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/margin_15"
+                        android:text="联系客服"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                    <TextView
+                        android:id="@+id/tv_service"
+                        android:padding="@dimen/margin_15"
+                        android:textColor="@color/MaterialRed500"
+                        android:textSize="@dimen/sp_14"
+                        android:text="0516-8888888"
+                        android:drawableEnd="@mipmap/icon_next"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bt_version"
+                    android:background="@color/White"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+
+
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/margin_15"
+                        android:text="版本号"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintTop_toBottomOf="@+id/bt_personInfo" />
+                    <TextView
+                        android:id="@+id/tv_version"
+                        android:padding="@dimen/margin_15"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14"
+                        android:text=""
+                        android:drawablePadding="@dimen/margin_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/bt_exit"
+                    android:layout_marginTop="@dimen/margin_70"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/MaterialGrey700"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_15"
+                    android:text="注销当前账号"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+
+
+</android.support.constraint.ConstraintLayout>

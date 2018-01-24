@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <ImageView
+        android:id="@+id/parallax"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="-100dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@color/colorPrimary"
+        app:layout_collapseMode="parallax" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/bt_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/img_head"
+                        android:layout_width="@dimen/margin_65"
+                        android:layout_height="@dimen/margin_65"
+                        android:layout_marginTop="55dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:placeholderImage="@mipmap/icon_main_msg_off"
+                        app:roundAsCircle="true"
+                        app:roundingBorderColor="@color/White"
+                        app:roundingBorderWidth="@dimen/margin_0.5"
+                        tool:background="@color/MaterialGrey200" />
+
+                    <TextView
+                        android:id="@+id/tv_userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_next"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:minWidth="@dimen/margin_90"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/img_head"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_head"
+                        tool:background="@color/MaterialGrey200" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="@dimen/margin_5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_userName">
+
+                        <com.flyco.roundview.RoundTextView
+                            android:id="@+id/tv_vip"
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/margin_3"
+                            android:drawableStart="@mipmap/icon_mine_vip"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:paddingStart="@dimen/margin_5"
+                            android:text="VIP"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_userName"
+                            app:rv_backgroundColor="@color/MaterialRedA400"
+                            app:rv_cornerRadius="@dimen/margin_20" />
+
+                        <com.flyco.roundview.RoundTextView
+                            android:id="@+id/tv_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_5"
+                            android:drawablePadding="@dimen/margin_3"
+                            android:drawableStart="@mipmap/icon_mine_state"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:paddingStart="@dimen/margin_5"
+                            android:text="已认证"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_userName"
+                            app:rv_backgroundColor="@color/DarkOrange"
+                            app:rv_cornerRadius="@dimen/margin_20" />
+                    </LinearLayout>
+
+                    <com.github.mmin18.widget.RealtimeBlurView
+                        android:id="@+id/lay_indate_blurView"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/lay_indate"
+                        app:layout_constraintEnd_toEndOf="@+id/lay_indate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/lay_indate"
+                        app:realtimeBlurRadius="10dp" />
+
+                    <LinearLayout
+                        android:id="@+id/lay_indate"
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="您的会员有效期至"
+                            android:textColor="@color/MaterialGrey800"
+                            android:textSize="@dimen/sp_12" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2017-47-44"
+                            android:textColor="@color/MaterialRed500"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/app_bg"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/White"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/margin_15"
+                        android:paddingLeft="@dimen/margin_10"
+                        android:paddingRight="@dimen/margin_10"
+                        android:paddingTop="@dimen/margin_15">
+
+                        <TextView
+                            android:id="@+id/bt_tab_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@mipmap/icon_mine_favorite"
+                            android:gravity="center"
+                            android:text="我的收藏"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/text_12" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/MaterialGrey200" />
+
+                        <TextView
+                            android:id="@+id/bt_tab_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@mipmap/icon_mine_footer"
+                            android:gravity="center"
+                            android:text="我的浏览记录"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/text_12" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="二手中心"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_sold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_sold"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的出售"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_buy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_buy"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的求购"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="租赁中心"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_lease"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_lease"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的出租"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_forRent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_forrent"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的求租"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:text="就业中心"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_recruit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_lease"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的招聘"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/bt_job"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:background="@color/white"
+                        android:drawableEnd="@mipmap/icon_mine_more"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:drawableStart="@mipmap/icon_mine_forrent"
+                        android:gravity="center_vertical"
+                        android:padding="12dp"
+                        android:text="我的求职"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</FrameLayout>

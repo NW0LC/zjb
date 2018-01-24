@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_top_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:src="@mipmap/ic_launcher_round"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="最专业的打桩机交流平台"
+                    android:textColor="#6c7027"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_top_icon" />
+
+                <LinearLayout
+                    android:id="@+id/lay_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="@dimen/margin_45"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_info">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="3"
+                        android:text="手机号"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_phone"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请输入手机号码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_pwd"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_phone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="3"
+                        android:text="密码"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_pwd"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请输入登录密码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/margin_35"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="登录"
+                    android:onClick="checkLogin"
+                    android:textColor="@color/MaterialGrey700"
+                    app:layout_constraintEnd_toEndOf="@+id/lay_pwd"
+                    app:layout_constraintStart_toStartOf="@+id/lay_pwd"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_pwd"
+                    app:rv_backgroundColor="@color/colorPrimaryDark"
+                    app:rv_backgroundPressColor="@color/Orange"
+                    app:rv_cornerRadius="20dp" />
+
+                <TextView
+                    android:id="@+id/bt_forgetPwd"
+                    android:onClick="forgetPwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingBottom="@dimen/margin_10"
+                    android:paddingEnd="@dimen/margin_10"
+                    android:paddingStart="@dimen/margin_10"
+                    android:text="忘记密码?"
+                    android:textColor="@color/MaterialGrey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/bt_submit"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_submit" />
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</FrameLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/popup_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:realtimeBlurRadius="10dp"
+            app:realtimeOverlayColor="@color/black_30000000"
+            />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/viewGroup"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@mipmap/icon_main_menu_bg"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/bt_tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="32dp"
+                android:clickable="true"
+                android:drawableTop="@mipmap/icon_main_menu_tab1"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="出租"
+                android:textColor="@color/white"
+                android:drawablePadding="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/bt_tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:drawableTop="@mipmap/icon_main_menu_tab2"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="求租"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@+id/bt_tab3"
+                app:layout_constraintStart_toEndOf="@+id/bt_tab1"
+                app:layout_constraintTop_toTopOf="@+id/bt_tab1" />
+
+            <TextView
+                android:id="@+id/bt_tab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="64dp"
+                android:clickable="true"
+                android:drawablePadding="8dp"
+                android:drawableTop="@mipmap/icon_main_menu_tab3"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="出售"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/bt_tab1" />
+
+            <TextView
+                android:id="@+id/bt_tab4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bt_tab1"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:drawableTop="@mipmap/icon_main_menu_tab4"
+                android:focusable="true"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="求购"
+                android:drawablePadding="8dp"
+                app:layout_constraintStart_toStartOf="@+id/bt_tab1"
+                app:layout_constraintTop_toBottomOf="@+id/bt_tab1" />
+
+            <TextView
+                android:id="@+id/bt_tab5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bt_tab2"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:drawableTop="@mipmap/icon_main_menu_tab5"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="招聘"
+                android:drawablePadding="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/bt_tab6"
+                app:layout_constraintStart_toEndOf="@+id/bt_tab4"
+                app:layout_constraintTop_toBottomOf="@+id/bt_tab2"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/bt_tab6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bt_tab3"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:drawableTop="@mipmap/icon_main_menu_tab6"
+                android:gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:text="求职"
+                android:textColor="@color/white"
+                android:drawablePadding="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/bt_tab3"
+                app:layout_constraintTop_toBottomOf="@+id/bt_tab3"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/center_music_window_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/vector_add_white"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/bt_tab6"
+                app:layout_constraintStart_toStartOf="@+id/bt_tab4"
+                app:layout_constraintTop_toBottomOf="@+id/bt_tab5" />
+
+        </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
+</LinearLayout>

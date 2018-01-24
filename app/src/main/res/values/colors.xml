@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f7c458</color>
+    <color name="colorPrimary_trans">#ccf7c458</color>
+    <color name="colorPrimaryDark">#f5bb3e</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="color_toolBar_title">#343434</color>
+    <color name="color_toolBar">@color/colorPrimary</color>
+    <color name="app_bg">#f5f6f8</color>
+    <color name="blur_bg_white">#ccffffff</color>
+    <color name="white">#ffffffff</color>
+    <color name="black_a7000000">#a7000000</color>
+    <color name="black_50000000">#50000000</color>
+    <color name="black_30000000">#30000000</color>
+</resources>

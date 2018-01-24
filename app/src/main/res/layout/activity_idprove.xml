@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:id="@+id/lay_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="4"
+                        android:text="姓名"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_name"
+                        android:layout_width="0dp"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_weight="1"
+                        android:hint="请输入"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_name">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="4"
+                        android:text="身份证号"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_id"
+                        android:layout_width="0dp"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_weight="1"
+                        android:hint="请输入"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="35dp"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_id">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minEms="4"
+                            android:text="证件信息"
+                            android:textColor="@color/MaterialGrey700"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:minEms="4"
+                            android:text="(请上传身份证正反面照片，需要手持照片)"
+                            android:textColor="@color/MaterialRed500"
+                            android:textSize="@dimen/sp_12" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10">
+
+                        <ImageView
+                            android:id="@+id/img_on"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_id_front"
+                            android:scaleType="centerCrop" />
+
+                        <ImageView
+                            android:id="@+id/img_off"
+                            android:layout_width="0dp"
+                            android:layout_height="110dp"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_id_bg"
+                            android:scaleType="centerCrop" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_submit"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="48dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginTop="@dimen/margin_35"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:onClick="submit"
+                    android:text="确认上传"
+                    android:textColor="@color/MaterialGrey700"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/lay_pic"
+                    app:layout_constraintStart_toStartOf="@+id/lay_pic"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_pic"
+                    app:rv_backgroundColor="@color/colorPrimaryDark"
+                    app:rv_backgroundPressColor="@color/Orange"
+                    app:rv_cornerRadius="20dp" />
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</FrameLayout>

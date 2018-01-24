@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbarLay"
+        >
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:realtimeBlurRadius="10dp"
+            app:realtimeOverlayColor="@color/colorPrimary_trans"
+            />
+
+        <LinearLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            >
+            <android.support.v7.widget.ButtonBarLayout
+                android:id="@+id/buttonBarLayout"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent">
+                <TextView
+                    android:drawableTop="@mipmap/icon_main_address"
+                    android:id="@+id/mTitleImg"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:text="徐州"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"
+                    tools:ignore="ContentDescription" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/mTitle"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:drawableStart="@mipmap/icon_search"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    app:rv_backgroundColor="#b1f5dfaf"
+                    app:rv_cornerRadius="20dp"
+                    android:ellipsize="end"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="5dp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:lines="1"
+                    android:maxEms="10"
+                    android:text="请输入搜索内容"
+                    android:textSize="12sp" />
+                <ImageView
+                    android:src="@mipmap/icon_main_msg_off"
+                    android:id="@+id/mRightImg"
+                    android:textColor="@color/color_toolBar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:layout_gravity="center_vertical"
+                    android:background="@null"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxEms="10"
+                    android:text=""
+
+                    android:textSize="16sp" />
+
+            </android.support.v7.widget.ButtonBarLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</FrameLayout>

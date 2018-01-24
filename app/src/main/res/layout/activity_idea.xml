@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_margin="@dimen/margin_15"
+                    android:textColor="@color/MaterialGrey700"
+                    android:textSize="@dimen/sp_14"
+                    android:text="如果您在使用过程中遇到任何问题，请留下您的宝贵意见，我们会及时与您取得联系："
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.flyco.roundview.RoundRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:layout_marginStart="@dimen/margin_15"
+                    app:rv_backgroundColor="@color/app_bg"
+                    app:rv_cornerRadius="@dimen/margin_5"
+                    android:orientation="vertical">
+
+
+                    <EditText
+                        android:background="@null"
+                        android:text=""
+                        android:textColor="@color/MaterialGrey700"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:id="@+id/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="140dp"
+                        android:maxLength="500"
+                        android:gravity="start"
+                        android:padding="@dimen/margin_5"
+                        android:hint="请输入至少11个字符的宝贵意见"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+
+
+
+                    <LinearLayout
+                        android:layout_alignBottom="@+id/editText"
+                        android:layout_alignParentEnd="true"
+                        android:padding="@dimen/margin_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/MaterialGrey700"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/MaterialGrey700"
+                            android:text="/500"/>
+
+                    </LinearLayout>
+
+
+
+
+                </com.flyco.roundview.RoundRelativeLayout>
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/margin_50"
+                    android:background="@color/colorPrimary"
+                    android:text="确认提交"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+
+
+</android.support.constraint.ConstraintLayout>

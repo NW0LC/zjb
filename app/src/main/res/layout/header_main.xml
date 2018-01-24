@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_bg"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:indicator_drawable_selected="@drawable/banner_point_green"
+            app:indicator_drawable_unselected="@drawable/banner_point_gray"
+            app:indicator_height="@dimen/margin_5"
+            app:indicator_width="@dimen/margin_5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_15"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10"
+            android:paddingTop="@dimen/margin_15">
+
+            <TextView
+                android:id="@+id/bt_tab_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_5"
+                android:drawableTop="@mipmap/icon_main_tab1"
+                android:gravity="center"
+                android:text="桩机"
+                android:textColor="@color/MaterialGrey600"
+                android:textSize="@dimen/text_12" />
+
+            <TextView
+                android:id="@+id/bt_tab_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_main_tab2"
+                android:gravity="center"
+                android:text="钢板桩"
+                android:drawablePadding="@dimen/margin_5"
+                android:textColor="@color/MaterialGrey600"
+                android:textSize="@dimen/text_12" />
+
+            <TextView
+                android:id="@+id/bt_tab_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_main_tab3"
+                android:gravity="center"
+                android:text="二手机"
+                android:drawablePadding="@dimen/margin_5"
+                android:textColor="@color/MaterialGrey600"
+                android:textSize="@dimen/text_12" />
+
+            <TextView
+                android:id="@+id/bt_tab_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@mipmap/icon_main_tab4"
+                android:gravity="center"
+                android:text="求职招聘"
+                android:drawablePadding="@dimen/margin_5"
+                android:textColor="@color/MaterialGrey600"
+                android:textSize="@dimen/text_12" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_0.5"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_main_hot"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_16" />
+
+            <com.sunfusheng.marqueeview.MarqueeView
+                android:id="@+id/marqueeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/margin_3"
+                app:mvAnimDuration="1000"
+                app:mvInterval="3000"
+                app:mvSingleLine="true"
+                app:mvTextColor="@color/MaterialGrey600"
+                app:mvTextSize="14sp" />
+        </LinearLayout>
+
+        <com.youth.banner.Banner
+            android:id="@+id/banner2"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            app:indicator_drawable_selected="@drawable/banner_point_green"
+            app:indicator_drawable_unselected="@drawable/banner_point_gray"
+            app:indicator_height="@dimen/margin_5"
+            app:indicator_width="@dimen/margin_5" />
+        <TextView
+            android:background="@mipmap/icon_main_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

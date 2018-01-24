@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="?attr/actionBarSize"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingTop="?attr/actionBarSize">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <FrameLayout
+        android:id="@+id/buttonBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurView"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            app:realtimeBlurRadius="10dp"
+            app:realtimeOverlayColor="@color/colorPrimary_trans" />
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:layout_marginStart="@dimen/margin_15"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            app:rv_backgroundColor="@color/blur_bg_white"
+            app:rv_cornerRadius="@dimen/margin_20">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:drawablePadding="@dimen/margin_5"
+                android:drawableStart="@mipmap/icon_search"
+                android:hint="搜索你想要的信息"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingEnd="@dimen/margin_10"
+                android:paddingStart="@dimen/margin_10"
+                android:text=""
+                android:textColor="@color/MaterialGrey600"
+                android:textColorHint="@color/MaterialGrey400"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="@dimen/text_12" />
+
+
+        </com.flyco.roundview.RoundLinearLayout>
+        <com.github.mmin18.widget.RealtimeBlurView
+            android:id="@+id/blurView2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_35"
+            android:layout_marginTop="@dimen/margin_45"
+            app:realtimeBlurRadius="10dp"
+            app:realtimeOverlayColor="@color/blur_bg_white" />
+        <RadioGroup
+            android:layout_marginTop="@dimen/margin_45"
+            android:id="@+id/radioGroup"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_35">
+        <com.szw.framelibrary.view.DrawableCenterButton
+            android:id="@+id/radioButton1"
+            android:text="发布时间"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_tab_triangle_grey"
+            android:gravity="center"
+            android:textColor="@color/MaterialGrey700"
+            android:textSize="@dimen/text_12"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.szw.framelibrary.view.DrawableCenterButton
+            android:id="@+id/radioButton2"
+            android:text="出厂年限"
+            android:gravity="center"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_tab_triangle_grey"
+            android:textColor="@color/MaterialGrey700"
+            android:textSize="@dimen/text_12"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <com.szw.framelibrary.view.DrawableCenterButton
+            android:id="@+id/radioButton3"
+            android:text="所在地"
+            android:gravity="center"
+            android:button="@null"
+            android:drawableEnd="@drawable/selector_tab_triangle_grey"
+            android:textColor="@color/MaterialGrey700"
+            android:textSize="@dimen/text_12"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        </RadioGroup>
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="end|center_vertical"
+    android:background="@color/white"
+    android:padding="5dp"
+    android:id="@+id/lay_btn"
+    android:layout_marginTop="1dp"
+    android:orientation="horizontal">
+
+    <com.flyco.roundview.RoundTextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:drawablePadding="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:gravity="center"
+        android:minEms="3"
+        android:text="删除"
+        android:textColor="@color/colorPrimary"
+        app:rv_strokeWidth="1dp"
+        app:rv_strokeColor="@color/colorPrimary"
+        app:rv_cornerRadius="@dimen/margin_5"
+        android:textSize="@dimen/sp_14" />
+    <com.flyco.roundview.RoundTextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:minEms="3"
+        android:text="编辑"
+        android:textColor="@color/colorPrimary"
+        app:rv_strokeWidth="1dp"
+        app:rv_strokeColor="@color/colorPrimary"
+        app:rv_cornerRadius="@dimen/margin_5"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:id="@+id/lay_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="3"
+                        android:text="手机号"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_phone"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请输入手机号码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_pwd"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_code">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="3"
+                        android:text="密码"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_pwd"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请输入密码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lay_code"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_phone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="3"
+                        android:text="验证码"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_code"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请输入验证码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                    <View
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@color/MaterialRed700"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/bt_code"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/MaterialRed700"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ed_bg"
+                        android:paddingEnd="@dimen/margin_10"
+                        android:paddingStart="@dimen/margin_10"
+                        android:paddingTop="@dimen/margin_5"
+                        android:paddingBottom="@dimen/margin_5"
+                        android:text="获取验证码"/>
+                </LinearLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_register"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/margin_35"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:text="下一步"
+                    android:textColor="@color/MaterialGrey700"
+                    app:layout_constraintEnd_toEndOf="@+id/lay_pwd"
+                    app:layout_constraintStart_toStartOf="@+id/lay_pwd"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_pwd"
+                    app:rv_backgroundColor="@color/colorPrimaryDark"
+                    app:rv_backgroundPressColor="@color/Orange"
+                    app:rv_cornerRadius="20dp" />
+
+                <LinearLayout
+                    android:id="@+id/lay_bt_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/bt_register"
+                    app:layout_constraintTop_toBottomOf="@+id/bt_register">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="注册即同意桩机宝"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/bt_protocol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_5"
+                        android:text="《用户使用协议》"
+                        android:textColor="#431b20"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</FrameLayout>

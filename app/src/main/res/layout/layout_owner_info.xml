@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:background="@color/white">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_head"
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:background="@color/MaterialGrey200" />
+
+        <TextView
+            android:id="@+id/tv_ownerName"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:minWidth="@dimen/margin_30"
+            android:text=""
+            android:textColor="@color/MaterialGrey700"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/img_head"
+            app:layout_constraintTop_toTopOf="@+id/img_head"
+            tool:background="@color/MaterialGrey200" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_attestation"
+            android:layout_width="38dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:gravity="center"
+            android:text="已认证"
+            android:textColor="@color/white"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_ownerName"
+            app:layout_constraintStart_toEndOf="@+id/tv_ownerName"
+            app:layout_constraintTop_toTopOf="@+id/tv_ownerName"
+            app:rv_backgroundColor="@color/MaterialRed500"
+            app:rv_cornerRadius="@dimen/dp_10"
+            tool:background="@color/MaterialGrey200" />
+
+        <android.support.v7.widget.AppCompatRatingBar
+            android:id="@+id/mRatingBar"
+            style="@style/ratingBar_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="@+id/img_head"
+            app:layout_constraintStart_toEndOf="@+id/img_head"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ownerName" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_ownerPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="电话:%s"
+            android:textColor="@color/MaterialGrey500"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:background="@color/MaterialGrey200" />
+
+        <TextView
+            android:id="@+id/tv_ownerCompany"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:minWidth="@dimen/margin_30"
+            android:text="公司:%s"
+            android:textColor="@color/MaterialGrey500"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ownerPhone"
+            tool:background="@color/MaterialGrey200" />
+
+        <TextView
+            android:id="@+id/tv_ownerAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/dp_4"
+            android:minWidth="@dimen/margin_30"
+            android:text="公司地址:%s"
+            android:textColor="@color/MaterialGrey500"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ownerCompany"
+            tool:background="@color/MaterialGrey200" />
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
