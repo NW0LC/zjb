@@ -63,6 +63,7 @@ dependencies {
     compile "io.objectbox:objectbox-android:$objectboxVersion"
     compile "io.objectbox:objectbox-kotlin:$objectboxVersion"
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 allprojects {
     repositories {

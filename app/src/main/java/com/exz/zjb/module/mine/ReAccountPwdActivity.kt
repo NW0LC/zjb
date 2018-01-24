@@ -33,7 +33,7 @@ class ReAccountPwdActivity : BaseActivity() {
                 et_old_pwd.text.isEmpty() -> et_old_pwd.setShakeAnimation()
                 et_new_pwd.text.isEmpty() -> et_new_pwd.setShakeAnimation()
                 et_new_pwd_again.text.isEmpty() -> et_new_pwd_again.setShakeAnimation()
-                et_new_pwd.text!=et_new_pwd_again.text -> toast("两次密码不一致")
+                et_new_pwd.text.toString().trim()!=et_new_pwd_again.text.toString().trim() -> toast("两次密码不一致")
                 else -> {
                     DataCtrlClass.changeAccountPwd(this,et_old_pwd.text.toString(),et_new_pwd.text.toString()){
                         if (null!=it){

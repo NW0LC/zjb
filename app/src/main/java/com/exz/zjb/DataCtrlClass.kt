@@ -24,41 +24,42 @@ import org.jetbrains.anko.toast
  * Created by 史忠文
  * on 2018/1/9.
  */
-object DataCtrlClass{
+object DataCtrlClass {
     /**
      * 登录
      * */
-    fun loginNoDialog(mobile: String, pwd: String,listener: (userId: String?) -> Unit) {
+    fun loginNoDialog(mobile: String, pwd: String, listener: (userId: NetEntity<User>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params["mobile"] = mobile
         params["password"] = pwd
         params["deviceType"] = "1"
 //      params.put("jpushToken", JPushInterface.getRegistrationID(this))
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile+pwd, salt).toLowerCase()
-        OkGo.post<NetEntity<String>>(Urls.url)
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile + pwd, salt).toLowerCase()
+        OkGo.post<NetEntity<User>>(Urls.Login)
                 .params(params)
                 .tag(this)
-                .execute(object : JsonCallback<NetEntity<String>>() {
-                    override fun onSuccess(response: Response<NetEntity<String>>) {
+                .execute(object : JsonCallback<NetEntity<User>>() {
+                    override fun onSuccess(response: Response<NetEntity<User>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
+                            listener.invoke(response.body())
                         } else {
                             listener.invoke(null)
                         }
                     }
 
-                    override fun onError(response: Response<NetEntity<String>>) {
+                    override fun onError(response: Response<NetEntity<User>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }
 
                 })
     }
+
     /**
      * 登录
      * */
-    fun login(context: Context, mobile: String, pwd: String, listener: (userId: String?) -> Unit) {
+    fun login(context: Context, mobile: String, pwd: String, listener: (userId: NetEntity<User>?) -> Unit) {
 //        mobile	string	必填	手机号
 //                password	string	必填	密码
 //                jpushToken	string	选填	极光推送令牌
@@ -70,27 +71,28 @@ object DataCtrlClass{
         params["password"] = pwd
         params["deviceType"] = "1"
 //      params.put("jpushToken", JPushInterface.getRegistrationID(this))
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile+pwd, salt).toLowerCase()
-        OkGo.post<NetEntity<String>>(Urls.Login)
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile + pwd, salt).toLowerCase()
+        OkGo.post<NetEntity<User>>(Urls.Login)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<String>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<String>>) {
+                .execute(object : DialogCallback<NetEntity<User>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<User>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
+                            listener.invoke(response.body())
                         } else {
                             context.toast(response.body().message)
                             listener.invoke(null)
                         }
                     }
 
-                    override fun onError(response: Response<NetEntity<String>>) {
+                    override fun onError(response: Response<NetEntity<User>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }
 
                 })
     }
+
     /**
      * 获取验证码
      * @param[phone] string	必填	手机号
@@ -111,7 +113,7 @@ object DataCtrlClass{
                 .execute(object : DialogCallback<NetEntity<String>>(context) {
                     override fun onSuccess(response: Response<NetEntity<String>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data?:"")
+                            listener.invoke(response.body().data ?: "")
                         } else {
                             listener.invoke(null)
                         }
@@ -125,13 +127,14 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 注册
      * @param[phone] string	必填	手机号
      * @param[code] string	必填	验证码
      * @param[pwd] string	必填	密码
      * */
-    fun register(context: Context, phone: String, code: String, pwd: String, listener: (userId: String?) -> Unit) {
+    fun register(context: Context, phone: String, code: String, pwd: String, listener: (userId: NetEntity<User>?) -> Unit) {
 //        mobile	string	必填	手机号
 //        code	string	必填	验证码
 //        password	string	必填	密码
@@ -146,26 +149,27 @@ object DataCtrlClass{
         params["deviceType"] = "1"
 //        params.put("jpushToken", JPushInterface.getRegistrationID(this))
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(phone + code, salt).toLowerCase()
-        OkGo.post<NetEntity<String>>(Urls.Register)
+        OkGo.post<NetEntity<User>>(Urls.Register)
                 .params(params)
                 .tag(this)
-                .execute(object : DialogCallback<NetEntity<String>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<String>>) {
+                .execute(object : DialogCallback<NetEntity<User>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<User>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
+                            listener.invoke(response.body())
                         } else {
                             listener.invoke(null)
                         }
                         context.toast(response.body().message)
                     }
 
-                    override fun onError(response: Response<NetEntity<String>>) {
+                    override fun onError(response: Response<NetEntity<User>>) {
                         super.onError(response)
                         listener.invoke(null)
                     }
 
                 })
     }
+
     /**
      * 注册
      * @param[phone] string	必填	手机号
@@ -188,6 +192,7 @@ object DataCtrlClass{
                 .tag(this)
                 .execute(object : DialogCallback<NetEntity<Void>>(context) {
                     override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        context.toast(response.body().message)
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                             listener.invoke(response.body())
                         } else {
@@ -202,10 +207,11 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 提交实名认证审核资料
      * */
-    fun submitAuthentication(context: Context, userName: String, IDNumber: String, IDCardPositive: String,IDCardReverse: String, listener: (userId: NetEntity<Void>?) -> Unit) {
+    fun submitAuthentication(context: Context, userName: String, IDNumber: String, IDCardPositive: String, IDCardReverse: String, listener: (userId: NetEntity<Void>?) -> Unit) {
 //        userId	string	必填	用户id
 //        userName	string	必填	联系人姓名
 //        IDNumber	string	必填	身份证号码
@@ -240,10 +246,12 @@ object DataCtrlClass{
                     }
 
                 })
-    } /**
+    }
+
+    /**
      * 提交实名认证审核资料
      * */
-    fun editAuthentication(context: Context, userName: String, IDNumber: String, IDCardPositive: String,IDCardReverse: String, listener: (userId: NetEntity<Void>?) -> Unit) {
+    fun editAuthentication(context: Context, userName: String, IDNumber: String, IDCardPositive: String, IDCardReverse: String, listener: (userId: NetEntity<Void>?) -> Unit) {
 //        userId	string	必填	用户id
 //        userName	string	必填	联系人姓名
 //        IDNumber	string	必填	身份证号码
@@ -279,6 +287,7 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 实名认证审核结果接口
      * */
@@ -305,110 +314,119 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 首页_Banner
      * */
     fun banner(context: Context?, listener: (userId: ArrayList<BannersBean>?) -> Unit) {
         val params = HashMap<String, String>()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString("Banner", salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<BannersBean>>>(Urls.banner)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<BannersBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<BannersBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<BannersBean>>>(Urls.banner)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<BannersBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<BannersBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<BannersBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<BannersBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
+                    })
+    }
 
-                })
-    }/**
+    /**
      * 首页_热点新闻(5条)
      * */
     fun topNews(context: Context?, listener: (userId: ArrayList<TopNewsBean>?) -> Unit) {
         val params = HashMap<String, String>()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString("TopNews", salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<TopNewsBean>>>(Urls.topNews)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<TopNewsBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<TopNewsBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<TopNewsBean>>>(Urls.topNews)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<TopNewsBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<TopNewsBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<TopNewsBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<TopNewsBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
+                    })
+    }
 
-                })
-    }/**
+    /**
      * 省市列表
      * */
     fun areaList(context: Context?, listener: (userId: ArrayList<ProvincesBean>?) -> Unit) {
         val params = HashMap<String, String>()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString("AreaList", salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<ProvincesBean>>>(Urls.areaList)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<ProvincesBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<ProvincesBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<ProvincesBean>>>(Urls.areaList)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<ProvincesBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<ProvincesBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<ProvincesBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<ProvincesBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
+                    })
+    }
 
-                })
-    }/**
+    /**
      * 首页_最新出售车源（4条）
      * */
     fun newCar(context: Context?, listener: (userId: ArrayList<GoodsBean>?) -> Unit) {
         val params = HashMap<String, String>()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString("NewCar", salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.newCar)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.newCar)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
+                    })
+    }
 
-                })
-    }/**
+    /**
      * 出售车辆列表
      * */
-    fun sellList(context: Context?,keyword:String,factoryYear:String,provinceId:String,cityId:String,sortType:String,currentPage: Int,listener: (userId: ArrayList<GoodsBean>?) -> Unit) {
+    fun sellList(context: Context?, keyword: String, factoryYear: String, provinceId: String, cityId: String, sortType: String, currentPage: Int, listener: (userId: ArrayList<GoodsBean>?) -> Unit) {
 //        keyword	string	选填	关键词
 //        factoryYear	string	选填	出厂年限
 //        provinceId	string	选填	省份id
@@ -416,77 +434,80 @@ object DataCtrlClass{
 //        sortType	string	必填	排序方式（0综合排序 1发布时间由远到近 2发布时间由近到远）
 //        page	string	必填	分页（从第1页开始,每页20条数据）
         val params = HashMap<String, String>()
-        params["keyword"] =keyword
-        params["factoryYear"] =factoryYear
-        params["provinceId"] =provinceId
-        params["cityId"] =cityId
-        params["sortType"] =sortType
-        params["page"] =currentPage.toString()
+        params["keyword"] = keyword
+        params["factoryYear"] = factoryYear
+        params["provinceId"] = provinceId
+        params["cityId"] = cityId
+        params["sortType"] = sortType
+        params["page"] = currentPage.toString()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(currentPage.toString(), salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.sellList)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.sellList)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
+                    })
+    }
 
-                })
-    }/**
+    /**
      * 求购车辆列表
      * 出租车辆列表
      * */
-    fun mainTabList(context: Context?,url:String,typeId:String,keyword:String,currentPage: Int,listener: (userId: ArrayList<GoodsBean>?) -> Unit) {
+    fun mainTabList(context: Context?, url: String, typeId: String, keyword: String, currentPage: Int, listener: (userId: ArrayList<GoodsBean>?) -> Unit) {
 //        keyword	string	选填	关键词
 //        typeId	string	必填	类型：1桩机 2钢板桩
 //        page	string	必填	分页（从第1页开始,每页20条数据）
 //        requestCheck	string	必填	验证
         val params = HashMap<String, String>()
-        params["typeId"] =typeId
-        params["keyword"] =keyword
-        params["page"] =currentPage.toString()
+        params["typeId"] = typeId
+        params["keyword"] = keyword
+        params["page"] = currentPage.toString()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(currentPage.toString(), salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<GoodsBean>>>(url)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<GoodsBean>>>(url)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
-
-                })
+                    })
     }
+
     /**
      * 个人中心消息
      * */
-    fun mineMsgData(context: Context,currentPage: Int, listener: (informationBeans: ArrayList<MsgBean>?) -> Unit) {
-    //userId	string	必填	用户id
+    fun mineMsgData(context: Context, currentPage: Int, listener: (informationBeans: ArrayList<MsgBean>?) -> Unit) {
+        //userId	string	必填	用户id
 //        page	string	必填	分页（从第1页开始,每页20条数据）
 //        requestCheck	string	必填	验证请求
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId
         params["page"] = currentPage.toString()
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+currentPage.toString(), salt).toLowerCase()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + currentPage.toString(), salt).toLowerCase()
         OkGo.post<NetEntity<ArrayList<MsgBean>>>(Urls.message)
                 .params(params)
                 .tag(this)
@@ -505,33 +526,35 @@ object DataCtrlClass{
                     }
 
                 })
-    } /**
+    }
+
+    /**
      * 热点新闻
      * */
-    fun newsData(context: Context?,currentPage: Int, listener: (informationBeans: ArrayList<HotNewsBean>?) -> Unit) {
+    fun newsData(context: Context?, currentPage: Int, listener: (informationBeans: ArrayList<HotNewsBean>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params["page"] = currentPage.toString()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(currentPage.toString(), salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<ArrayList<HotNewsBean>>>(Urls.hotNews)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<ArrayList<HotNewsBean>>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<ArrayList<HotNewsBean>>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
-                        } else {
+        if (context != null)
+            OkGo.post<NetEntity<ArrayList<HotNewsBean>>>(Urls.hotNews)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<ArrayList<HotNewsBean>>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<ArrayList<HotNewsBean>>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<ArrayList<HotNewsBean>>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<ArrayList<HotNewsBean>>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
-
-                })
+                    })
     }
 
 
@@ -539,7 +562,7 @@ object DataCtrlClass{
      * 出售车辆详情
      * 出租车辆详情
      * */
-    fun getTabDetail(context: Context,url: String,key: String,id:String,  listener: (goodsBean: GoodsBean?) -> Unit) {
+    fun getTabDetail(context: Context, url: String, key: String, id: String, listener: (goodsBean: GoodsBean?) -> Unit) {
 //        userId	string	必填	用户id
 //        sellId	string	必填	出售id
 //        requestCheck	string	必填	验证请求
@@ -566,15 +589,16 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 发布
      * */
-    fun push(context: Context,postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, images:List<String>,listener: (goodsBean: NetEntity<Void>?) -> Unit) {
+    fun push(context: Context, postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, images: List<String>, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
         CustomProgress.show(context, "加载中", false, null)
-        Thread{
-            pushImgData(images){
-                if (it!=null) {
-                    postRequest.params("carImageUrl",it).tag(this)
+        Thread {
+            pushImgData(images) {
+                if (it != null) {
+                    postRequest.params("carImageUrl", it).tag(this)
                             .execute(object : DialogCallback<NetEntity<Void>>(context) {
                                 override fun onSuccess(response: Response<NetEntity<Void>>) {
                                     if (response.body().getCode() == Constants.NetCode.SUCCESS) {
@@ -582,6 +606,7 @@ object DataCtrlClass{
                                     } else {
                                         listener.invoke(null)
                                     }
+                                    context.toast(response.body().message)
                                 }
 
                                 override fun onError(response: Response<NetEntity<Void>>) {
@@ -595,30 +620,31 @@ object DataCtrlClass{
         }.start()
 
     }
+
     /**
      * 公共方法： 上传图片
      * */
-    fun pushImgData(images:List<String>,count:Int=0,listener: (imgName: String?) -> Unit){
+    fun pushImgData(images: List<String>, count: Int = 0, listener: (imgName: String?) -> Unit) {
         if (images.isNotEmpty()) {
-            var str=""
+            var str = ""
             val params = HashMap<String, String>()
             params["userId"] = MyApplication.loginUserId
-            params["carImg"] = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(images[count].replace("file:///","")))
-            params["requestCheck"] = EncryptUtils.encryptMD5ToString(  MyApplication.loginUserId, salt).toLowerCase()
+            params["carImg"] = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(images[count].replace("file:///", "")))
+            params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
             OkGo.post<NetEntity<String>>(Urls.uploadCarImg)
                     .params(params)
                     .tag(this)
                     .execute(object : JsonCallback<NetEntity<String>>() {
                         override fun onSuccess(response: Response<NetEntity<String>>) {
                             if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                                str+=response.body().data+","
+                                str += response.body().data + ","
 
-                                if (count<images.size-1)
-                                    pushImgData(images,count+1){
-                                        str+=it
+                                if (count < images.size - 1)
+                                    pushImgData(images, count + 1) {
+                                        str += it
                                         listener.invoke(str)
                                     }
-                                else{
+                                else {
                                     listener.invoke(str)
                                 }
                             } else {
@@ -632,15 +658,16 @@ object DataCtrlClass{
                         }
 
                     })
-        }else{
+        } else {
             listener.invoke("")
         }
 
     }
+
     /**
      * 【添加/取消】【关注/收藏】
      * */
-    fun editFavoriteData(context: Context,id:String, idMark:String,type:String, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
+    fun editFavoriteData(context: Context, id: String, idMark: String, type: String, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
 //        userId	string	必填	用户id
 //        typeId	string	必填	类型：1出售信息 2求购信息 3出租信息 4求租信息 5招聘信息 6求职信息
 //        objectId	string	必填	收藏对象id
@@ -651,7 +678,7 @@ object DataCtrlClass{
         params["objectId"] = id
         params["typeId"] = idMark
         params["collectType"] = type
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+id, salt).toLowerCase()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + id, salt).toLowerCase()
         OkGo.post<NetEntity<Void>>(Urls.collectAction)
                 .params(params)
                 .tag(this)
@@ -671,6 +698,7 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 编辑个人信息
      * */
@@ -678,12 +706,12 @@ object DataCtrlClass{
 
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId//教练id
-        if (key == "header")
+        if (key == "headImg")
             params[key] = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(value))
         else
             params[key] = value
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-        OkGo.post<NetEntity<String>>(Urls.url)
+        OkGo.post<NetEntity<String>>(Urls.ModifyUserInfo)
                 .params(params)
                 .tag(this)
                 .execute(object : DialogCallback<NetEntity<String>>(context) {
@@ -703,10 +731,11 @@ object DataCtrlClass{
 
                 })
     }
+
     /**
      * 修改登录密码
      */
-    fun changeAccountPwd(context: Context,oldPwd:String ,newPwd:String ,listener: (data: String?) -> Unit) {
+    fun changeAccountPwd(context: Context, oldPwd: String, newPwd: String, listener: (data: String?) -> Unit) {
 //        userId	/**/string	必填	用户ID
 //                pwd	string	必填	旧密码
 //                newPwd	string	必填	新密码
@@ -714,17 +743,17 @@ object DataCtrlClass{
 
         val params = HashMap<String, String>()
         params["userId"] = loginUserId
-        params["pwd"] = oldPwd
-        params["newPwd"] = newPwd
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(loginUserId +oldPwd+newPwd, MyApplication.salt).toLowerCase()
-        OkGo.post<NetEntity<String>>(Urls.url)
+        params["oldPassword"] = oldPwd
+        params["newPassword"] = newPwd
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(loginUserId + newPwd, MyApplication.salt).toLowerCase()
+        OkGo.post<NetEntity<String>>(Urls.ModifyPassword)
                 .params(params)
                 .tag(this)
                 .execute(object : DialogCallback<NetEntity<String>>(context) {
                     override fun onSuccess(response: Response<NetEntity<String>>) {
                         context.toast(response.body().message)
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data?:"")
+                            listener.invoke(response.body().data ?: "")
                         } else {
                             listener.invoke(null)
                         }

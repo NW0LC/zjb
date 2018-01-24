@@ -66,7 +66,7 @@ class LogoActivity : BaseActivity() {
     fun login() {
         DataCtrlClass.loginNoDialog(PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "") {
             if (it != null) {
-                LoginActivity.loginSuccess(this, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "", User(it))
+                LoginActivity.loginSuccess(this, PreferencesService.getAccountKey(this) ?: "", PreferencesService.getAccountValue(this) ?: "", User(it.data!!.userId))
             }else{
                 MyApplication.user = null
             }

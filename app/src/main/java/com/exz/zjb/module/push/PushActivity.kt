@@ -192,7 +192,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                     for (p in listAddress ?: ArrayList()) {
                         city = ArrayList()
                         optionsProvinces.add(p.ProvinceName ?: "")
-                        (p.cities ?: ArrayList()).mapTo(city) { it.CityName ?: "" }
+                        (p.CityList ?: ArrayList()).mapTo(city) { it.CityName ?: "" }
                         optionsCities.add(city)
                     }
                 }.start()
@@ -202,9 +202,9 @@ class PushActivity : BaseActivity(), View.OnClickListener {
             try {
                 optionsAddress1 = options1
                 optionsAddress2 = option2
-                tv_address.text = String.format(listAddress?.get(options1)?.value + "-" + listAddress?.get(options1)?.cities?.get(option2)?.value)
+                tv_address.text = String.format(listAddress?.get(options1)?.value + "-" + listAddress?.get(options1)?.CityList?.get(option2)?.value)
                 provinceId = listAddress?.get(options1)?.key ?: ""
-                cityId = listAddress?.get(options1)?.cities?.get(option2)?.key ?: ""
+                cityId = listAddress?.get(options1)?.CityList?.get(option2)?.key ?: ""
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -289,7 +289,11 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                     else -> {
                     }
                 }
-                DataCtrlClass.push(this, postRequest,images) {}
+                DataCtrlClass.push(this, postRequest,images) {
+                    if(it!=null){
+                        finish()
+                    }
+                }
             }
             else -> {
             }

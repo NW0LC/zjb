@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.blankj.utilcode.util.EncryptUtils
+import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
 import com.exz.zjb.config.Urls
 import com.lzy.okgo.OkGo
@@ -16,6 +17,7 @@ import com.szw.framelibrary.utils.net.NetEntity
 import com.szw.framelibrary.utils.net.callback.DialogCallback
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_idea.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 /**
@@ -59,29 +61,26 @@ class IdeaActivity : BaseActivity(), View.OnClickListener {
     }
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.submit -> initPort()
+
+            R.id.submit -> {
+                var content=editText.text.toString().trim()
+                if(content.isEmpty()){
+                    editText.setShakeAnimation()
+                    return
+                }
+                if(content.length<11){
+                    toast("请输入至少11个字符的宝贵意见!")
+                    return
+                }
+                DataCtrlClassX.submitFeedback(mContext,content, {
+                    if(it!=null){
+                        finish()
+                    }
+                })
+            }
         }
     }
 
 
-    private fun initPort() {
-        val params = HashMap<String, String>()
-        params["userId"] = MyApplication.loginUserId
-        params["content"] = editText.text.toString()
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + MyApplication.salt).toLowerCase()
-        OkGo.post<NetEntity<Void>>(Urls.url)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<Void>>(mContext) {
-
-                    override fun onSuccess(response: Response<NetEntity<Void>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            finish()
-                        }
-
-                    }
-
-                })
-    }
 
 }

@@ -6,8 +6,8 @@ import android.util.TypedValue
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
 import com.exz.zjb.DataCtrlClass
+import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
-import com.exz.zjb.bean.User
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
@@ -28,9 +28,8 @@ import java.util.*
 
 class PersonInfoActivity : BaseActivity(), View.OnClickListener {
     class OpenTextBen(var className: String, var content: String, var length: Int, var warn: String) : Serializable
-    private lateinit var mTextEntity: OpenTextBen
+    private  var mTextEntity: OpenTextBen?=null
     private var textType = 0
-    private var mUserInfo: User?=null
     override fun initToolbar(): Boolean {
         toolbar.setNavigationOnClickListener { finish() }
 
@@ -51,14 +50,26 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initUserInfo() {
+
+        DataCtrlClassX.getUserInfo(mContext, {
+            refreshLayout.finishRefresh()
+            if (it != null) {
+                iv_header.setImageURI(it.data!!.headImg)
+                tv_nickname.text = it.data!!.nickname
+                tv_phone.text= it.data!!.mobile
+                tv_company.text= it.data!!.company
+                tv_address.text= it.data!!.companyAddress
+            }
+        })
     }
 
 
 
     private fun initEvent() {
         bt_header.setOnClickListener(this)
-        bt_address.setOnClickListener(this)
         bt_nicename.setOnClickListener(this)
+        bt_company.setOnClickListener(this)
+        bt_address.setOnClickListener(this)
     }
 
     private fun initCamera() {
@@ -92,12 +103,7 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
 
     private fun editInfo(key: String, value: String) {
         DataCtrlClass.editPersonInfo(this, key, value) {
-            if (it != null) {
-                if (key == "header")
-                    iv_header.setImageURI(it)
-            }
-            if (key == "nickname")
-                tv_nickname.text = value
+            initUserInfo()
         }
     }
 
@@ -105,18 +111,20 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == ImagePicker.RESULT_CODE_ITEMS) { //图片选择
             val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
-            editInfo("header", (images[0] as ImageItem).path)
+            editInfo("headImg", (images[0] as ImageItem).path)
         } else if (resultCode ==100) {
             when (textType) {
-                1 -> {//公司
+                1 -> {//修改昵称
                     mTextEntity = data?.getSerializableExtra("text") as OpenTextBen
-                    mUserInfo?.nickname=mTextEntity.content
-                    editInfo("nickname", mTextEntity.content)
+                    editInfo("nickname", mTextEntity!!.content)
                 }
-                2 -> {//公司地址
+                2 -> {//修改公司名称
                     mTextEntity = data?.getSerializableExtra("text") as OpenTextBen
-                    mUserInfo?.companyAddress=mTextEntity.content
-                    editInfo("wechat", mTextEntity.content)
+                    editInfo("company", mTextEntity!!.content)
+                }
+                3 -> {//修改公司名称
+                    mTextEntity = data?.getSerializableExtra("text") as OpenTextBen
+                    editInfo("companyAddress", mTextEntity!!.content)
                 }
             }
         }
@@ -129,20 +137,24 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
             bt_header -> {
                 PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), false)
             }
-            bt_company -> {
+            bt_nicename -> {
                 textType = 1
-                if (mUserInfo != null) mTextEntity = OpenTextBen("修改昵称", URLDecoder.decode(mUserInfo?.nickname, "utf-8"), 15, "*名称请控制长度不要超过15字")
+                mTextEntity = OpenTextBen("修改昵称", URLDecoder.decode(tv_nickname.text.toString().trim(), "utf-8"), 10, "*昵称请控制长度不要超过10字")
                 b.putSerializable("text", mTextEntity)
                 startActivityForResult(Intent(mContext, OpenShopInputTextActivity::class.java).putExtras(b), 100)
             }
-            bt_address -> {
+            bt_company -> {
                 textType = 2
-                if (mUserInfo != null) mTextEntity = OpenTextBen("修改微信号", URLDecoder.decode(mUserInfo?.companyAddress, "utf-8"), 15, "*公司地址请控制长度不要超过15字")
+                 mTextEntity = OpenTextBen("修改公司名称", URLDecoder.decode(tv_company.text.toString().trim(), "utf-8"), 15, "*公司地址请控制长度不要超过15字")
                 b.putSerializable("text", mTextEntity)
                 startActivityForResult(Intent(mContext, OpenShopInputTextActivity::class.java).putExtras(b), 100)
             }
 
-            else -> {
+            bt_address -> {
+                textType = 3
+                mTextEntity = OpenTextBen("修改公司地址", URLDecoder.decode(tv_address.text.toString().trim(), "utf-8"), 60, "*公司地址请控制长度不要超过60字")
+                b.putSerializable("text", mTextEntity)
+                startActivityForResult(Intent(mContext, OpenShopInputTextActivity::class.java).putExtras(b), 100)
             }
         }
     }

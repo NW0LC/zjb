@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.toast
 
 
-
 /**
  * Created by 史忠文
  * on 2018/1/9.
@@ -36,9 +35,9 @@ class LoginActivity : BaseActivity() {
         blurView.alpha = 0f
         toolbar.inflateMenu(R.menu.menu_text)
         val actionView = toolbar.menu.getItem(0).actionView
-        (actionView as TextView).text ="注册"
+        (actionView as TextView).text = "注册"
         actionView.setOnClickListener {
-            startActivityForResult(Intent(this,RegisterActivity::class.java),100)
+            startActivityForResult(Intent(this, RegisterActivity::class.java), 100)
         }
         return false
     }
@@ -47,8 +46,9 @@ class LoginActivity : BaseActivity() {
 
 
     fun forgetPwd(v: View) {
-        startActivity(Intent(this,ForgetPwdActivity::class.java))
+        startActivity(Intent(this, ForgetPwdActivity::class.java))
     }
+
     fun checkLogin(v: View) {
         if (TextUtils.isEmpty(ed_phone.text.toString().trim())) {
             ed_phone.setShakeAnimation()
@@ -62,13 +62,14 @@ class LoginActivity : BaseActivity() {
             DataCtrlClass.login(this, ed_phone.text.toString(), ed_pwd.text.toString()) {
                 if (it != null) {
                     ed_phone.postDelayed({
-                        LoginActivity.loginSuccess(this, ed_phone.text.toString(), ed_pwd.text.toString(), User(it))
+                        LoginActivity.loginSuccess(this, ed_phone.text.toString(), ed_pwd.text.toString(), User(it.data!!.userId))
                     }, 500)
                 }
 
             }
         }
     }
+
     override fun onBackPressed() {
         setResult(RESULT_LOGIN_CANCELED)
         finish()
@@ -83,6 +84,7 @@ class LoginActivity : BaseActivity() {
             finish()
         }
     }
+
     companion object {
         val RESULT_LOGIN_OK = 2000
         val RESULT_LOGIN_CANCELED = 3000

@@ -13,7 +13,7 @@ open class ProvincesBean(var ProvinceId: String? = null, var ProvinceName: Strin
 //    },...]
 
     var Initial = ""
-    var cities: ArrayList<CitiesBean>? = null
+    var CityList: ArrayList<CitiesBean>? = null
 
     override fun absKey() = ProvinceId ?: ""
     override fun absValue() = ProvinceName ?: ""

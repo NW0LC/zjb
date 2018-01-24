@@ -71,6 +71,7 @@
                         android:drawablePadding="@dimen/margin_5"
                         android:ellipsize="end"
                         android:lines="1"
+                        android:gravity="center"
                         android:minWidth="@dimen/margin_90"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="14sp"
@@ -78,7 +79,8 @@
                         app:layout_constraintLeft_toRightOf="@+id/img_head"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/img_head"
-                        tool:background="@color/MaterialGrey200" />
+                        tool:background="@color/MaterialGrey200"
+                        />
 
                     <LinearLayout
                         android:id="@+id/lay_state"
@@ -156,6 +158,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2017-47-44"
+                            android:id="@+id/endTime"
                             android:textColor="@color/MaterialRed500"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>
