@@ -1,5 +1,4 @@
 package com.exz.zjb.bean
-import com.exz.zjb.bean.KeyAndValueBean
 
 open class ProvincesBean(var ProvinceId: String? = null, var ProvinceName: String? = null) : KeyAndValueBean() {
 //    "data":[{
@@ -13,7 +12,7 @@ open class ProvincesBean(var ProvinceId: String? = null, var ProvinceName: Strin
 //    },...]
 
     var Initial = ""
-    var cities: ArrayList<CitiesBean>? = null
+    var CityList : ArrayList<CitiesBean>? = null
 
     override fun absKey() = ProvinceId ?: ""
     override fun absValue() = ProvinceName ?: ""

@@ -7,14 +7,15 @@ import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.config.Urls
+import com.exz.zjb.imageloader.BannerImageLoader
 import com.exz.zjb.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
 import com.szw.framelibrary.base.BaseActivity
-import com.szw.framelibrary.imageloder.GlideApp
 import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.StatusBarUtil
+import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_goods_detail.*
 import kotlinx.android.synthetic.main.layout_owner_info.*
@@ -67,13 +68,28 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
         initEvent()
 
         initData()
+
+        initBanner()
+    }
+
+    private fun initBanner() {
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+        //设置图片加载器
+        banner.setImageLoader(BannerImageLoader())
+        //设置自动轮播，默认为true
+        banner.isAutoPlay(true)
+        //设置轮播时间
+        banner.setDelayTime(3000)
+        //设置指示器位置（当banner模式中有指示器时）
+        banner.setIndicatorGravity(BannerConfig.CENTER)
+
     }
 
     private fun initData() {
         DataCtrlClass.getTabDetail(this, Urls.getSellInfo,"sellId",intent.getStringExtra("id")?:""){
             if (it != null) {
                 goodsBean=it
-                GlideApp.with(this).load(it.image).into(img)
+                banner.setImages(it.carImageUrl).start()
                 tv_title.text=it.title
                 tv_date.text=it.date
                 tv_year.text=it.factoryYear

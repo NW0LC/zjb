@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.adapter.PushAdapter
+import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.bean.ProvincesBean
 import com.exz.zjb.config.Urls.editBuy
 import com.exz.zjb.config.Urls.editJobWanted
@@ -22,12 +23,18 @@ import com.exz.zjb.config.Urls.editLease
 import com.exz.zjb.config.Urls.editRecruiter
 import com.exz.zjb.config.Urls.editRent
 import com.exz.zjb.config.Urls.editSell
+import com.exz.zjb.config.Urls.jobWantedInfo
+import com.exz.zjb.config.Urls.machineBuyInfo
+import com.exz.zjb.config.Urls.machineLeaseInfo
+import com.exz.zjb.config.Urls.machineRentInfo
+import com.exz.zjb.config.Urls.machineSellInfo
 import com.exz.zjb.config.Urls.publishBuy
 import com.exz.zjb.config.Urls.publishJobWanted
 import com.exz.zjb.config.Urls.publishLease
 import com.exz.zjb.config.Urls.publishRecruiter
 import com.exz.zjb.config.Urls.publishRent
 import com.exz.zjb.config.Urls.publishSell
+import com.exz.zjb.config.Urls.recruiterInfo
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
@@ -71,7 +78,8 @@ class PushActivity : BaseActivity(), View.OnClickListener {
     private var photos = ArrayList<String>()
     private var deleteHttpPhotos = ArrayList<String>()
 
-
+    private lateinit var postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>
+    private lateinit var postRequestGoodsBean: Request<NetEntity<GoodsBean>, PostRequest<NetEntity<GoodsBean>>>
     private var isEdit = false
     override fun initToolbar(): Boolean {
         toolbar.setNavigationOnClickListener { finish() }
@@ -93,44 +101,105 @@ class PushActivity : BaseActivity(), View.OnClickListener {
         initPicker()
     }
 
-    private lateinit var postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>
+    private fun initData() {
+        val id = intent.getStringExtra("id") ?: ""
+        if (id.isNotEmpty()) {
+            val params = HashMap<String, String>()
+            params["userId"] = MyApplication.loginUserId
+            when (intent.getStringExtra(Intent_Push_Type)) {
+                "1" -> {//发布-发布出售
+                    params["sellId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineSellInfo).params(params)
+                }
+                "2" -> {//发布-发布求购
+                    params["buyId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineBuyInfo).params(params)
+                }
+                "3" -> {//发布-发布出租
+                    params["leaseId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineLeaseInfo).params(params)
+                }
+                "4" -> {//发布-发布求租
+                    params["rentId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(machineRentInfo).params(params)
+                }
+                "5" -> {//发布-招聘
+                    params["recruiterId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(recruiterInfo).params(params)
+                }
+                "6" -> {//发布-求职
+                    params["jobWantedId"] = id
+                    postRequestGoodsBean = OkGo.post<NetEntity<GoodsBean>>(jobWantedInfo).params(params)
+                }
+                else -> {
+                }
+            }
+            DataCtrlClass.pushEdit(this, postRequestGoodsBean) {
+                if (it != null) {
+                    photos.addAll(it.carImageUrl ?: ArrayList())
+                    ed_title.setText(it.title)
+                    provinceId = it.provinceId
+                    cityId = it.cityId
+                    optionsAddress1 = listAddress?.indexOfFirst { it.key == provinceId } ?: 0
+                    optionsAddress2 = listAddress?.get(optionsAddress1)?.CityList?.indexOfFirst { it.key == cityId } ?: 0
+                    tv_address.text = String.format(listAddress?.get(optionsAddress1)?.value + "-" + listAddress?.get(optionsAddress1)?.CityList?.get(optionsAddress2)?.value)
+                    ed_date.setText(it.factoryYear)
+                    ed_type.setText(it.modelName)
+                    ed_description.setText(it.description)
+                    ed_phone.setText(it.mobile)
+                    intent.putExtra(Intent_Push_Type, it.typeId)
+                    val salarys = it.salary.split("-")
+                    if (salarys.size == 2) {
+                        ed_pay.setText(salarys[0])
+                        ed_pay_height.setText(salarys[1])
+                    } else
+                        ed_pay.setText(it.salary)
+
+
+                }
+            }
+        }
+    }
+
+
     private fun initView() {
         ed_description.setClearIconVisible(false)
-        isEdit=intent.getBooleanExtra(Intent_Push_IsEdit,false)
+        isEdit = (intent.getStringExtra("id") ?: "").isNotEmpty()
+        bt_push.text = if (isEdit) {"确定"} else "发布"
         when (intent.getStringExtra(Intent_Push_Type)) {
             "1" -> {//发布-发布出售
-                mTitle.text = "发布出售"
+                mTitle.text = if (isEdit) {"编辑出售"} else "发布出售"
                 lay_pay.visibility = View.GONE
             }
             "2" -> {//发布-发布求购
-                mTitle.text = "发布求购"
+                mTitle.text = if (isEdit) {"编辑求购"} else "发布求购"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "3" -> {//发布-发布出租
-                mTitle.text = "发布出租"
+                mTitle.text = if (isEdit) {"编辑出租"} else "发布出租"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "4" -> {//发布-发布求租
-                mTitle.text = "发布求租"
+                mTitle.text = if (isEdit) {"编辑求租"} else "发布求租"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "5" -> {//发布-招聘
-                mTitle.text = "招聘"
+                mTitle.text = if (isEdit) {"编辑招聘"} else "发布招聘"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
             }
             "6" -> {//发布-求职
-                mTitle.text = "求职"
+                mTitle.text = if (isEdit) {"编辑求职"} else "发布求职"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
@@ -183,7 +252,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
 
     private fun initPicker() {
         pvOptionsAddress = OptionsPickerView(this)
-        DataCtrlClass.areaList(this){
+        DataCtrlClass.areaList(this) {
             if (it != null) {
                 Thread {
                     var city: ArrayList<String>
@@ -192,9 +261,10 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                     for (p in listAddress ?: ArrayList()) {
                         city = ArrayList()
                         optionsProvinces.add(p.ProvinceName ?: "")
-                        (p.cities ?: ArrayList()).mapTo(city) { it.CityName ?: "" }
+                        p.CityList?.forEach { city.add(it.CityName ?: "") }
                         optionsCities.add(city)
                     }
+                    initData()
                 }.start()
             }
         }
@@ -202,9 +272,9 @@ class PushActivity : BaseActivity(), View.OnClickListener {
             try {
                 optionsAddress1 = options1
                 optionsAddress2 = option2
-                tv_address.text = String.format(listAddress?.get(options1)?.value + "-" + listAddress?.get(options1)?.cities?.get(option2)?.value)
+                tv_address.text = String.format(listAddress?.get(options1)?.value + "-" + listAddress?.get(options1)?.CityList?.get(option2)?.value)
                 provinceId = listAddress?.get(options1)?.key ?: ""
-                cityId = listAddress?.get(options1)?.cities?.get(option2)?.key ?: ""
+                cityId = listAddress?.get(options1)?.CityList?.get(option2)?.key ?: ""
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -240,7 +310,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
         when (p0) {
             lay_address -> {
                 KeyboardUtils.hideSoftInput(this)
-                pvOptionsAddress.setPicker(optionsProvinces, optionsCities,true)
+                pvOptionsAddress.setPicker(optionsProvinces, optionsCities, true)
                 pvOptionsAddress.setSelectOptions(optionsAddress1, optionsAddress2)
                 //三级选择器
                 pvOptionsAddress.setCyclic(false)
@@ -253,43 +323,64 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                         images.add(it)
                     }
                 }
+                var salary: String
+                if (ed_pay.text.toString().isEmpty()) {
+                    salary = ed_pay_height.text.toString()
+                } else {
+                    salary = ed_pay.text.toString()
+                    if (salary.isNotEmpty() && ed_pay_height.text.toString().isNotEmpty())
+                        if (salary.toLong() > ed_pay_height.text.toString().toLong())
+                            salary = ed_pay_height.text.toString() + "-" + salary
+                        else
+                            salary += "-" + ed_pay_height.text.toString()
+                }
                 val params = HashMap<String, String>()
                 params["userId"] = MyApplication.loginUserId
-                params["title"] = if (ed_title.text.toString().isEmpty() && !isEdit) { ed_title.setShakeAnimation();return } else ed_title.text.toString()
-                params["mobile"] = if (ed_phone.text.toString().isEmpty() && !isEdit) { ed_phone.setShakeAnimation();return } else ed_phone.text.toString()
-                params["description"] = if (ed_description.text.toString().isEmpty() && !isEdit) { ed_description.setShakeAnimation();return } else ed_description.text.toString()
+                params["title"] = if (ed_title.text.toString().isEmpty() && !isEdit) {
+                    ed_title.setShakeAnimation();return
+                } else ed_title.text.toString()
+                params["mobile"] = if (ed_phone.text.toString().isEmpty() && !isEdit) {
+                    ed_phone.setShakeAnimation();return
+                } else ed_phone.text.toString()
+                params["description"] = if (ed_description.text.toString().isEmpty() && !isEdit) {
+                    ed_description.setShakeAnimation();return
+                } else ed_description.text.toString()
                 params["provinceId"] = provinceId
                 params["cityId"] = cityId
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+if (isEdit) intent.getStringExtra("id") else ed_phone.text.toString(), salt).toLowerCase()
+                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + if (isEdit) intent.getStringExtra("id") else ed_phone.text.toString(), salt).toLowerCase()
                 when (intent.getStringExtra(Intent_Push_Type)) {
                     "1" -> {//发布-发布出售
                         params["modelName"] = ed_type.text.toString()
-                        params["factoryYear"] =ed_date.text.toString()
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editSell else publishSell).params(params)
+                        params["factoryYear"] = ed_date.text.toString()
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editSell else publishSell).params(params)
                     }
                     "2" -> {//发布-发布求购
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editBuy else publishBuy).params(params)
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editBuy else publishBuy).params(params)
                     }
                     "3" -> {//发布-发布出租
-                        params["typeId"] = intent.getStringExtra(Intent_Push_Device)?:"1"
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editLease else publishLease).params(params)
+                        params["typeId"] = intent.getStringExtra(Intent_Push_Device) ?: "1"
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editLease else publishLease).params(params)
                     }
                     "4" -> {//发布-发布求租
-                        params["typeId"] = intent.getStringExtra(Intent_Push_Device)?:"1"
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editRent else publishRent).params(params)
+                        params["typeId"] = intent.getStringExtra(Intent_Push_Device) ?: "1"
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editRent else publishRent).params(params)
                     }
                     "5" -> {//发布-招聘
-                        params["salary"] = ed_pay.text.toString()
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editRecruiter else publishRecruiter).params(params)
+                        params["salary"] = salary
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editRecruiter else publishRecruiter).params(params)
                     }
                     "6" -> {//发布-求职
-                        params["salary"] = ed_pay.text.toString()
-                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit)editJobWanted else publishJobWanted).params(params)
+                        params["salary"] = salary
+                        postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editJobWanted else publishJobWanted).params(params)
                     }
                     else -> {
                     }
                 }
-                DataCtrlClass.push(this, postRequest,images) {}
+                DataCtrlClass.push(this, postRequest, images) {
+                    if (it!=null) {
+                        finish()
+                    }
+                }
             }
             else -> {
             }
@@ -318,6 +409,5 @@ class PushActivity : BaseActivity(), View.OnClickListener {
     companion object {
         var Intent_Push_Type = "Intent_Push_Type"
         var Intent_Push_Device = "Intent_Push_Device"
-        var Intent_Push_IsEdit = "Intent_Push_IsEdit"
     }
 }

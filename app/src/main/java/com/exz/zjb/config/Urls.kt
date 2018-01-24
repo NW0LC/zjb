@@ -160,4 +160,81 @@ object Urls{
      * 编辑求职信息
       */
     var editJobWanted =url+ "App/Job/EditJobWanted.aspx"
+    /**
+     * 出售车辆详情【编辑用】
+      */
+    var machineSellInfo =url+ "App/Machine/MachineSellInfo.aspx"
+    /**
+     * 求购车辆详情【编辑用】
+      */
+    var machineBuyInfo =url+ "App/Machine/MachineBuyInfo.aspx"
+    /**
+     * 出租车辆详情【编辑用】
+      */
+    var machineLeaseInfo =url+ "App/Machine/MachineLeaseInfo.aspx"
+    /**
+     * 求租车辆详情【编辑用】
+      */
+    var machineRentInfo =url+ "App/Machine/MachineRentInfo.aspx"
+    /**
+     * 招聘信息详情【编辑用】
+      */
+    var recruiterInfo =url+ "App/Job/RecruiterInfo.aspx"
+    /**
+     * 求职信息详情【编辑用】
+      */
+    var jobWantedInfo =url+ "App/Job/JobWantedInfo.aspx"
+
+    /**
+     * 我的出售车辆列表
+      */
+    var mySellList =url+ "App/Account/MySellList.aspx"
+    /**
+     * 我的求购车辆列表
+      */
+    var myBuyList =url+ "App/Account/MyBuyList.aspx"
+    /**
+     * 我的出租车辆列表
+      */
+    var myLeaseList =url+ "App/Account/MyLeaseList.aspx"
+    /**
+     * 我的求租车辆列表
+      */
+    var myRentList =url+ "App/Account/MyRentList.aspx"
+    /**
+     * 我的招聘信息列表
+      */
+    var myRecruiterList =url+ "App/Account/MyRecruiterList.aspx"
+    /**
+     * 我的求职信息列表
+      */
+    var MyJobWantedList =url+ "App/Account/MyJobWantedList.aspx"
+    /**
+     * 我的收藏列表
+      */
+    var myCollection =url+ "App/Account/MyCollection.aspx"
+    /**
+     * 删除出售信息
+     */
+    var deleteSell =url+ "App/Machine/DeleteSell.aspx"
+    /**
+     * 删除求购信息
+     */
+    var deleteBuy =url+ "App/Machine/DeleteBuy.aspx"
+    /**
+     * 删除出租信息
+     */
+    var deleteLease =url+ "App/Machine/DeleteLease.aspx"
+    /**
+     * 删除求租信息
+     */
+    var deleteRent =url+ "App/Machine/DeleteRent.aspx"
+    /**
+     * 删除招聘信息
+     */
+    var deleteRecruiter =url+ "App/Job/DeleteRecruiter.aspx"
+    /**
+     * 删除求职信息
+     */
+    var deleteJobWanted =url+ "App/Job/DeleteJobWanted.aspx"
 }

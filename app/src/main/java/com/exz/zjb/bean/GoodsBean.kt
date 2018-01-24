@@ -41,8 +41,14 @@ open class GoodsBean(var type: Int = 1) : MultiItemEntity {
      * companyAddress : 公司地址
      * mobile : 联系电话
      * isCollection : 0
+     *         "provinceId":"省份id",
+    "cityId":"城市id",
+            typeId类型：1桩机 2钢板桩
      */
 
+    var typeId: String=""
+    var provinceId: String=""
+    var cityId: String=""
     var factoryYear: String=""
     var modelName: String=""
     var description: String=""
@@ -55,5 +61,5 @@ open class GoodsBean(var type: Int = 1) : MultiItemEntity {
     var mobile: String=""
     var isCollection: String=""
     var salary: String=""
-    var carImageUrl: List<String>? = null
+    var carImageUrl: ArrayList<String>? = null
 }

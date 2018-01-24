@@ -29,14 +29,14 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
             if (firstSetData) {//只走一次
                 firstSetData=false
                 for (provinceBean in value) {
-                    provinceBean.cities?.add(0,ProvincesBean.CitiesBean("0","不限"))
+                    provinceBean.CityList?.add(0,ProvincesBean.CitiesBean("0","不限"))
                 }
                 val provinceBean = ProvincesBean()
                 provinceBean.ProvinceName = "全部"
                 provinceBean.ProvinceId = ""
                 provinceBean.isCheck=true
                 val city = ArrayList<ProvincesBean.CitiesBean>()
-                provinceBean.cities = city
+                provinceBean.CityList = city
                 value.add(0,provinceBean)
             }
             adapter.setNewData(value)
@@ -65,7 +65,7 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
             adapter.data[position].isCheck = true
             if (position==0) {
                 adapter.data.forEach {
-                    it.cities?.forEach {
+                    it.CityList?.forEach {
                         it.isCheck=false
                     }
                 }
@@ -76,7 +76,7 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
                 dismiss()
                 popupWindowView.recyclerView2.visibility=View.GONE
             }
-            adapter2.setNewData(data[position].cities)
+            adapter2.setNewData(data[position].CityList)
             adapter.notifyDataSetChanged()
             if (!isSecondShow&&position!=0) {
                 isSecondShow=!isSecondShow
@@ -89,7 +89,7 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
         }
         adapter2.setOnItemClickListener { _, _, position ->
             adapter.data.forEach {
-                it.cities?.forEach {
+                it.CityList?.forEach {
                     it.isCheck=false
                 }
             }
@@ -98,7 +98,7 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
             adapter2.notifyDataSetChanged()
 
             adapter.data.forEach {
-                it.cities?.forEach {item->
+                it.CityList?.forEach {item->
                     if (item.isCheck) {
                         provinceId =it.key
                         val value = adapter2.data[position].value

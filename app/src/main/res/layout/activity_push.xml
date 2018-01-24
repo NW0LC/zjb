@@ -30,8 +30,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="55dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="55dp">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/mPhotoRecyclerView"
@@ -69,8 +69,8 @@
                         android:gravity="center_vertical"
                         android:hint="请输入(必填)"
                         android:inputType="text"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
                         android:textColor="@color/MaterialGrey600"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -104,8 +104,8 @@
                         android:gravity="center_vertical"
                         android:hint="请输入"
                         android:inputType="text"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
                         android:textColor="@color/MaterialGrey600"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -139,8 +139,8 @@
                         android:gravity="center_vertical"
                         android:hint="请输入(例：2018)"
                         android:inputType="date"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
                         android:textColor="@color/MaterialGrey600"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -167,17 +167,40 @@
 
                     <com.szw.framelibrary.view.ClearWriteEditText
                         android:id="@+id/ed_pay"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
+                        android:gravity="center"
+                        android:background="@color/MaterialGrey100"
+                        android:hint="低"
                         android:inputType="number"
-                        android:gravity="center_vertical"
-                        android:hint="请输入"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:minWidth="75dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
-                        android:textColor="@color/MaterialGrey600"
+                        android:textColor="@color/MaterialGrey800"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="@dimen/margin_15"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/dp_10"
+                        android:background="@color/MaterialGrey200" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_pay_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:background="@color/MaterialGrey100"
+                        android:hint="高"
+                        android:inputType="number"
+                        android:minWidth="75dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:singleLine="true"
+                        android:textColor="@color/MaterialGrey800"
                         android:textCursorDrawable="@drawable/color_cursor"
                         android:textSize="@dimen/sp_12" />
                 </LinearLayout>
@@ -208,8 +231,8 @@
                         android:gravity="center_vertical"
                         android:hint="请输入"
                         android:inputType="phone"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
                         android:textColor="@color/MaterialGrey600"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -244,8 +267,8 @@
                         android:drawablePadding="@dimen/margin_5"
                         android:gravity="center_vertical"
                         android:hint="请选择"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
                         android:singleLine="true"
                         android:textColor="@color/MaterialGrey600"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -292,25 +315,28 @@
         </android.support.v4.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-<LinearLayout
-    android:layout_gravity="bottom"
-    android:paddingStart="@dimen/margin_15"
-    android:paddingEnd="@dimen/margin_15"
-    android:paddingTop="@dimen/margin_8"
-    android:paddingBottom="@dimen/margin_8"
-    android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="55dp">
-    <com.flyco.roundview.RoundTextView
-        android:text="发布"
-        android:id="@+id/bt_push"
-        android:textSize="@dimen/sp_14"
-        android:gravity="center"
-        app:rv_cornerRadius="@dimen/margin_5"
-        app:rv_backgroundColor="@color/colorPrimary"
-        android:textColor="@color/MaterialGrey800"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="55dp"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/margin_8"
+        android:paddingEnd="@dimen/margin_15"
+        android:paddingStart="@dimen/margin_15"
+        android:paddingTop="@dimen/margin_8">
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/bt_push"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@color/MaterialGrey800"
+            android:textSize="@dimen/sp_14"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius="@dimen/margin_5" />
+    </LinearLayout>
+
     <include layout="@layout/action_bar_custom" />
 </FrameLayout>

@@ -12,7 +12,9 @@ import com.szw.framelibrary.imageloder.GlideApp
 import kotlinx.android.synthetic.main.item_push_img.view.*
 
 class PushAdapter : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_push_img, ArrayList<String>()) {
-    override fun getItemCount(): Int = 6
+    override fun getItemCount(): Int {
+        return if (data.size>6) 6 else data.size
+    }
     override fun convert(helper: BaseViewHolder, item: String) {
         val itemView = helper.itemView
         GlideApp.with(mContext).load(Uri.parse(item)).into(itemView.imgs)

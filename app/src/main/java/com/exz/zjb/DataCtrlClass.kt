@@ -536,8 +536,8 @@ object DataCtrlClass{
 
 
     /**
-     * 出售车辆详情
-     * 出租车辆详情
+     * tab详情
+     * tab详情
      * */
     fun getTabDetail(context: Context,url: String,key: String,id:String,  listener: (goodsBean: GoodsBean?) -> Unit) {
 //        userId	string	必填	用户id
@@ -567,6 +567,72 @@ object DataCtrlClass{
                 })
     }
     /**
+     *  push 编辑
+     * */
+    fun pushEdit(context: Context?,postRequest: Request<NetEntity<GoodsBean>, PostRequest<NetEntity<GoodsBean>>>, listener: (goodsBean: GoodsBean?) -> Unit) {
+        if (context!=null)
+        postRequest.tag(this)
+                .execute(object : DialogCallback<NetEntity<GoodsBean>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<GoodsBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<GoodsBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+    /**
+     *  push 编辑
+     * */
+    fun pushList(context: Context?,postRequest: Request<NetEntity<ArrayList<GoodsBean>>, PostRequest<NetEntity<ArrayList<GoodsBean>>>>, listener: (goodsBean: ArrayList<GoodsBean>?) -> Unit) {
+        if (context!=null)
+        postRequest.tag(this)
+                .execute(object : DialogCallback<NetEntity<ArrayList<GoodsBean>>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<ArrayList<GoodsBean>>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+    /**
+     *  push 删除
+     * */
+    fun pushDelete(context: Context?,postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, listener: (goodsBean: Void?) -> Unit) {
+        if (context!=null)
+        postRequest.tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body().data)
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
+    /**
      * 发布
      * */
     fun push(context: Context,postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, images:List<String>,listener: (goodsBean: NetEntity<Void>?) -> Unit) {
@@ -582,6 +648,7 @@ object DataCtrlClass{
                                     } else {
                                         listener.invoke(null)
                                     }
+                                    context.toast(response.body().message)
                                 }
 
                                 override fun onError(response: Response<NetEntity<Void>>) {

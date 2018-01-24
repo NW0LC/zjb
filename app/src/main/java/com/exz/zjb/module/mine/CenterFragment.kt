@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.adapter.MainTabAdapter
@@ -40,7 +40,8 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 1
     private lateinit var mAdapter: MainTabAdapter<GoodsBean>
-    private lateinit var postRequest: Request<NetEntity<ArrayList<String>>, PostRequest<NetEntity<ArrayList<String>>>>
+    private lateinit var postRequest: Request<NetEntity<ArrayList<GoodsBean>>, PostRequest<NetEntity<ArrayList<GoodsBean>>>>
+    private lateinit var postRequestVoid: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_mine_center, container, false)
         return rootView
@@ -49,112 +50,44 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
     override fun initView() {
         initBar()
         initRecycler()
-
+        iniData()
     }
 
     override fun initEvent() {
+        val params = HashMap<String, String>()
+        mAdapter.isDelete = true
+        mAdapter.isEdit = true
+
+        params["userId"] = MyApplication.loginUserId
+        params["page"] = currentPage.toString()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+currentPage.toString(), salt).toLowerCase()
         when (arguments?.get(Intent_Type) ?: "") {
             "1" -> {//收藏
-                mAdapter.isDelete = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                mAdapter.isEdit = false
+                params["typeId"] ="0"
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myCollection).params(params)
             }
             "2" -> {//浏览记录
-                mAdapter.isDelete = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                mAdapter.isEdit = false
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.url).params(params)
             }
             "3" -> {//我的出售
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.mySellList).params(params)
             }
             "4" -> {//我的求购
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myBuyList).params(params)
             }
             "5" -> {//我的出租
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myLeaseList).params(params)
             }
             "6" -> {//我的求租
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myRentList).params(params)
             }
             "7" -> {//我的招聘
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myRecruiterList).params(params)
             }
             "8" -> {//我的求职
-                mAdapter.isDelete = true
-                mAdapter.isEdit = true
-                val params = HashMap<String, String>()
-                params["userId"] = MyApplication.loginUserId
-                params["page"] = currentPage.toString()
-                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-                postRequest = OkGo.post<NetEntity<ArrayList<String>>>(Urls.url).params(params)
-                mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
-                    override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    }
-                })
+                postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.MyJobWantedList).params(params)
             }
             else -> {
             }
@@ -171,7 +104,59 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
         refreshLayout.setOnRefreshListener(this)
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, SizeUtils.dp2px(1f), ContextCompat.getColor(context!!, R.color.MaterialGrey400)))
+        mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener(){
+            override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                when (view?.id) {
+                    R.id.tv_left -> {//删除
+                        val params = HashMap<String, String>()
+                        params["userId"] = MyApplication.loginUserId
+                        params["page"] = currentPage.toString()
+                        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+mAdapter.data[position].id, salt).toLowerCase()
+                        when (arguments?.get(Intent_Type) ?: "") {
+                            "1" -> {//收藏
+                                params["typeId"] ="0"
+                                params["objectId"] =mAdapter.data[position].id
+                                params["collectType"] ="0"
+                                params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+"0", salt).toLowerCase()
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.collectAction).params(params)
+                            }
+                            "2" -> {//浏览记录
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.url).params(params)
+                            }
+                            "3" -> {//我的出售
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteSell).params(params)
+                            }
+                            "4" -> {//我的求购
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteBuy).params(params)
+                            }
+                            "5" -> {//我的出租
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteLease).params(params)
+                            }
+                            "6" -> {//我的求租
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRent).params(params)
+                            }
+                            "7" -> {//我的招聘
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRecruiter).params(params)
+                            }
+                            "8" -> {//我的求职
+                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteJobWanted).params(params)
+                            }
+                            else -> {
+                            }
+                        }
+                        DataCtrlClass.pushDelete(context,postRequestVoid){
+                                if (it!=null)
+                                    onRefresh(refreshLayout)
+                        }
+                    }
+                    R.id.tv_right ->{
 
+                    }
+                    else -> {
+                    }
+                }
+            }
+        })
     }
 
     private fun initBar() {
@@ -222,23 +207,23 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
     }
 
     private fun iniData() {
-        DataCtrlClass.newsData(context, currentPage) {
+        DataCtrlClass.pushList(context,postRequest){
             refreshLayout?.finishRefresh()
-//            if (it != null) {
-//                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-//                    mAdapter.setNewData(it)
-//                } else {
-//                    mAdapter.addData(it)
-//                }
-//                if (it.isNotEmpty()) {
-//                    mAdapter.loadMoreComplete()
-//                    currentPage++
-//                } else {
-//                    mAdapter.loadMoreEnd()
-//                }
-//            } else {
-//                mAdapter.loadMoreFail()
-//            }
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it)
+                } else {
+                    mAdapter.addData(it)
+                }
+                if (it.isNotEmpty()) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
         }
 
     }
