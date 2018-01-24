@@ -12,10 +12,10 @@ class MainTabSaleAdapter<T : GoodsBean> : BaseQuickAdapter<T, BaseViewHolder>(R.
 
     override fun convert(helper: BaseViewHolder, item: T) {
         val itemView=helper.itemView
-        GlideApp.with(mContext).load(item.image).into(itemView.img)
-        itemView.tv_title.text=item.title
-        itemView.tv_address.text=item.city
-        itemView.tv_date.text=item.date
+        GlideApp.with(mContext).load(item.image).into(itemView.sale_img)
+        itemView.sale_tv_title.text=item.title
+        itemView.sale_tv_address.text=item.city
+        itemView.sale_tv_date.text=item.date
     }
 }
 
