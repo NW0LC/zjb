@@ -35,7 +35,7 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
 
         //状态栏透明和间距处理
         mTitle.text = "个人信息"
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)

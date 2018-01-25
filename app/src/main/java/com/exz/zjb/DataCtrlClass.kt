@@ -475,7 +475,7 @@ object DataCtrlClass {
         params["typeId"] = typeId
         params["keyword"] = keyword
         params["page"] = currentPage.toString()
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(currentPage.toString(), salt).toLowerCase()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(typeId+currentPage.toString(), salt).toLowerCase()
         if (context != null)
             OkGo.post<NetEntity<ArrayList<GoodsBean>>>(url)
                     .params(params)

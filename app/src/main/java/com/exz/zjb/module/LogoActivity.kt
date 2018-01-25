@@ -1,6 +1,5 @@
 package com.exz.zjb.module
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
@@ -23,27 +22,12 @@ class LogoActivity : BaseActivity() {
         val anim = AnimationUtils.loadAnimation(this, R.anim.logo_fade_in)
         anim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
-                login()
+
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
 
-            override fun onAnimationEnd(animation: Animation) {
-                val preferences = getSharedPreferences("CPM",
-                        Context.MODE_PRIVATE)
-                val flag = preferences.getBoolean("FirstRun", false)
-                if (flag) {
-                    val editor = preferences.edit()
-                    editor.putBoolean("FirstRun", false)
-                    editor.apply()
-                    //                    LogoActivity.this.startActivity(new Intent(
-                    //                            LogoActivity.this, FirstRunActivity.class));
-                    //                    finish();
-                } else {
-
-//                    type = 1
-//                    jump(type)
-                }
+            override fun onAnimationEnd(animation: Animation) {login()
             }
         })
         img_logo.animation = anim
@@ -53,7 +37,7 @@ class LogoActivity : BaseActivity() {
 
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         return false
     }
 

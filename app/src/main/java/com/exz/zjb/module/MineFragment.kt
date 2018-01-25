@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -64,15 +63,15 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                     tv_userName.text = it.data!!.nickname
 
                     //vip年费开启模式：0关闭 1开启
-                    if (it.data!!.modeState == "1"){
-                        tv_vip.visibility =  View.VISIBLE
-                        lay_indate.visibility =  View.VISIBLE
-                        endTime.text= it.data!!.endTime
-                    }else{
-                        tv_vip.visibility =   View.GONE
-                        lay_indate.visibility =  View.GONE
+                    if (it.data!!.modeState == "1") {
+                        tv_vip.visibility = View.VISIBLE
+                        lay_indate.visibility = View.VISIBLE
+                        endTime.text = it.data!!.endTime
+                    } else {
+                        tv_vip.visibility = View.GONE
+                        lay_indate.visibility = View.GONE
                     }
-                    authenticationState=it.data!!.authenticationState ?:""
+                    authenticationState = it.data!!.authenticationState ?: ""
                     //实名认证：-1未申请 0审核中，1已通过 2未通过"
                     when (it.data!!.authenticationState) {
                         "-1" -> {
@@ -91,13 +90,13 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                     }
                 }
             })
-        }else{
+        } else {
             refreshLayout.finishRefresh()
-            img_head.setImageURI(Urls.url+"userImg/default.png")
-            tv_userName.text="未登录"
-            tv_vip.visibility =View.GONE
-            tv_state.visibility =View.GONE
-            lay_indate.visibility =  View.GONE
+            img_head.setImageURI(Urls.url + "userImg/default.png")
+            tv_userName.text = "未登录"
+            tv_vip.visibility = View.GONE
+            tv_state.visibility = View.GONE
+            lay_indate.visibility = View.GONE
         }
     }
 
@@ -174,26 +173,32 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 val intent = Intent(context, PersonInfoActivity::class.java)
                 SZWUtils.checkLogin(this, intent, PersonInfoActivity::class.java.name)
             }
-            bt_sold, bt_buy, bt_lease, bt_forRent, bt_recruit, bt_job -> {
+            bt_tab_1, bt_tab_2, bt_sold, bt_buy, bt_lease, bt_forRent, bt_recruit, bt_job -> {
                 val intent = Intent(context, CenterActivity::class.java)
                 intent.putExtra(CenterFragment.Intent_Type, when (p0) {
-                    bt_sold -> {
-                        "3"
-                    }
-                    bt_buy -> {
-                        "4"
-                    }
-                    bt_lease -> {
-                        "5"
-                    }
-                    bt_forRent -> {
-                        "6"
-                    }
-                    bt_recruit -> {
+                    bt_tab_1 -> {
                         "7"
                     }
-                    bt_job -> {
+                    bt_tab_1 -> {
                         "8"
+                    }
+                    bt_sold -> {
+                        "1"
+                    }
+                    bt_buy -> {
+                        "2"
+                    }
+                    bt_lease -> {
+                        "3"
+                    }
+                    bt_forRent -> {
+                        "4"
+                    }
+                    bt_recruit -> {
+                        "5"
+                    }
+                    bt_job -> {
+                        "6"
                     }
                     else -> {
                         ""
@@ -222,7 +227,7 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
 
     companion object {
-        var authenticationState=""
+        var authenticationState = ""
         fun newInstance(): MineFragment {
             val bundle = Bundle()
             val fragment = MineFragment()

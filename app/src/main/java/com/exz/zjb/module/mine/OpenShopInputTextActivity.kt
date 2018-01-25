@@ -25,7 +25,7 @@ class OpenShopInputTextActivity : BaseActivity() {
     private lateinit var entity: PersonInfoActivity.OpenTextBen
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         StatusBarUtil.setPaddingSmart(this, blurView)

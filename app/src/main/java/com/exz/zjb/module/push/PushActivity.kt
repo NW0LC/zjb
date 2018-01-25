@@ -85,7 +85,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
         toolbar.setNavigationOnClickListener { finish() }
 
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)

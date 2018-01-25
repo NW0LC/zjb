@@ -50,7 +50,7 @@ class TabActivity : BaseActivity() {
 
         tab.setTabData(mTitles, this, R.id.frameLayout, mFragments)
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
         return false

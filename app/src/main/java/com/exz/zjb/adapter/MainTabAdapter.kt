@@ -32,13 +32,12 @@ class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolde
 
         when (helper.itemViewType) {
             GoodsBean.TYPE_1-> {
-                GlideApp.with(mContext).load(item.image).into(itemView.img)
                 itemView.tv_title.text=item.title
                 itemView.tv_address.text=item.provinceCity
                 itemView.tv_date.text=item.date
             }
             GoodsBean.TYPE_2-> {
-                GlideApp.with(mContext).load(item.image).into(itemView.img)
+                GlideApp.with(mContext).load(item.image).into(itemView.sale_img)
                 itemView.sale_tv_title.text=item.title
                 itemView.sale_tv_address.text=item.provinceCity
                 itemView.sale_tv_date.text=item.date

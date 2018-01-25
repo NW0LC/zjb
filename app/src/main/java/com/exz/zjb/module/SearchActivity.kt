@@ -34,7 +34,7 @@ class SearchActivity : BaseActivity(), View.OnClickListener {
         editText.setText(intent.getStringExtra(Intent_Search_Content))
         editText.setSelection(editText.text.length)
 
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, lay_search)
         StatusBarUtil.setPaddingSmart(this, blurView)
 

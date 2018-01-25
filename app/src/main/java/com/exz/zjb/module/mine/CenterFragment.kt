@@ -1,5 +1,6 @@
 package com.exz.zjb.module.mine
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -15,6 +16,8 @@ import com.exz.zjb.R
 import com.exz.zjb.adapter.MainTabAdapter
 import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.config.Urls
+import com.exz.zjb.module.push.PushActivity
+import com.exz.zjb.module.push.PushActivity.Companion.Intent_Push_Type
 import com.exz.zjb.utils.SZWUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.request.PostRequest
@@ -50,7 +53,6 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
     override fun initView() {
         initBar()
         initRecycler()
-        iniData()
     }
 
     override fun initEvent() {
@@ -62,43 +64,43 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
         params["page"] = currentPage.toString()
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+currentPage.toString(), salt).toLowerCase()
         when (arguments?.get(Intent_Type) ?: "") {
-            "1" -> {//收藏
+            "7" -> {//收藏
                 mAdapter.isEdit = false
                 params["typeId"] ="0"
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myCollection).params(params)
             }
-            "2" -> {//浏览记录
+            "8" -> {//浏览记录
                 mAdapter.isEdit = false
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.url).params(params)
             }
-            "3" -> {//我的出售
+            "1" -> {//我的出售
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.mySellList).params(params)
             }
-            "4" -> {//我的求购
+            "2" -> {//我的求购
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myBuyList).params(params)
             }
-            "5" -> {//我的出租
+            "3" -> {//我的出租
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myLeaseList).params(params)
             }
-            "6" -> {//我的求租
+            "4" -> {//我的求租
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myRentList).params(params)
             }
-            "7" -> {//我的招聘
+            "5" -> {//我的招聘
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.myRecruiterList).params(params)
             }
-            "8" -> {//我的求职
+            "6" -> {//我的求职
                 postRequest = OkGo.post<NetEntity<ArrayList<GoodsBean>>>(Urls.MyJobWantedList).params(params)
             }
             else -> {
             }
         }
+        iniData()
     }
 
 
     private fun initRecycler() {
 
         mAdapter = MainTabAdapter()
-        mAdapter.setNewData(listOf(GoodsBean(1), GoodsBean(2)))
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         refreshLayout.setOnRefreshListener(this)
@@ -113,32 +115,32 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
                         params["page"] = currentPage.toString()
                         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+mAdapter.data[position].id, salt).toLowerCase()
                         when (arguments?.get(Intent_Type) ?: "") {
-                            "1" -> {//收藏
+                            "7" -> {//收藏
                                 params["typeId"] ="0"
                                 params["objectId"] =mAdapter.data[position].id
                                 params["collectType"] ="0"
                                 params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+"0", salt).toLowerCase()
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.collectAction).params(params)
                             }
-                            "2" -> {//浏览记录
+                            "8" -> {//浏览记录
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.url).params(params)
                             }
-                            "3" -> {//我的出售
+                            "1" -> {//我的出售
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteSell).params(params)
                             }
-                            "4" -> {//我的求购
+                            "2" -> {//我的求购
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteBuy).params(params)
                             }
-                            "5" -> {//我的出租
+                            "3" -> {//我的出租
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteLease).params(params)
                             }
-                            "6" -> {//我的求租
+                            "4" -> {//我的求租
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRent).params(params)
                             }
-                            "7" -> {//我的招聘
+                            "5" -> {//我的招聘
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRecruiter).params(params)
                             }
-                            "8" -> {//我的求职
+                            "6" -> {//我的求职
                                 postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteJobWanted).params(params)
                             }
                             else -> {
@@ -150,7 +152,7 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
                         }
                     }
                     R.id.tv_right ->{
-
+                        startActivity(Intent(context,PushActivity::class.java).putExtra(Intent_Push_Type,arguments?.getString(Intent_Type)))
                     }
                     else -> {
                     }
@@ -161,28 +163,28 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
 
     private fun initBar() {
         mTitle.text = when (arguments?.get(Intent_Type).toString()) {
-            "1" -> {
+            "7" -> {
                 "我的收藏"
             }
-            "2" -> {
+            "8" -> {
                 "浏览记录"
             }
-            "3" -> {
+            "1" -> {
                 "我的出售"
             }
-            "4" -> {
+            "2" -> {
                 "我的求购"
             }
-            "5" -> {
+            "3" -> {
                 "我的出租"
             }
-            "6" -> {
+            "4" -> {
                 "我的求租"
             }
-            "7" -> {
+            "5" -> {
                 "我的招聘"
             }
-            "8" -> {
+            "6" -> {
                 "我的求职"
             }
             else -> {
@@ -190,8 +192,11 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
             }
         }
         StatusBarUtil.setPaddingSmart(context, mRecyclerView)
+        StatusBarUtil.setPaddingSmart(context, blurView)
+        StatusBarUtil.setPaddingSmart(activity, toolbar)
         StatusBarUtil.setMargin(context, header)
         SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
+        toolbar.setNavigationOnClickListener { activity?.finish() }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {

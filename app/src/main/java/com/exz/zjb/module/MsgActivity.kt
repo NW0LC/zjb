@@ -31,7 +31,7 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
     override fun initToolbar(): Boolean {
         mTitle.text = "消息"
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, mRecyclerView)
         StatusBarUtil.setPaddingSmart(this, blurView)

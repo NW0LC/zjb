@@ -88,9 +88,7 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
 
 
     private fun initRecycler() {
-
         mAdapter = MainTabAdapter()
-        mAdapter.setNewData(listOf(GoodsBean()))
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         refreshLayout.setOnRefreshListener(this)

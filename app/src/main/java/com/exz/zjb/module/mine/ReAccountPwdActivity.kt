@@ -18,7 +18,7 @@ class ReAccountPwdActivity : BaseActivity() {
 
         //状态栏透明和间距处理
         mTitle.text = "修改密码"
-        StatusBarUtil.immersive(this)
+        StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)
