@@ -112,8 +112,6 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
                     R.id.tv_left -> {//删除
                         val params = HashMap<String, String>()
                         params["userId"] = MyApplication.loginUserId
-                        params["page"] = currentPage.toString()
-                        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+mAdapter.data[position].id, salt).toLowerCase()
                         when (arguments?.get(Intent_Type) ?: "") {
                             "7" -> {//收藏
                                 params["typeId"] ="0"
@@ -212,6 +210,8 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
     }
 
     private fun iniData() {
+        postRequest.params.put("page",currentPage.toString())
+        postRequest.params.put("requestCheck", EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+currentPage.toString(), salt).toLowerCase())
         DataCtrlClass.pushList(context,postRequest){
             refreshLayout?.finishRefresh()
             if (it != null) {

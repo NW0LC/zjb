@@ -135,6 +135,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                startActivity(Intent(context,GoodsDetailActivity::class.java).putExtra("id",mAdapter.data[position].id))
             }
         })
         blurView.setBlurRadius(0f)

@@ -17,7 +17,6 @@ import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.DecelerateInterpolator;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -25,12 +24,13 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.exz.zjb.R;
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.szw.framelibrary.base.BaseActivity;
+import com.szw.framelibrary.utils.StatusBarUtil;
 
 import im.delight.android.webview.AdvancedWebView;
 import im.delight.android.webview.AdvancedWebView.Listener;
@@ -38,7 +38,7 @@ import im.delight.android.webview.AdvancedWebView.Listener;
 public class MyWebActivity extends BaseActivity implements Listener {
     AdvancedWebView mWebView;
     TextView mTitle;
-    ImageView mLeftImg;
+    RealtimeBlurView blurView;
     Toolbar toolbar;
     ProgressBar mProgressBar;
     public static String Intent_Url = "info";
@@ -50,20 +50,17 @@ public class MyWebActivity extends BaseActivity implements Listener {
     }
 
     public boolean initToolbar() {
-        this.mTitle.setTextSize(18.0F);
-        this.mTitle.setTextColor(ContextCompat.getColor(this, R.color.color_toolBar_title));
-        this.mTitle.setMaxEms(7);
-        this.toolbar.setContentInsetsAbsolute(0, 0);
-        this.mLeftImg.setOnClickListener(new OnClickListener() {
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
+        StatusBarUtil.setPaddingSmart(this, blurView);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
-                if(MyWebActivity.this.mWebView.onBackPressed()) {
-                    MyWebActivity.this.finish();
+                if (mWebView.onBackPressed()) {
+                    finish();
                 }
-
             }
         });
-        this.mTitle.setText(this.getIntent().getStringExtra(Intent_Title));
-        this.setSupportActionBar(this.toolbar);
         return false;
     }
 
@@ -74,8 +71,8 @@ public class MyWebActivity extends BaseActivity implements Listener {
     @SuppressLint("SetJavaScriptEnabled")
     public void init() {
         this.mWebView = this.findViewById(R.id.mWebView);
+        this.blurView = this.findViewById(R.id.blurView);
         this.mTitle = this.findViewById(R.id.mTitle);
-        this.mLeftImg = this.findViewById(R.id.mLeftImg);
         this.toolbar = this.findViewById(R.id.toolbar);
         this.mProgressBar = this.findViewById(R.id.progressBar);
         this.mWebView.setListener(this, this);

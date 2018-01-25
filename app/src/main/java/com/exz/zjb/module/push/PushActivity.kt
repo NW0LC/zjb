@@ -351,7 +351,9 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                 when (intent.getStringExtra(Intent_Push_Type)) {
                     "1" -> {//发布-发布出售
                         params["modelName"] = ed_type.text.toString()
-                        params["factoryYear"] = ed_date.text.toString()
+                        params["factoryYear"] =if (ed_date.text.toString().length<4 && !isEdit) {
+                            ed_date.setShakeAnimation();return
+                        } else ed_date.text.toString()
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editSell else publishSell).params(params)
                     }
                     "2" -> {//发布-发布求购

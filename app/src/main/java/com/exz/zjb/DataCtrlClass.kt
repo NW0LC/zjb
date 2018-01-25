@@ -613,7 +613,7 @@ object DataCtrlClass {
                 })
     }
     /**
-     *  push 编辑
+     *  push
      * */
     fun pushList(context: Context?,postRequest: Request<NetEntity<ArrayList<GoodsBean>>, PostRequest<NetEntity<ArrayList<GoodsBean>>>>, listener: (goodsBean: ArrayList<GoodsBean>?) -> Unit) {
         if (context!=null)
@@ -681,6 +681,9 @@ object DataCtrlClass {
                                 }
 
                             })
+                }else{
+                    CustomProgress.disMissNow()
+                    context.toast("图片上传错误，请稍后再试")
                 }
             }
         }.start()
@@ -697,13 +700,13 @@ object DataCtrlClass {
             params["userId"] = MyApplication.loginUserId
             params["carImg"] = EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(images[count].replace("file:///", "")))
             params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, salt).toLowerCase()
-            OkGo.post<NetEntity<String>>(Urls.uploadCarImg)
+            OkGo.post<NetEntity<CarImageUrlBean>>(Urls.uploadCarImg)
                     .params(params)
                     .tag(this)
-                    .execute(object : JsonCallback<NetEntity<String>>() {
-                        override fun onSuccess(response: Response<NetEntity<String>>) {
+                    .execute(object : JsonCallback<NetEntity<CarImageUrlBean>>() {
+                        override fun onSuccess(response: Response<NetEntity<CarImageUrlBean>>) {
                             if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                                str += response.body().data + ","
+                                str += response.body().data?.carImageUrl + ","
 
                                 if (count < images.size - 1)
                                     pushImgData(images, count + 1) {
@@ -718,7 +721,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<NetEntity<String>>) {
+                        override fun onError(response: Response<NetEntity<CarImageUrlBean>>) {
                             super.onError(response)
                             listener.invoke(null)
                         }

@@ -52,14 +52,14 @@ class MainActivity : BaseActivity() {
                     1 -> {
 
                         mainTabBar.currentTab=oldPosition
-                        SZWUtils.checkLogin(this@MainActivity)
+                        if (SZWUtils.checkLogin(this@MainActivity))
                         pop = MenuPop(this@MainActivity) {
                             val viewId = it.id
                             DataCtrlClassX.getUserInfo(this@MainActivity, {
                                 refreshLayout.finishRefresh()
                                 if (it != null) {
                                     //实名认证：-1未申请 0审核中，1已通过 2未通过"
-                                    when (it.data!!.authenticationState) {
+                                    when (it.data?.authenticationState) {
                                         "-1", "2" -> {
                                             startActivity(Intent(this@MainActivity, IDProveActivity::class.java))
                                         }
