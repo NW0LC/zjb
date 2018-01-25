@@ -108,6 +108,14 @@ object Urls{
      * 求职信息详情
       */
     var getJobWantedInfo =url+ "App/Job/GetJobWantedInfo.aspx"
+
+    /**
+     * 求购车辆详情
+      */
+    var getBuyInfo =url+ "App/Machine/GetBuyInfo.aspx"
+
+
+
     /**
      * 上传车辆图片
       */
