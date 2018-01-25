@@ -6,9 +6,14 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import com.blankj.utilcode.util.KeyboardUtils
-import com.common.controls.dialog.*
+import com.common.controls.dialog.CommonDialogFactory
+import com.common.controls.dialog.CoreDialog
+import com.common.controls.dialog.DialogUtil
+import com.common.controls.dialog.ICommonDialog
 import com.exz.zjb.R
 import kotlinx.android.synthetic.main.dialog_change_num.view.*
+import kotlinx.android.synthetic.main.dialog_check_ing.view.*
+import kotlinx.android.synthetic.main.dialog_check_unpass.view.*
 
 /**
  * Created by 史忠文
@@ -143,5 +148,66 @@ object DialogUtils {
             view.count.setSelection(view.count.text.length)
         }
 
+    }
+
+
+
+
+
+
+
+
+
+    /***
+     *认证失败
+     */
+    fun checkUnpass(context: Context?,listener: () -> Unit) {
+
+        val inflate = View.inflate(context, R.layout.dialog_check_unpass, null)
+        val dlg = CoreDialog(context, com.common.alertpop.R.style.dialog, inflate, true)
+        dlg.setPosition(Gravity.CENTER, 0, 0)
+        dlg.setCanceledOnTouchOutside(true)
+        inflate.bt_check_unpass_close.setOnClickListener {
+            dlg.dismiss()
+        }
+        inflate.bt_check_unpass_confirm.setOnClickListener {
+            listener.invoke()
+            dlg.dismiss()
+        }
+        dlg.show()
+    }
+
+
+    /***
+     *认证审核中
+     */
+    fun checking(context: Context?) {
+
+        val inflate = View.inflate(context, R.layout.dialog_check_ing, null)
+        val dlg = CoreDialog(context, com.common.alertpop.R.style.dialog, inflate, true)
+        dlg.setPosition(Gravity.CENTER, 0, 0)
+        dlg.setCanceledOnTouchOutside(true)
+        inflate.bt_check_ing_close.setOnClickListener {
+            dlg.dismiss()
+        }
+        dlg.show()
+    }
+    /***
+     *未认证
+     */
+    fun unCheck(context: Context?,listener: () -> Unit) {
+
+        val inflate = View.inflate(context, R.layout.dialog_check_uncheck, null)
+        val dlg = CoreDialog(context, com.common.alertpop.R.style.dialog, inflate, true)
+        dlg.setPosition(Gravity.CENTER, 0, 0)
+        dlg.setCanceledOnTouchOutside(true)
+        inflate.bt_check_unpass_close.setOnClickListener {
+            dlg.dismiss()
+        }
+        inflate.bt_check_unpass_confirm.setOnClickListener {
+            listener.invoke()
+            dlg.dismiss()
+        }
+        dlg.show()
     }
 }

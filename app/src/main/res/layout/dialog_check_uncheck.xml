@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon_check_unpass">
+
+        <ImageView
+            android:id="@+id/bt_check_unchecking_close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="50dp"
+            android:layout_toEndOf="@+id/textView"
+            android:src="@mipmap/icon_check_close" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            android:text="抱歉，您还没有认证~"
+            android:textColor="@color/MaterialGrey700"
+            android:textSize="@dimen/text_14" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/bt_check_unchecking_confirm"
+            android:layout_width="110dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="前往认证"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_14"
+            app:rv_backgroundColor="@color/colorPrimary"
+            app:rv_cornerRadius="@dimen/margin_20" />
+    </RelativeLayout>
+</FrameLayout>

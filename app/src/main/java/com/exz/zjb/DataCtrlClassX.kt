@@ -2,7 +2,6 @@ package com.exz.zjb
 
 import android.content.Context
 import com.blankj.utilcode.util.EncryptUtils
-import com.exz.zjb.bean.User
 import com.exz.zjb.bean.UserInfo
 import com.exz.zjb.config.Urls
 import com.lzy.okgo.OkGo
@@ -23,7 +22,7 @@ object DataCtrlClassX {
     /**
      * 获取用户信息
      * */
-    fun getUserInfo(context: Context, listener: (userInfo: NetEntity<UserInfo>?) -> Unit) {
+    fun getUserInfo(context: Context?, listener: (userInfo: NetEntity<UserInfo>?) -> Unit) {
 //        mobile	string	必填	手机号
 //                password	string	必填	密码
 //                jpushToken	string	选填	极光推送令牌
@@ -33,6 +32,7 @@ object DataCtrlClassX {
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase()
+        if (context!=null)
         OkGo.post<NetEntity<UserInfo>>(Urls.GetUserInfo)
                 .params(params)
                 .tag(this)

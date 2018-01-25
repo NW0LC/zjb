@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.zjb.DataCtrlClass
+import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
 import com.exz.zjb.adapter.MainTabAdapter
 import com.exz.zjb.bean.GoodsBean
@@ -99,16 +100,66 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, SizeUtils.dp2px(1f), ContextCompat.getColor(context!!, R.color.MaterialGrey400)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(context,MainTabDetailActivity::class.java).putExtra("id",mAdapter.data[position].id)
-                        .putExtra(Intent_Type,arguments?.get(Intent_Type).toString()))
+                DataCtrlClassX.getUserInfo(context, {
+                    refreshLayout.finishRefresh()
+                    if (it != null) {
+                        //实名认证：-1未申请 0审核中，1已通过 2未通过"
+                        when (it.data?.authenticationState) {
+                            "-1" -> {
+                                com.exz.zjb.utils.DialogUtils.unCheck(context) {
+                                    startActivity(Intent(context, IDProveActivity::class.java))
+                                }
+                            }
+                            "2" -> {
+                                com.exz.zjb.utils.DialogUtils.checkUnpass(context) {
+                                    startActivity(Intent(context, IDProveActivity::class.java))
+                                }
+                            }
+                            "0" -> {
+                                com.exz.zjb.utils.DialogUtils.checking(context)
+                            }
+                            "1" -> {
+                                startActivity(Intent(context,MainTabDetailActivity::class.java).putExtra("id",mAdapter.data[position].id)
+                                        .putExtra(Intent_Type,arguments?.get(Intent_Type).toString()))
+                            }
+
+                        }
+                    }
+                })
+
             }
 
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 super.onItemChildClick(adapter, view, position)
-                var mEntity= mAdapter.data[position]
+                val mEntity= mAdapter.data[position]
                 when (view.id) {
                     R.id.img -> {
-                        DialogUtils.Call(context as BaseActivity,mEntity.mobile)
+                        DataCtrlClassX.getUserInfo(context, {
+                            refreshLayout.finishRefresh()
+                            if (it != null) {
+                                //实名认证：-1未申请 0审核中，1已通过 2未通过"
+                                when (it.data?.authenticationState) {
+                                    "-1" -> {
+                                        com.exz.zjb.utils.DialogUtils.unCheck(context) {
+                                            startActivity(Intent(context, IDProveActivity::class.java))
+                                        }
+                                    }
+                                    "2" -> {
+                                        com.exz.zjb.utils.DialogUtils.checkUnpass(context) {
+                                            startActivity(Intent(context, IDProveActivity::class.java))
+                                        }
+                                    }
+                                    "0" -> {
+                                        com.exz.zjb.utils.DialogUtils.checking(context)
+                                    }
+                                    "1" -> {
+                                        DialogUtils.Call(context as BaseActivity,mEntity.mobile)
+                                    }
+
+                                }
+                            }
+                        })
+
                     }
                 }
             }
