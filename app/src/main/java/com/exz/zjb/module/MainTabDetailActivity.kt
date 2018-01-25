@@ -31,6 +31,7 @@ class MainTabDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshLis
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
+        StatusBarUtil.setPaddingSmart(this, scrollView)
         StatusBarUtil.setMargin(this, header)
         mTitle.text = "商品详情"
         toolbar.setNavigationOnClickListener { finish() }
@@ -49,10 +50,11 @@ class MainTabDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshLis
             }
         }
         initEvent()
-        initData()
+        onRefresh(refreshLayout)
     }
     private fun initData() {
         DataCtrlClass.getTabDetail(this, url,key,intent.getStringExtra("id")?:""){
+            refreshLayout?.finishRefresh()
             if (it != null) {
                 goodsBean=it
                 tv_title.text=it.title
@@ -78,7 +80,7 @@ class MainTabDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshLis
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-
+        initData()
     }
 
     override fun onClick(p0: View?) {

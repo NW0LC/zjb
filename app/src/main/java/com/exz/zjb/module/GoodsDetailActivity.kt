@@ -32,6 +32,8 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
+        StatusBarUtil.setPaddingSmart(this, scrollView)
+        StatusBarUtil.setMargin(this, header)
 
         mTitle.text="商品详情"
         toolbar.setNavigationOnClickListener { finish() }

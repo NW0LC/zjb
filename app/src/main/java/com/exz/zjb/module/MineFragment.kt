@@ -164,6 +164,8 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         bt_forRent.setOnClickListener(this)
         bt_recruit.setOnClickListener(this)
         bt_job.setOnClickListener(this)
+        bt_tab_1.setOnClickListener(this)
+        bt_tab_2.setOnClickListener(this)
 
     }
 
