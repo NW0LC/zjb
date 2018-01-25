@@ -37,7 +37,7 @@ class TabActivity : BaseActivity() {
                 arrayListOf(TabEntity("出售信息"), TabEntity("求购信息"))
             }
             "4" -> {
-                mFragments.add(MainTabFragment.newInstance("42"))
+                mFragments.add(MainTabFragment.newInstance("41"))
                 mFragments.add(MainTabFragment.newInstance("42"))
                 arrayListOf(TabEntity("招聘信息"), TabEntity("求职信息"))
             }

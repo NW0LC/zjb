@@ -55,6 +55,9 @@
         <activity
             android:name=".module.mine.ReAccountPwdActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.CollectBrowseActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

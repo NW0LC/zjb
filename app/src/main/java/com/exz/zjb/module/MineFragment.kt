@@ -12,10 +12,7 @@ import android.view.ViewGroup
 import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
 import com.exz.zjb.config.Urls
-import com.exz.zjb.module.mine.CenterActivity
-import com.exz.zjb.module.mine.CenterFragment
-import com.exz.zjb.module.mine.PersonInfoActivity
-import com.exz.zjb.module.mine.SettingsActivity
+import com.exz.zjb.module.mine.*
 import com.exz.zjb.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshHeader
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -175,15 +172,21 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 val intent = Intent(context, PersonInfoActivity::class.java)
                 SZWUtils.checkLogin(this, intent, PersonInfoActivity::class.java.name)
             }
-            bt_tab_1, bt_tab_2, bt_sold, bt_buy, bt_lease, bt_forRent, bt_recruit, bt_job -> {
+
+            bt_tab_1 -> {
+                val intent = Intent(context, CollectBrowseActivity::class.java)
+                intent.putExtra("type","7")
+                startActivity(intent)
+            }
+            bt_tab_2 -> {
+                val intent = Intent(context, CollectBrowseActivity::class.java)
+                intent.putExtra("type","8")
+                startActivity(intent)
+            }
+
+            bt_sold, bt_buy, bt_lease, bt_forRent, bt_recruit, bt_job -> {
                 val intent = Intent(context, CenterActivity::class.java)
                 intent.putExtra(CenterFragment.Intent_Type, when (p0) {
-                    bt_tab_1 -> {
-                        "7"
-                    }
-                    bt_tab_1 -> {
-                        "8"
-                    }
                     bt_sold -> {
                         "1"
                     }
@@ -208,6 +211,8 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 })
                 SZWUtils.checkLogin(this, intent, CenterActivity::class.java.name)
             }
+
+
         }
     }
 

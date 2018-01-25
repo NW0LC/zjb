@@ -285,4 +285,8 @@ object Urls{
      * 退出
      */
     var Exit =url+ "App/Account/Exit.aspx"
+    /**
+     * 我的浏览记录
+     */
+    var MyBrowse =url+ "App/Account/MyBrowse.aspx"
 }
