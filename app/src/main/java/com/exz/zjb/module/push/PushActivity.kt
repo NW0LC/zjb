@@ -56,6 +56,7 @@ import com.szw.framelibrary.view.preview.PreviewActivity.Companion.PREVIEW_INTEN
 import com.szw.framelibrary.view.preview.PreviewActivity.Companion.PREVIEW_INTENT_SHOW_NUM
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_push.*
+import org.jetbrains.anko.toast
 
 
 /**
@@ -106,6 +107,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
         if (id.isNotEmpty()) {
             val params = HashMap<String, String>()
             params["userId"] = MyApplication.loginUserId
+            params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + id, salt).toLowerCase()
             when (intent.getStringExtra(Intent_Push_Type)) {
                 "1" -> {//发布-发布出售
                     params["sellId"] = id
@@ -136,7 +138,8 @@ class PushActivity : BaseActivity(), View.OnClickListener {
             }
             DataCtrlClass.pushEdit(this, postRequestGoodsBean) {
                 if (it != null) {
-                    photos.addAll(it.carImageUrl ?: ArrayList())
+                    photos.addAll(0, it.carImageUrl ?: ArrayList())
+                    mAdapter.notifyDataSetChanged()
                     ed_title.setText(it.title)
                     provinceId = it.provinceId
                     cityId = it.cityId
@@ -147,7 +150,7 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                     ed_type.setText(it.modelName)
                     ed_description.setText(it.description)
                     ed_phone.setText(it.mobile)
-                    intent.putExtra(Intent_Push_Type, it.typeId)
+                    intent.putExtra(Intent_Push_Device, it.typeId)
                     val salarys = it.salary.split("-")
                     if (salarys.size == 2) {
                         ed_pay.setText(salarys[0])
@@ -165,41 +168,55 @@ class PushActivity : BaseActivity(), View.OnClickListener {
     private fun initView() {
         ed_description.setClearIconVisible(false)
         isEdit = (intent.getStringExtra("id") ?: "").isNotEmpty()
-        bt_push.text = if (isEdit) {"确定"} else "发布"
+        bt_push.text = if (isEdit) {
+            "确定"
+        } else "发布"
         when (intent.getStringExtra(Intent_Push_Type)) {
             "1" -> {//发布-发布出售
-                mTitle.text = if (isEdit) {"编辑出售"} else "发布出售"
+                mTitle.text = if (isEdit) {
+                    "编辑出售"
+                } else "发布出售"
                 lay_pay.visibility = View.GONE
             }
             "2" -> {//发布-发布求购
-                mTitle.text = if (isEdit) {"编辑求购"} else "发布求购"
+                mTitle.text = if (isEdit) {
+                    "编辑求购"
+                } else "发布求购"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "3" -> {//发布-发布出租
-                mTitle.text = if (isEdit) {"编辑出租"} else "发布出租"
+                mTitle.text = if (isEdit) {
+                    "编辑出租"
+                } else "发布出租"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "4" -> {//发布-发布求租
-                mTitle.text = if (isEdit) {"编辑求租"} else "发布求租"
+                mTitle.text = if (isEdit) {
+                    "编辑求租"
+                } else "发布求租"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
                 lay_pay.visibility = View.GONE
             }
             "5" -> {//发布-招聘
-                mTitle.text = if (isEdit) {"编辑招聘"} else "发布招聘"
+                mTitle.text = if (isEdit) {
+                    "编辑招聘"
+                } else "发布招聘"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
             }
             "6" -> {//发布-求职
-                mTitle.text = if (isEdit) {"编辑求职"} else "发布求职"
+                mTitle.text = if (isEdit) {
+                    "编辑求职"
+                } else "发布求职"
                 mPhotoRecyclerView.visibility = View.GONE
                 lay_type.visibility = View.GONE
                 lay_date.visibility = View.GONE
@@ -351,36 +368,51 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                 when (intent.getStringExtra(Intent_Push_Type)) {
                     "1" -> {//发布-发布出售
                         params["modelName"] = ed_type.text.toString()
-                        params["factoryYear"] =if (ed_date.text.toString().length<4 && !isEdit) {
+                        params["sellId"] = intent.getStringExtra("id") ?: ""
+                        params["factoryYear"] = if (ed_date.text.toString().length < 4 && !isEdit) {
                             ed_date.setShakeAnimation();return
                         } else ed_date.text.toString()
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editSell else publishSell).params(params)
                     }
                     "2" -> {//发布-发布求购
+                        params["buyId"] = intent.getStringExtra("id") ?: ""
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editBuy else publishBuy).params(params)
                     }
                     "3" -> {//发布-发布出租
+                        params["leaseId"] = intent.getStringExtra("id") ?: ""
                         params["typeId"] = intent.getStringExtra(Intent_Push_Device) ?: "1"
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editLease else publishLease).params(params)
                     }
                     "4" -> {//发布-发布求租
+                        params["rentId"] = intent.getStringExtra("id") ?: ""
                         params["typeId"] = intent.getStringExtra(Intent_Push_Device) ?: "1"
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editRent else publishRent).params(params)
                     }
                     "5" -> {//发布-招聘
+                        params["recruiterId"] = intent.getStringExtra("id") ?: ""
                         params["salary"] = salary
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editRecruiter else publishRecruiter).params(params)
                     }
                     "6" -> {//发布-求职
+                        params["jobWantedId"] = intent.getStringExtra("id") ?: ""
                         params["salary"] = salary
                         postRequest = OkGo.post<NetEntity<Void>>(if (isEdit) editJobWanted else publishJobWanted).params(params)
                     }
                     else -> {
                     }
                 }
-                DataCtrlClass.push(this, postRequest, images) {
-                    if (it!=null) {
-                        finish()
+                var oldImages = ""
+                photos.forEach {
+                    if (!it.contains("file://") && !it.contains("android.resource://"))
+                        oldImages += it + ","
+                }
+                if (oldImages.isEmpty()&&images.isEmpty()&&intent.getStringExtra(Intent_Push_Type)=="1")
+                    toast("请至少上传一张图片！")
+                else {
+                    DataCtrlClass.push(this, postRequest, oldImages, images) {
+                        if (it != null) {
+                            finish()
+                        }
                     }
                 }
             }

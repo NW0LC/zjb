@@ -12,15 +12,14 @@ import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.zjb.DataCtrlClass
-import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
 import com.exz.zjb.adapter.MainAdapter
 import com.exz.zjb.bean.BannersBean
 import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.imageloader.BannerImageLoader
+import com.exz.zjb.module.MainActivity.Companion.checkPass
 import com.exz.zjb.module.SearchActivity.Companion.Intent_isShowSoft
 import com.exz.zjb.module.TabActivity.Companion.Intent_Tab
-import com.exz.zjb.utils.DialogUtils
 import com.exz.zjb.widget.MyWebActivity
 import com.exz.zjb.widget.MyWebActivity.Intent_Title
 import com.exz.zjb.widget.MyWebActivity.Intent_Url
@@ -137,32 +136,9 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                DataCtrlClassX.getUserInfo(context, {
-                    refreshLayout.finishRefresh()
-                    if (it != null) {
-                        //实名认证：-1未申请 0审核中，1已通过 2未通过"
-                        when (it.data?.authenticationState) {
-                            "-1" -> {
-                                DialogUtils.unCheck(context) {
-                                    startActivity(Intent(context, IDProveActivity::class.java))
-                                }
-                            }
-                            "2" -> {
-                                DialogUtils.checkUnpass(context) {
-                                    startActivity(Intent(context, IDProveActivity::class.java))
-                                }
-                            }
-                            "0" -> {
-                                DialogUtils.checking(context)
-                            }
-                            "1" -> {
-                                startActivity(Intent(context,GoodsDetailActivity::class.java).putExtra("id",mAdapter.data[position].id))
-                            }
-
-                        }
-                    }
-                })
-
+                checkPass(context) {
+                    startActivity(Intent(context,GoodsDetailActivity::class.java).putExtra("id",mAdapter.data[position].id))
+                }
             }
         })
         blurView.setBlurRadius(0f)

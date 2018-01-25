@@ -24,7 +24,7 @@ object DialogUtils {
     /**
      * 清除提醒
      */
-    fun delete(context: Context, listener: () -> Unit) {
+    fun delete(context: Context?, listener: () -> Unit) {
         dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
         dialog.setTitleText("删除")
         dialog.setContentText("确定删除？")

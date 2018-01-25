@@ -15,15 +15,14 @@ import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.adapter.MainTabAdapter
 import com.exz.zjb.bean.GoodsBean
-import com.exz.zjb.bean.TabEntity
 import com.exz.zjb.config.Urls
 import com.exz.zjb.module.GoodsDetailActivity
+import com.exz.zjb.module.MainActivity.Companion.checkPass
 import com.exz.zjb.module.MainTabDetailActivity
 import com.exz.zjb.module.MainTabFragment
 import com.exz.zjb.module.push.PushActivity
 import com.exz.zjb.module.push.PushActivity.Companion.Intent_Push_Type
 import com.exz.zjb.utils.SZWUtils
-import com.flyco.tablayout.listener.CustomTabEntity
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.request.PostRequest
 import com.lzy.okgo.request.base.Request
@@ -122,11 +121,13 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, SizeUtils.dp2px(1f), ContextCompat.getColor(context!!, R.color.MaterialGrey400)))
         mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener() {
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                when (view?.id) {
-                    R.id.tv_left -> {//删除
-                        val params = HashMap<String, String>()
-                        params["userId"] = MyApplication.loginUserId
-                        when (arguments?.get(Intent_Type) ?: "") {
+                checkPass(context) {
+                    when (view?.id) {
+                        R.id.tv_left -> {//删除
+                            val params = HashMap<String, String>()
+                            params["userId"] = MyApplication.loginUserId
+                            com.exz.zjb.utils.DialogUtils.delete(context) {
+                                when (arguments?.get(Intent_Type) ?: "") {
 //                            "7" -> {//收藏
 //                                params["typeId"] = "0"
 //                                params["objectId"] = mAdapter.data[position].id
@@ -137,75 +138,77 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
 //                            "8" -> {//浏览记录
 //                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.url).params(params)
 //                            }
-                            "1" -> {//我的出售
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteSell).params(params)
-                            }
-                            "2" -> {//我的求购
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteBuy).params(params)
-                            }
-                            "3" -> {//我的出租
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteLease).params(params)
-                            }
-                            "4" -> {//我的求租
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRent).params(params)
-                            }
-                            "5" -> {//我的招聘
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRecruiter).params(params)
-                            }
-                            "6" -> {//我的求职
-                                postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteJobWanted).params(params)
-                            }
-                            else -> {
+                                    "1" -> {//我的出售
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteSell).params(params)
+                                    }
+                                    "2" -> {//我的求购
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteBuy).params(params)
+                                    }
+                                    "3" -> {//我的出租
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteLease).params(params)
+                                    }
+                                    "4" -> {//我的求租
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRent).params(params)
+                                    }
+                                    "5" -> {//我的招聘
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteRecruiter).params(params)
+                                    }
+                                    "6" -> {//我的求职
+                                        postRequestVoid = OkGo.post<NetEntity<Void>>(Urls.deleteJobWanted).params(params)
+                                    }
+                                    else -> {
+                                    }
+                                }
+                                DataCtrlClass.pushDelete(context, postRequestVoid) {
+                                    if (it != null)
+                                        onRefresh(refreshLayout)
+                                }
                             }
                         }
-                        DataCtrlClass.pushDelete(context, postRequestVoid) {
-                            if (it != null)
-                                onRefresh(refreshLayout)
+                        R.id.tv_right -> {
+                            startActivity(Intent(context, PushActivity::class.java).putExtra(Intent_Push_Type, arguments?.getString(Intent_Type)).putExtra("id", mAdapter.data[position].id))
                         }
-                    }
-                    R.id.tv_right -> {
-                        startActivity(Intent(context, PushActivity::class.java).putExtra(Intent_Push_Type, arguments?.getString(Intent_Type)))
-                    }
-                    R.id.img -> {
-                        DialogUtils.Call(context as BaseActivity, mAdapter.data[position].mobile)
+                        R.id.img -> {
+                            DialogUtils.Call(context as BaseActivity, mAdapter.data[position].mobile)
+                        }
                     }
                 }
             }
-            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                super.onItemClick(adapter, view, position)
-                when (arguments?.get(Intent_TypeId).toString() ?: "") {
-                    "1" -> {//我的出售
-                        startActivity(Intent(context, GoodsDetailActivity::class.java).putExtra("id", mAdapter.data[position].id))
-                    }
-                    "2" -> {//我的求购
-                        startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
-                                .putExtra(MainTabFragment.Intent_Type, "32"))
-                    }
-                    "3" -> {//我的出租
-                        startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
-                                .putExtra(MainTabFragment.Intent_Type, "11"))
-                    }
-                    "4" -> {//我的求租
-                        startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
-                                .putExtra(MainTabFragment.Intent_Type, "12"))
-                    }
-                    "5" -> {//我的招聘
-                        startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
-                                .putExtra(MainTabFragment.Intent_Type, "41"))
-                    }
-                    "6" -> {//我的求职
-                        startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
-                                .putExtra(MainTabFragment.Intent_Type, "42"))
-                    }
-                }
 
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                checkPass(context) {
+                    when (arguments?.get(Intent_TypeId).toString()) {
+                        "1" -> {//我的出售
+                            startActivity(Intent(context, GoodsDetailActivity::class.java).putExtra("id", mAdapter.data[position].id))
+                        }
+                        "2" -> {//我的求购
+                            startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
+                                    .putExtra(MainTabFragment.Intent_Type, "32"))
+                        }
+                        "3" -> {//我的出租
+                            startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
+                                    .putExtra(MainTabFragment.Intent_Type, "11"))
+                        }
+                        "4" -> {//我的求租
+                            startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
+                                    .putExtra(MainTabFragment.Intent_Type, "12"))
+                        }
+                        "5" -> {//我的招聘
+                            startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
+                                    .putExtra(MainTabFragment.Intent_Type, "41"))
+                        }
+                        "6" -> {//我的求职
+                            startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
+                                    .putExtra(MainTabFragment.Intent_Type, "42"))
+                        }
+                    }
+
+                }
             }
 
 
         })
     }
-
-    private lateinit var mTitles: ArrayList<CustomTabEntity>
     private fun initBar() {
 
         mTitle.text = when (arguments?.get(Intent_Type).toString()) {

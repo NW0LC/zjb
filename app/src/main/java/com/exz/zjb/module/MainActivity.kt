@@ -1,5 +1,6 @@
 package com.exz.zjb.module
 
+import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
 import com.exz.zjb.DataCtrlClassX
@@ -18,7 +19,6 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_main_mine.*
 
 class MainActivity : BaseActivity() {
     private val mTitles = arrayOf("首页", "发布", "我的")
@@ -55,52 +55,30 @@ class MainActivity : BaseActivity() {
                         if (SZWUtils.checkLogin(this@MainActivity))
                             pop = MenuPop(this@MainActivity) {
                                 val viewId = it.id
-                                DataCtrlClassX.getUserInfo(this@MainActivity, {
-                                    refreshLayout.finishRefresh()
-                                    if (it != null) {
-                                        //实名认证：-1未申请 0审核中，1已通过 2未通过"
-                                        when (it.data?.authenticationState) {
-                                            "-1" -> {
-                                                DialogUtils.unCheck(this@MainActivity) {
-                                                    startActivity(Intent(this@MainActivity, IDProveActivity::class.java))
-                                                }
-                                            }
-                                            "2" -> {
-                                                DialogUtils.checkUnpass(this@MainActivity) {
-                                                    startActivity(Intent(this@MainActivity, IDProveActivity::class.java))
-                                                }
-                                            }
-                                            "0" -> {
-                                                DialogUtils.checking(this@MainActivity)
-                                            }
-                                            "1" -> {
-                                                when (viewId) {
-                                                    R.id.bt_tab1 -> {
-                                                        startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "3"))
-                                                    }
-                                                    R.id.bt_tab2 -> {
-                                                        startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "4"))
-                                                    }
-                                                    R.id.bt_tab3 -> {
-                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "1"))
-                                                    }
-                                                    R.id.bt_tab4 -> {
-                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "2"))
-                                                    }
-                                                    R.id.bt_tab5 -> {
-                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "5"))
-                                                    }
-                                                    R.id.bt_tab6 -> {
-                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "6"))
-                                                    }
-                                                    else -> {
-                                                    }
-                                                }
-                                            }
-
+                                checkPass(this@MainActivity) {
+                                    when (viewId) {
+                                        R.id.bt_tab1 -> {
+                                            startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "3"))
+                                        }
+                                        R.id.bt_tab2 -> {
+                                            startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "4"))
+                                        }
+                                        R.id.bt_tab3 -> {
+                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "1"))
+                                        }
+                                        R.id.bt_tab4 -> {
+                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "2"))
+                                        }
+                                        R.id.bt_tab5 -> {
+                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "5"))
+                                        }
+                                        R.id.bt_tab6 -> {
+                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "6"))
+                                        }
+                                        else -> {
                                         }
                                     }
-                                })
+                                }
 
                                 pop?.dismiss()
                             }
@@ -123,6 +101,35 @@ class MainActivity : BaseActivity() {
             override fun onTabReselect(position: Int) {
             }
         })
+    }
+
+    companion object {
+        fun checkPass(context: Context?, listener: () -> Unit) {
+            DataCtrlClassX.getUserInfo(context, {
+                if (it != null) {
+                    //实名认证：-1未申请 0审核中，1已通过 2未通过"
+                    when (it.data?.authenticationState) {
+                        "-1" -> {
+                            DialogUtils.unCheck(context) {
+                                context?.startActivity(Intent(context, IDProveActivity::class.java))
+                            }
+                        }
+                        "2" -> {
+                            DialogUtils.checkUnpass(context) {
+                                context?.startActivity(Intent(context, IDProveActivity::class.java))
+                            }
+                        }
+                        "0" -> {
+                            DialogUtils.checking(context)
+                        }
+                        "1" -> {
+                            listener.invoke()
+                        }
+
+                    }
+                }
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

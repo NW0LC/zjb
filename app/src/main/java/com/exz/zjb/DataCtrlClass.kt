@@ -659,12 +659,12 @@ object DataCtrlClass {
     /**
      * 发布
      * */
-    fun push(context: Context, postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, images: List<String>, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
+    fun push(context: Context, postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, oldImages:String,images: List<String>, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
         CustomProgress.show(context, "加载中", false, null)
         Thread {
             pushImgData(images) {
                 if (it != null) {
-                    postRequest.params("carImageUrl", it).tag(this)
+                    postRequest.params("carImageUrl", oldImages+it).tag(this)
                             .execute(object : DialogCallback<NetEntity<Void>>(context) {
                                 override fun onSuccess(response: Response<NetEntity<Void>>) {
                                     if (response.body().getCode() == Constants.NetCode.SUCCESS) {
