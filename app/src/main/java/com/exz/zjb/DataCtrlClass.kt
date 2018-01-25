@@ -744,7 +744,7 @@ object DataCtrlClass {
         params["objectId"] = id
         params["typeId"] = idMark
         params["collectType"] = type
-        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + id, salt).toLowerCase()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + idMark, salt).toLowerCase()
         OkGo.post<NetEntity<Void>>(Urls.collectAction)
                 .params(params)
                 .tag(this)

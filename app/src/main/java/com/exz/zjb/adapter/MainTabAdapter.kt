@@ -35,6 +35,7 @@ class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolde
                 itemView.tv_title.text=item.title
                 itemView.tv_address.text=item.provinceCity
                 itemView.tv_date.text=item.date
+                helper.addOnClickListener(R.id.img)
             }
             GoodsBean.TYPE_2-> {
                 GlideApp.with(mContext).load(item.image).into(itemView.sale_img)

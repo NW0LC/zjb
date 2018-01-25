@@ -23,8 +23,10 @@ import com.exz.zjb.module.SearchActivity.Companion.Intent_isShowSoft
 import com.exz.zjb.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.config.Constants
+import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_main_tab_filter.*
@@ -51,6 +53,7 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
             onRefresh(refreshLayout)
         }
     }
+
 
     override fun initView() {
         initBar()
@@ -96,7 +99,18 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, SizeUtils.dp2px(1f), ContextCompat.getColor(context!!, R.color.MaterialGrey400)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(context,MainTabDetailActivity::class.java).putExtra("id",mAdapter.data[position].id))
+                startActivity(Intent(context,MainTabDetailActivity::class.java).putExtra("id",mAdapter.data[position].id)
+                        .putExtra(Intent_Type,arguments?.get(Intent_Type).toString()))
+            }
+
+            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
+                super.onItemChildClick(adapter, view, position)
+                var mEntity= mAdapter.data[position]
+                when (view.id) {
+                    R.id.img -> {
+                        DialogUtils.Call(context as BaseActivity,mEntity.mobile)
+                    }
+                }
             }
         })
     }
