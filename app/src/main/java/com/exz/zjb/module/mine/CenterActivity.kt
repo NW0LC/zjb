@@ -16,7 +16,7 @@ class CenterActivity : BaseActivity() {
 
     override fun init() {
         val transaction = supportFragmentManager.beginTransaction()
-        val fragment = CenterFragment.newInstance(intent.getStringExtra(CenterFragment.Intent_Type),"")
+        val fragment = CenterFragment.newInstance(intent.getStringExtra(CenterFragment.Intent_Type),intent.getStringExtra(CenterFragment.Intent_Type))
         fragment.arguments?.putString(CenterFragment.Intent_Type,intent.getStringExtra(CenterFragment.Intent_Type)?:"")
         transaction.add(R.id.frameLay, fragment)
         transaction.commit()
