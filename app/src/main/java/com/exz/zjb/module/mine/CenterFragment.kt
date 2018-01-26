@@ -105,7 +105,6 @@ class CenterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Req
         }
 
     }
-
     override fun onResume() {
         super.onResume()
         onRefresh(refreshLayout)

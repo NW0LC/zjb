@@ -9,7 +9,6 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.config.Constants
-import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.utils.net.NetEntity
 import com.szw.framelibrary.utils.net.callback.DialogCallback
 import com.szw.framelibrary.utils.net.callback.JsonCallback
@@ -38,7 +37,7 @@ object DataCtrlClassX {
             OkGo.post<NetEntity<UserInfo>>(Urls.GetUserInfo)
                     .params(params)
                     .tag(this)
-                    .execute(object : DialogCallback<NetEntity<UserInfo>>(context) {
+                    .execute(object : JsonCallback<NetEntity<UserInfo>>() {
                         override fun onSuccess(response: Response<NetEntity<UserInfo>>) {
                             if (response.body().getCode() == Constants.NetCode.SUCCESS) {
                                 listener.invoke(response.body())

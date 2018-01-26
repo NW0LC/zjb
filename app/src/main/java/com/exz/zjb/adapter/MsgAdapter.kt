@@ -24,7 +24,8 @@ class MsgAdapter<T : MsgBean> : BaseQuickAdapter<T, BaseViewHolder>(R.layout.ite
             View.GONE
         } else View.VISIBLE
         itemView.btnDelete.setOnClickListener {
-            DataCtrlClass.deleteMessage(mContext, data[helper.adapterPosition].id) {_,id->
+            DataCtrlClass.deleteMessage(mContext, data[helper.adapterPosition].id) {it,id->
+                if (it!=null)
                 MsgActivity.removeItem(this,id)
             }
         }

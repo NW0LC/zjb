@@ -56,7 +56,6 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
 
     private fun initRecycler() {
         mAdapter = MsgAdapter()
-        mAdapter.setNewData(listOf(MsgBean("1"),MsgBean("1")))
         mAdapter.bindToRecyclerView(mRecyclerView)
         mAdapter.setOnLoadMoreListener(this,mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -109,8 +108,13 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
                 while (iterator.hasNext()) {
                     val temp = iterator.next()
                     if (temp.id == id) {
+                        val indexOf = adapter.data.indexOf(temp)
                         iterator.remove()
-                        adapter.notifyItemRemoved(adapter.data.indexOf(temp))
+                        if (adapter.data.size <= 0) {
+                            adapter.notifyDataSetChanged()
+                        } else {
+                            adapter.notifyItemRemoved(indexOf)
+                        }
                     }
                 }
         }
