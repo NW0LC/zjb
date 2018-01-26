@@ -11,6 +11,7 @@
         android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:scaleType="fitXY"
         tool:background="@color/MaterialGrey200" />
 
     <TextView

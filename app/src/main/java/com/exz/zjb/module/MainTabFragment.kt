@@ -20,6 +20,7 @@ import com.exz.zjb.adapter.MainTabAdapter
 import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.config.Urls
 import com.exz.zjb.module.MainActivity.Companion.checkPass
+import com.exz.zjb.module.SearchActivity.Companion.Intent_Search_Content
 import com.exz.zjb.module.SearchActivity.Companion.Intent_isShowSoft
 import com.exz.zjb.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -30,7 +31,7 @@ import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
-import kotlinx.android.synthetic.main.fragment_main_tab_filter.*
+import kotlinx.android.synthetic.main.fragment_main_tab.*
 
 /**
  * Created by 史忠文
@@ -57,6 +58,7 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
 
 
     override fun initView() {
+        editText.setText(arguments?.getString(Intent_Search_Content)?:"")
         initBar()
         initRecycler()
 

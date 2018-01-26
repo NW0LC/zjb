@@ -22,21 +22,22 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/bt_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:src="@mipmap/icon_arrow_white_back"
-                android:paddingStart="@dimen/margin_15"
                 android:paddingEnd="@dimen/margin_10"
+                android:paddingStart="@dimen/margin_15"
+                android:src="@mipmap/icon_arrow_white_back"
                 android:text="取消"
                 android:textColor="@color/White"
                 android:textSize="@dimen/text_16" />
+
             <com.flyco.roundview.RoundLinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:id="@+id/searchLay"
                 android:layout_width="0dp"
                 android:layout_height="33dp"
                 android:layout_gravity="center_vertical"
@@ -46,22 +47,38 @@
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="@dimen/margin_20">
 
+                <TextView
+
+                    android:id="@+id/bt_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/selector_tab_triangle_grey"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="@dimen/margin_10"
+                    android:text="出售信息"
+                    android:textColor="@color/MaterialGrey700"
+                    android:textSize="@dimen/text_12" />
+
                 <EditText
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:drawableStart="@mipmap/icon_search"
+                    android:drawableEnd="@mipmap/icon_search"
                     android:drawablePadding="@dimen/margin_5"
                     android:hint="输入二手机、桩机等名称"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:paddingEnd="@dimen/margin_10"
-                    android:paddingStart="@dimen/margin_10"
+                    android:paddingStart="0dp"
                     android:text=""
-                    android:textCursorDrawable="@drawable/color_cursor"
                     android:textColor="@color/MaterialGrey600"
                     android:textColorHint="@color/MaterialGrey400"
+                    android:textCursorDrawable="@drawable/color_cursor"
                     android:textSize="@dimen/text_14" />
 
 
@@ -114,7 +131,7 @@
                         android:layout_marginLeft="@dimen/margin_20"
                         android:layout_marginRight="@dimen/margin_20"
                         android:padding="@dimen/margin_5"
-                        android:src="@drawable/vector_search_delete" />
+                        android:src="@mipmap/icon_delete" />
                 </LinearLayout>
 
 

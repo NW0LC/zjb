@@ -29,7 +29,6 @@ class OpenShopInputTextActivity : BaseActivity() {
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         StatusBarUtil.setPaddingSmart(this, blurView)
-        StatusBarUtil.setMargin(this, header)
         SZWUtils.setPaddingSmart(scrollView, 10f)
         toolbar.setNavigationOnClickListener {
             finish()

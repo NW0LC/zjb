@@ -37,7 +37,6 @@ class PersonInfoActivity : BaseActivity(), View.OnClickListener {
         mTitle.text = "个人信息"
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
-        StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         return false

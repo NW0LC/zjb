@@ -20,6 +20,7 @@ import com.exz.zjb.adapter.MainTabAdapter
 import com.exz.zjb.bean.GoodsBean
 import com.exz.zjb.bean.ListFilterBean
 import com.exz.zjb.module.MainActivity.Companion.checkPass
+import com.exz.zjb.module.SearchActivity.Companion.Intent_Search_Content
 import com.exz.zjb.module.SearchActivity.Companion.Intent_isShowSoft
 import com.exz.zjb.pop.AddressPop
 import com.exz.zjb.pop.ListSortPop
@@ -62,6 +63,7 @@ class MainTabFilterFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
     }
 
     override fun initView() {
+        editText.setText(arguments?.getString(Intent_Search_Content)?:"")
         initBar()
         initRecycler()
         initFilterPop()

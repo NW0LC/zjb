@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/popup_animation"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/search_trilateral" />
+        <com.flyco.roundview.RoundLinearLayout
+            app:rv_backgroundColor="@color/MaterialGrey800"
+            app:rv_cornerRadius="@dimen/margin_5"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tab_1"
+                android:minEms="5"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="出售信息"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_2"
+                android:minEms="5"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="求购信息"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_3"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="出租(桩机)"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_4"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="出租(钢板桩)"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_5"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="求租(桩机)"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_6"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="求租(钢板桩)"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_7"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="招聘信息"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_0.5"
+                android:background="#18171c"/>
+            <TextView
+                android:id="@+id/tab_8"
+                android:padding="@dimen/margin_10"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:text="求职信息"
+                android:minEms="5"
+                android:textSize="@dimen/sp_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </com.flyco.roundview.RoundLinearLayout>
+    </LinearLayout>
+</LinearLayout>

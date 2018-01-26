@@ -9,6 +9,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.zjb.DataCtrlClass
@@ -42,7 +44,7 @@ import kotlinx.android.synthetic.main.header_main.view.*
  */
 
 class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, OnBannerListener {
-    var   newsStr=ArrayList<String>()
+    private var   newsStr=ArrayList<String>()
     private var mScrollY=0
     private lateinit var mAdapter: MainAdapter<GoodsBean>
     private lateinit var headerView: View
@@ -161,6 +163,8 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         val array2=ArrayList<String>()
         array2.add(Uri.parse("android.resource://" + activity?.packageName + "/" +R.mipmap.icon_main_banner).toString())
 
+        headerView.banner.layoutParams.height=SizeUtils.dp2px(130f)*ScreenUtils.getScreenWidth()/SizeUtils.dp2px(320f)
+        headerView.banner2.layoutParams.height=SizeUtils.dp2px(80f)*ScreenUtils.getScreenWidth()/SizeUtils.dp2px(320f)
 
         headerView.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         //设置图片加载器
@@ -196,10 +200,10 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     override fun onClick(p0: View?) {
         when (p0) {
             notice-> startActivity(Intent(context,NewsActivity::class.java))
-            bt_tab_1-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"1"))
-            bt_tab_2-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"2"))
-            bt_tab_3-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"3"))
-            bt_tab_4-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"4"))
+            bt_tab_1-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"11"))
+            bt_tab_2-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"21"))
+            bt_tab_3-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"31"))
+            bt_tab_4-> startActivity(Intent(context,TabActivity::class.java).putExtra(Intent_Tab,"41"))
         }
     }
 

@@ -32,7 +32,6 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         mTitle.text = "设置"
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
-        StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         return false

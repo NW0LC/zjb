@@ -498,7 +498,7 @@ object DataCtrlClass {
     }
 
     /**
-     * 个人中心消息
+     * 系统消息列表
      * */
     fun mineMsgData(context: Context, currentPage: Int, listener: (informationBeans: ArrayList<MsgBean>?) -> Unit) {
         //userId	string	必填	用户id
@@ -527,7 +527,36 @@ object DataCtrlClass {
 
                 })
     }
+    /**
+     * 个人中心消息
+     * */
+    fun deleteMessage(context: Context,id: String, listener: (goodsBean: NetEntity<Void>?,id:String) -> Unit) {
+//        userId	string	必填	用户id
+//        sellId	string	必填	出售id
+//        requestCheck	string	必填	验证请求
+        val params = HashMap<String, String>()
+        params["userId"] = MyApplication.loginUserId
+        params["messageId"] = id
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString( MyApplication.loginUserId+id, salt).toLowerCase()
+        OkGo.post<NetEntity<Void>>(Urls.deleteMessage)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body(),id)
+                        } else {
+                            listener.invoke(null,id)
+                        }
+                    }
 
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null,id)
+                    }
+
+                })
+    }
     /**
      * 热点新闻
      * */

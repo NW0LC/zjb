@@ -1,10 +1,10 @@
 package com.exz.zjb.module
 
-import android.os.Build
-import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.NestedScrollView
 import android.view.View
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
 import com.exz.zjb.bean.GoodsBean
@@ -76,6 +76,7 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initBanner() {
+        banner.layoutParams.height= SizeUtils.dp2px(130f)* ScreenUtils.getScreenWidth()/SizeUtils.dp2px(320f)
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         //设置图片加载器
         banner.setImageLoader(BannerImageLoader())
@@ -87,8 +88,6 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
         banner.setIndicatorGravity(BannerConfig.CENTER)
 
     }
-
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private fun initData() {
         DataCtrlClass.getTabDetail(this, Urls.getSellInfo, "sellId", intent.getStringExtra("id") ?: "") {
             if (it != null) {
@@ -122,7 +121,6 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
         bt_connect.setOnClickListener(this)
     }
 
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     override fun onClick(p0: View?) {
         when (p0) {
             bt_favorite -> {//收藏 操作

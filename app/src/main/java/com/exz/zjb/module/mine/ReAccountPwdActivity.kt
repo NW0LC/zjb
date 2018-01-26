@@ -20,7 +20,6 @@ class ReAccountPwdActivity : BaseActivity() {
         mTitle.text = "修改密码"
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
-        StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         return false

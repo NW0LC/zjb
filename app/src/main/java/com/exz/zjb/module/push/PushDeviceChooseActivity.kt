@@ -22,7 +22,6 @@ class PushDeviceChooseActivity : BaseActivity(), View.OnClickListener {
         //状态栏透明和间距处理
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
-        StatusBarUtil.setPaddingSmart(this, header)
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         return false

@@ -93,9 +93,9 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                     }
                     "2" -> {
 
-                        if (!it.checkResult!!.reason!!.isEmpty()) {
-                            var pop = SchemePop(this@IDProveActivity)
-                            pop.data = it.checkResult!!.reason!!
+                        if (it.checkResult?.reason?.isEmpty()!=true) {
+                            val pop = SchemePop(this@IDProveActivity)
+                            pop.data = it.checkResult?.reason.toString()
                             pop.showPopupWindow()
                         }
                         if (it.checkResult?.userName?.check != "1") {

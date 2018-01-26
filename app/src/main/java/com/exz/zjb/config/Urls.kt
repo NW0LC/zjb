@@ -296,4 +296,9 @@ object Urls{
      */
     var UpgradeApk = url + "App/Upgrade.aspx"
 
+    /**
+     * 删除系统消息
+     */
+    var deleteMessage = url + "App/Account/DeleteMessage.aspx"
+
 }

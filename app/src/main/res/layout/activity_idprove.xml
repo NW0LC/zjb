@@ -105,8 +105,8 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingBottom="35dp"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:paddingStart="@dimen/dp_10"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
                     android:paddingTop="@dimen/dp_10"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
                         <ImageView
                             android:id="@+id/img_on"
                             android:layout_width="0dp"
-                            android:layout_height="110dp"
+                            android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@mipmap/icon_id_front"
                             android:scaleType="centerCrop" />
@@ -150,7 +150,7 @@
                         <ImageView
                             android:id="@+id/img_off"
                             android:layout_width="0dp"
-                            android:layout_height="110dp"
+                            android:layout_height="100dp"
                             android:layout_marginStart="@dimen/margin_15"
                             android:layout_weight="1"
                             android:background="@mipmap/icon_id_bg"

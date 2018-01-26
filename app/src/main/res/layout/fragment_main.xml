@@ -53,20 +53,7 @@
                 android:gravity="center_horizontal"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent">
-                <TextView
-                    android:drawableTop="@mipmap/icon_main_address"
-                    android:id="@+id/mTitleImg"
-                    android:layout_marginStart="@dimen/margin_15"
-                    android:text="徐州"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
+
                 <com.flyco.roundview.RoundTextView
                     android:id="@+id/mTitle"
                     android:layout_marginStart="@dimen/margin_15"

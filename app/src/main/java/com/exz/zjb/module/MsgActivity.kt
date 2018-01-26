@@ -46,7 +46,7 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
         SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         initRecycler()
         initEvent()
-        refreshLayout.autoRefresh()
+//        refreshLayout.autoRefresh()
     }
 
     private fun initEvent() {
@@ -56,6 +56,7 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
 
     private fun initRecycler() {
         mAdapter = MsgAdapter()
+        mAdapter.setNewData(listOf(MsgBean("1"),MsgBean("1")))
         mAdapter.bindToRecyclerView(mRecyclerView)
         mAdapter.setOnLoadMoreListener(this,mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -101,5 +102,17 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
             }
         }
 
+    }
+    companion object {
+        fun <T :MsgBean>removeItem(adapter: MsgAdapter<T>,id:String){
+            val iterator = adapter.data.iterator()
+                while (iterator.hasNext()) {
+                    val temp = iterator.next()
+                    if (temp.id == id) {
+                        iterator.remove()
+                        adapter.notifyItemRemoved(adapter.data.indexOf(temp))
+                    }
+                }
+        }
     }
 }
