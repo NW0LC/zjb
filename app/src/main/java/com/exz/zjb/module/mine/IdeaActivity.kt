@@ -63,7 +63,18 @@ class IdeaActivity : BaseActivity(), View.OnClickListener {
                     toast("请输入至少11个字符的宝贵意见!")
                     return
                 }
-                DataCtrlClassX.submitFeedback(mContext,content, {
+
+                var phone=ed_phone.text.toString().trim()
+                if(phone.isEmpty()){
+                    ed_phone.setShakeAnimation()
+                    return
+                }
+
+                if(phone.length!=11){
+                    toast("请输入11位手机号!")
+                    return
+                }
+                DataCtrlClassX.submitFeedback(mContext,content,phone, {
                     if(it!=null){
                         finish()
                     }

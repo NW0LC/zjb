@@ -289,4 +289,11 @@ object Urls{
      * 我的浏览记录
      */
     var MyBrowse =url+ "App/Account/MyBrowse.aspx"
+
+
+    /*
+     * 更新接口
+     */
+    var UpgradeApk = url + "App/Upgrade.aspx"
+
 }

@@ -52,6 +52,32 @@ object DialogUtils {
     }
 
     /**
+     *
+     */
+    fun updateApk(context: Context, title: String,isMust:String,listener: () -> Unit) {
+        if(isMust == "0"){//可以忽略升级
+            dialog = CommonDialogFactory.createDialogByType(context, DialogUtil.DIALOG_TYPE_103)
+            dialog.setTitleText("发现新版本")
+            dialog.setCancelBtn("取消",{v ->
+                dialog.dismiss()
+            })
+
+        }else{ //必须升级
+            dialog = CommonDialogFactory.createDialogByType(context, 4)
+            dialog.setTitleText("发现新版本\n\n"+title)
+            dialog.setCancelable(false)
+        }
+
+        dialog.setContentText(title)
+        dialog.setOkBtn("更新") { v ->
+            dialog.dismiss()
+            listener.invoke()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+    }
+
+    /**
      * 清除搜索记录
      */
     fun deleteSearch(context: Context, listener: View.OnClickListener) {

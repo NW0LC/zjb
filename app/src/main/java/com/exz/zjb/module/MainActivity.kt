@@ -2,7 +2,9 @@ package com.exz.zjb.module
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.app.Fragment
+import com.blankj.utilcode.util.AppUtils
 import com.exz.zjb.DataCtrlClassX
 import com.exz.zjb.R
 import com.exz.zjb.bean.TabEntity
@@ -55,30 +57,52 @@ class MainActivity : BaseActivity() {
                         if (SZWUtils.checkLogin(this@MainActivity))
                             pop = MenuPop(this@MainActivity) {
                                 val viewId = it.id
-                                checkPass(this@MainActivity) {
-                                    when (viewId) {
-                                        R.id.bt_tab1 -> {
-                                            startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "3"))
-                                        }
-                                        R.id.bt_tab2 -> {
-                                            startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "4"))
-                                        }
-                                        R.id.bt_tab3 -> {
-                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "1"))
-                                        }
-                                        R.id.bt_tab4 -> {
-                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "2"))
-                                        }
-                                        R.id.bt_tab5 -> {
-                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "5"))
-                                        }
-                                        R.id.bt_tab6 -> {
-                                            startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "6"))
-                                        }
-                                        else -> {
+                                DataCtrlClassX.getUserInfo(this@MainActivity, {
+                                    refreshLayout.finishRefresh()
+                                    if (it != null) {
+                                        //实名认证：-1未申请 0审核中，1已通过 2未通过"
+                                        when (it.data?.authenticationState) {
+                                            "-1" -> {
+                                                DialogUtils.unCheck(this@MainActivity) {
+                                                    startActivity(Intent(this@MainActivity, IDProveActivity::class.java))
+                                                }
+                                            }
+                                            "2" -> {
+                                                DialogUtils.checkUnpass(this@MainActivity) {
+                                                    startActivity(Intent(this@MainActivity, IDProveActivity::class.java))
+                                                }
+                                            }
+                                            "0" -> {
+                                                DialogUtils.checking(this@MainActivity)
+                                            }
+                                            "1" -> {
+                                                when (viewId) {
+                                                    R.id.bt_tab1 -> {
+                                                        startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "3"))
+                                                    }
+                                                    R.id.bt_tab2 -> {
+                                                        startActivity(Intent(this@MainActivity, PushDeviceChooseActivity::class.java).putExtra(Intent_Push_Type, "4"))
+                                                    }
+                                                    R.id.bt_tab3 -> {
+                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "1"))
+                                                    }
+                                                    R.id.bt_tab4 -> {
+                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "2"))
+                                                    }
+                                                    R.id.bt_tab5 -> {
+                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "5"))
+                                                    }
+                                                    R.id.bt_tab6 -> {
+                                                        startActivity(Intent(this@MainActivity, PushActivity::class.java).putExtra(Intent_Push_Type, "6"))
+                                                    }
+                                                    else -> {
+                                                    }
+                                                }
+                                            }
+
                                         }
                                     }
-                                }
+                                })
 
                                 pop?.dismiss()
                             }
@@ -101,7 +125,29 @@ class MainActivity : BaseActivity() {
             override fun onTabReselect(position: Int) {
             }
         })
+
+
+
+        DataCtrlClassX.updateApk(mContext, AppUtils.getAppVersionName(),{
+            if (it != null) {
+                if (it.data?.isUpgrade.equals("1")) {
+                    DialogUtils.updateApk(mContext, it.data?.tip ?: "", it.data?.isMust ?: "", {
+                        val uri = Uri.parse(it.data?.loadUrl)
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                        if(it.data?.isMust.equals("0")){
+                            startActivity(Intent.createChooser(intent, "请选择浏览器"));
+                        }else{
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    })
+                }
+
+            }
+        })
     }
+
+
 
     companion object {
         fun checkPass(context: Context?, listener: () -> Unit) {

@@ -62,10 +62,9 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                     //vip年费开启模式：0关闭 1开启
                     if (it.data!!.modeState == "1") {
                         tv_vip.visibility = View.VISIBLE
-                        lay_indate.visibility = View.VISIBLE
+
                         endTime.text = it.data!!.endTime
                     } else {
-                        tv_vip.visibility = View.GONE
                         lay_indate.visibility = View.GONE
                     }
                     authenticationState = it.data!!.authenticationState ?: ""
@@ -79,21 +78,25 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                         }
                         "1" -> {
                             tv_state.text = "已认证"
+                            tv_vip.visibility = View.VISIBLE
                         }
                         "2" -> {
                             tv_state.text = "未通过"
                         }
 
                     }
+
+
                 }
             })
         } else {
+
             refreshLayout.finishRefresh()
             img_head.setImageURI(Urls.url + "userImg/default.png")
             tv_userName.text = "未登录"
             tv_vip.visibility = View.GONE
             tv_state.visibility = View.GONE
-            lay_indate.visibility = View.GONE
+
         }
     }
 

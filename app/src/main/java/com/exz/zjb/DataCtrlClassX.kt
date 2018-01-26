@@ -2,6 +2,7 @@ package com.exz.zjb
 
 import android.content.Context
 import com.blankj.utilcode.util.EncryptUtils
+import com.exz.zjb.bean.UpgradeBean
 import com.exz.zjb.bean.UserInfo
 import com.exz.zjb.config.Urls
 import com.lzy.okgo.OkGo
@@ -11,6 +12,7 @@ import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.utils.net.NetEntity
 import com.szw.framelibrary.utils.net.callback.DialogCallback
+import com.szw.framelibrary.utils.net.callback.JsonCallback
 import org.jetbrains.anko.toast
 
 /**
@@ -32,37 +34,37 @@ object DataCtrlClassX {
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId, MyApplication.salt).toLowerCase()
-        if (context!=null)
-        OkGo.post<NetEntity<UserInfo>>(Urls.GetUserInfo)
-                .params(params)
-                .tag(this)
-                .execute(object : DialogCallback<NetEntity<UserInfo>>(context) {
-                    override fun onSuccess(response: Response<NetEntity<UserInfo>>) {
-                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body())
-                        } else {
-                            context.toast(response.body().message)
+        if (context != null)
+            OkGo.post<NetEntity<UserInfo>>(Urls.GetUserInfo)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<UserInfo>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<UserInfo>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body())
+                            } else {
+                                context.toast(response.body().message)
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<UserInfo>>) {
+                            super.onError(response)
                             listener.invoke(null)
                         }
-                    }
 
-                    override fun onError(response: Response<NetEntity<UserInfo>>) {
-                        super.onError(response)
-                        listener.invoke(null)
-                    }
-
-                })
+                    })
     }
 
 
     /**
      * 获取用户信息
      * */
-    fun submitFeedback(context: Context, content: String, listener: (userInfo: NetEntity<Void>?) -> Unit) {
+    fun submitFeedback(context: Context, content: String, phone: String, listener: (userInfo: NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId
         params["content"] = content
-        params["mobile"] = PreferencesService.getAccountKey(context) ?: ""
+        params["mobile"] = phone
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + MyApplication.salt).toLowerCase()
         OkGo.post<NetEntity<Void>>(Urls.SubmitFeedback)
                 .params(params)
@@ -118,6 +120,34 @@ object DataCtrlClassX {
                 })
     }
 
+    /**
+     * 登录
+     * */
+    fun
+            updateApk(context: Context, version: String, listener: (s: NetEntity<UpgradeBean>?) -> Unit) {
 
+        val params = java.util.HashMap<String, String>()
+        params.put("version", version)
+        params.put("deviceType", "1")
+        params.put("requestCheck", EncryptUtils.encryptMD5ToString(version + "1", MyApplication.salt).toLowerCase())
+        OkGo.post<NetEntity<UpgradeBean>>(Urls.UpgradeApk)
+                .params(params)
+                .tag(this)
+                .execute(object : JsonCallback<NetEntity<UpgradeBean>>() {
+                    override fun onSuccess(response: Response<NetEntity<UpgradeBean>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<UpgradeBean>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
 
 }
