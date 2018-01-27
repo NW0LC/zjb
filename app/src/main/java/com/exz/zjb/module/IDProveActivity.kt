@@ -93,7 +93,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                     }
                     "2" -> {
 
-                        if (it.checkResult?.reason?.isEmpty()!=true) {
+                        if (it.checkResult?.reason?.isEmpty() != true) {
                             val pop = SchemePop(this@IDProveActivity)
                             pop.data = it.checkResult?.reason.toString()
                             pop.showPopupWindow()
@@ -146,23 +146,25 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
         when {
             ed_name.text.isEmpty() -> ed_name.setShakeAnimation()
             ed_id.text.isEmpty() -> ed_id.setShakeAnimation()
-            imgOn.isEmpty() -> toast("请传入身份证正面")
-            imgOff.isEmpty() -> toast("请传入身份证正面")
+            checkState == "1"&&imgOn.isEmpty() -> toast("请传入身份证正面")
+            checkState == "1"&&imgOff.isEmpty() -> toast("请传入身份证正面")
             else -> {
                 if (checkState == "2") {
+
                     DataCtrlClass.editAuthentication(this, ed_name.text.toString(), ed_id.text.toString(),
+                           if (imgOn.isEmpty()) "" else  EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
+                            if (imgOff.isEmpty()) "" else   EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
+                        if (it != null) {
+                            finish()
+                        }
+                    }
+                } else {
+                    DataCtrlClass.submitAuthentication(this, ed_name.text.toString(), ed_id.text.toString(),
                             EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
                             EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
                         if (it != null) {
                             finish()
                         }
-                    }
-                }
-                DataCtrlClass.submitAuthentication(this, ed_name.text.toString(), ed_id.text.toString(),
-                        EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
-                        EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
-                    if (it != null) {
-                        finish()
                     }
                 }
             }

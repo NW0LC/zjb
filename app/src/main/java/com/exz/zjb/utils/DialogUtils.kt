@@ -13,6 +13,7 @@ import com.common.controls.dialog.ICommonDialog
 import com.exz.zjb.R
 import kotlinx.android.synthetic.main.dialog_change_num.view.*
 import kotlinx.android.synthetic.main.dialog_check_ing.view.*
+import kotlinx.android.synthetic.main.dialog_check_uncheck.view.*
 import kotlinx.android.synthetic.main.dialog_check_unpass.view.*
 
 /**
@@ -227,10 +228,10 @@ object DialogUtils {
         val dlg = CoreDialog(context, com.common.alertpop.R.style.dialog, inflate, true)
         dlg.setPosition(Gravity.CENTER, 0, 0)
         dlg.setCanceledOnTouchOutside(true)
-        inflate.bt_check_unpass_close.setOnClickListener {
+        inflate.bt_check_unchecking_close.setOnClickListener {
             dlg.dismiss()
         }
-        inflate.bt_check_unpass_confirm.setOnClickListener {
+        inflate.bt_check_unchecking_confirm.setOnClickListener {
             listener.invoke()
             dlg.dismiss()
         }
