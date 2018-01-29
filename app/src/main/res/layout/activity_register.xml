@@ -183,7 +183,6 @@
                         android:id="@+id/tv_check"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@mipmap/ic_check_yellow"
                         android:drawablePadding="@dimen/dp_4"
                         android:text="注册即同意桩机宝"
                         android:textColor="@color/MaterialGrey400"

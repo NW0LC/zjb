@@ -53,23 +53,25 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     */
     private fun getUserInfo() {
         if (MyApplication.checkUserLogin()) {
-            DataCtrlClassX.getUserInfo(context!!, {
+            DataCtrlClassX.getUserInfo(context, {
                 refreshLayout.finishRefresh()
                 if (it != null) {
-                    img_head.setImageURI(it.data!!.headImg)
-                    tv_userName.text = it.data!!.nickname
+                    img_head.setImageURI(it.data?.headImg)
+                    tv_userName.text = it.data?.nickname
 
                     //vip年费开启模式：0关闭 1开启
-                    if (it.data!!.modeState == "1") {
+                    if (it.data?.modeState == "1") {
                         tv_vip.visibility = View.VISIBLE
 
-                        endTime.text = it.data!!.endTime
+                        endTime.text = it.data?.endTime
+                        lay_indate.visibility = View.VISIBLE
                     } else {
-                        lay_indate.visibility = View.GONE
+                        lay_indate.visibility = View.INVISIBLE
                     }
-                    authenticationState = it.data!!.authenticationState ?: ""
+                    authenticationState = it.data?.authenticationState ?: ""
                     //实名认证：-1未申请 0审核中，1已通过 2未通过"
-                    when (it.data!!.authenticationState) {
+                    tv_state.visibility = View.VISIBLE
+                    when (it.data?.authenticationState) {
                         "-1" -> {
                             tv_state.text = "未认证"
                         }
@@ -229,6 +231,7 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == LoginActivity.RESULT_LOGIN_CANCELED) {
             (activity as MainActivity).mainTabBar.currentTab = 0
+            (activity as MainActivity).oldPosition = 0
         } else if (resultCode == Activity.RESULT_OK) {
             //刷新
             onRefresh(refreshLayout)

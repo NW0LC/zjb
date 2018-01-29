@@ -79,19 +79,19 @@ object SZWUtils {
      * @param intent   事件
      * @return true登录
      */
-    fun checkLogin(mContext: Activity, intent: Intent = Intent(), clazzName: String = ""): Boolean {
+    fun checkLogin(mContext: Activity?, intent: Intent = Intent(), clazzName: String = ""): Boolean {
         return if (!MyApplication.checkUserLogin()) {
             val login = Intent(mContext, LoginActivity::class.java)
             if (clazzName.isNotEmpty()) {
                 login.putExtra(Intent_ClassName, clazzName)
             }
             login.putExtras(intent)
-            mContext.startActivityForResult(login, 0xc8)
-            mContext.overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out)
+            mContext?.startActivityForResult(login, 0xc8)
+            mContext?.overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out)
             false
         } else {
             try {
-                mContext.startActivityForResult(intent, 0xc8)
+                mContext?.startActivityForResult(intent, 0xc8)
             } catch (e: Exception) {
             }
             true
@@ -256,9 +256,9 @@ object SZWUtils {
      */
     fun getTimeSortData(): ArrayList<ListFilterBean> {
         val filterBeans = ArrayList<ListFilterBean>()
-        filterBeans.add(ListFilterBean("1", "默认"))
-        filterBeans.add(ListFilterBean("2", "截止日期由远到近"))
-        filterBeans.add(ListFilterBean("3", "截止日期由近到远"))
+        filterBeans.add(ListFilterBean("0", "默认"))
+        filterBeans.add(ListFilterBean("1", "发布时间由远到近"))
+        filterBeans.add(ListFilterBean("2", "发布时间由近到远"))
         return filterBeans
     }
     /**
@@ -266,11 +266,11 @@ object SZWUtils {
      */
     fun getYearSortData(): ArrayList<ListFilterBean> {
         val filterBeans = ArrayList<ListFilterBean>()
-        filterBeans.add(ListFilterBean("1", "不限"))
-        filterBeans.add(ListFilterBean("2", "一年以下"))
-        filterBeans.add(ListFilterBean("3", "1(含)-2年"))
-        filterBeans.add(ListFilterBean("4", "2(含)-3年"))
-        filterBeans.add(ListFilterBean("5", "3年以上"))
+        filterBeans.add(ListFilterBean("", "不限"))
+        filterBeans.add(ListFilterBean("1", "一年以下"))
+        filterBeans.add(ListFilterBean("1,2", "1(含)-2年"))
+        filterBeans.add(ListFilterBean("2,3", "2(含)-3年"))
+        filterBeans.add(ListFilterBean("3", "3年以上"))
         return filterBeans
     }
 }

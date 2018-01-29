@@ -62,7 +62,7 @@ object DataCtrlClassX {
     fun submitFeedback(context: Context, content: String, phone: String, listener: (userInfo: NetEntity<Void>?) -> Unit) {
         val params = HashMap<String, String>()
         params["userId"] = MyApplication.loginUserId
-        params["content"] = content
+        params["substance"] = content
         params["mobile"] = phone
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId + MyApplication.salt).toLowerCase()
         OkGo.post<NetEntity<Void>>(Urls.SubmitFeedback)

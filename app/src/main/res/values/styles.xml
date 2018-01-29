@@ -17,4 +17,7 @@
         <item name="android:minHeight">13dip</item>
         <item name="android:maxHeight">25dip</item>
     </style>
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
 </resources>

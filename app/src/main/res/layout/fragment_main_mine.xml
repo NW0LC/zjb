@@ -44,17 +44,16 @@
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/bt_header"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="wrap_content">
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/img_head"
                         android:layout_width="@dimen/margin_65"
                         android:layout_height="@dimen/margin_65"
-                        android:layout_marginTop="55dp"
+                        android:layout_marginTop="35dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:placeholderImage="@mipmap/icon_main_msg_off"
                         app:roundAsCircle="true"
                         app:roundingBorderColor="@color/White"
                         app:roundingBorderWidth="@dimen/margin_0.5"
@@ -70,8 +69,8 @@
                         android:drawableEnd="@mipmap/icon_next"
                         android:drawablePadding="@dimen/margin_5"
                         android:ellipsize="end"
-                        android:lines="1"
                         android:gravity="center"
+                        android:lines="1"
                         android:minWidth="@dimen/margin_90"
                         android:textColor="@color/MaterialGrey800"
                         android:textSize="14sp"
@@ -79,8 +78,7 @@
                         app:layout_constraintLeft_toRightOf="@+id/img_head"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/img_head"
-                        tool:background="@color/MaterialGrey200"
-                        />
+                        tool:background="@color/MaterialGrey200" />
 
                     <LinearLayout
                         android:id="@+id/lay_state"
@@ -125,27 +123,21 @@
                             app:rv_cornerRadius="@dimen/margin_20" />
                     </LinearLayout>
 
-                    <com.github.mmin18.widget.RealtimeBlurView
-                        android:id="@+id/lay_indate_blurView"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/lay_indate"
-                        app:layout_constraintEnd_toEndOf="@+id/lay_indate"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/lay_indate"
-                        app:realtimeBlurRadius="10dp" />
 
                     <LinearLayout
                         android:id="@+id/lay_indate"
-                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:background="@color/blur_bg_white"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:padding="8dp"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lay_state">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -155,10 +147,10 @@
                             android:textSize="@dimen/sp_12" />
 
                         <TextView
+                            android:id="@+id/endTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2017-47-44"
-                            android:id="@+id/endTime"
                             android:textColor="@color/MaterialRed500"
                             android:textSize="@dimen/sp_12" />
                     </LinearLayout>

@@ -44,7 +44,9 @@ class LoginActivity : BaseActivity() {
 
     override fun setInflateId() = R.layout.activity_login
 
-
+    override fun init() {
+        ed_phone.setText(PreferencesService.getAccountKey(this) ?: "")
+    }
     fun forgetPwd(v: View) {
         startActivity(Intent(this, ForgetPwdActivity::class.java))
     }
@@ -86,8 +88,8 @@ class LoginActivity : BaseActivity() {
     }
 
     companion object {
-        val RESULT_LOGIN_OK = 2000
-        val RESULT_LOGIN_CANCELED = 3000
+        const val RESULT_LOGIN_OK = 2000
+        const val RESULT_LOGIN_CANCELED = 3000
 
         fun loginSuccess(context: Activity, mobile: String, pwd: String, user: User?) {
             PreferencesService.saveAccount(context, mobile, pwd)

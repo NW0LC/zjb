@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.layout_mine_center_bt.view.*
 class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolder>(ArrayList<T>()) {
     var isDelete=false
     var isEdit=false
+    var isPhone=true
     init {
         addItemType(GoodsBean.TYPE_1, R.layout.item_main_tab)
         addItemType(GoodsBean.TYPE_2, R.layout.item_main_tab_sale)
@@ -22,7 +23,7 @@ class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolde
     override fun convert(helper: BaseViewHolder, item: T) {
         val itemView=helper.itemView
         itemView.lay_btn.visibility= View.GONE
-        itemView.lay_btn.visibility=if (isDelete&&isEdit)View.VISIBLE else View.GONE
+        itemView.lay_btn.visibility=if (isDelete||isEdit)View.VISIBLE else View.GONE
         itemView.tv_left.visibility=if (isDelete)View.VISIBLE else View.GONE
         itemView.tv_right.visibility=if (isEdit)View.VISIBLE else View.GONE
         helper.addOnClickListener(R.id.tv_left)
@@ -32,6 +33,8 @@ class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolde
 
         when (helper.itemViewType) {
             GoodsBean.TYPE_1-> {
+                itemView.line.visibility=if (isPhone)View.VISIBLE else View.GONE
+                itemView.img.visibility=if (isPhone)View.VISIBLE else View.GONE
                 itemView.tv_title.text=item.title
                 itemView.tv_address.text=item.provinceCity
                 itemView.tv_date.text=item.date

@@ -35,15 +35,6 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
             bt_code -> {//获取验证码
                 getSecurityCode()
             }
-            tv_check -> {
-                if (tv_check.tag == true) {
-                    tv_check.tag = false
-                    tv_check.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.ic_check_gray), null, null, null)
-                } else {
-                    tv_check.tag = true
-                    tv_check.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.ic_check_yellow), null, null, null)
-                }
-            }
             bt_protocol -> {
                 //协议
                 val intent = Intent(this, MyWebActivity::class.java)
@@ -147,9 +138,6 @@ class RegisterActivity : BaseActivity(), View.OnClickListener {
         } else if (TextUtils.isEmpty(ed_pwd.text.toString().trim())) {
             ed_pwd.setShakeAnimation()
             toast("请输入密码!")
-            return
-        } else if (tv_check.tag == false) {
-            toast("请同意桩机宝用户协议")
             return
         } else {
             DataCtrlClass.register(this, ed_phone.text.toString(), ed_code.text.toString(), ed_pwd.text.toString()) {

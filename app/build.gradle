@@ -19,17 +19,19 @@ android {
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true    // Enable RS support
         ndk {
-            abiFilters "armeabi", "armeabi-v7a"
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
         //        设置友盟统计key ,可在build里面
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY  : "635a09fdad601abbb4b24fe8", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY  : "eb7763da247f4dbd790417b1", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
 
 //                AMap_Key : "4dbce37156db4b2624e343a9b787b610", //高德key
 
-                UMENG_APPKEY  : "5a3385fcf43e48403b000383", //友盟key
+//                UMENG_APPKEY  : "5a3385fcf43e48403b000383", //友盟key
 //                TencentKey  : "U4HBZ-Z6OCQ-4R45D-G7WXM-LTJSF-ZWFGC", //腾讯地图
 
 //                EASEMOB_APPKEY : "1175170810115218#logistics", //环信应用的AppKey
@@ -63,7 +65,10 @@ dependencies {
     compile "io.objectbox:objectbox-android:$objectboxVersion"
     compile "io.objectbox:objectbox-kotlin:$objectboxVersion"
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
 }
 allprojects {
     repositories {

@@ -76,7 +76,7 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initBanner() {
-        banner.layoutParams.height= SizeUtils.dp2px(130f)* ScreenUtils.getScreenWidth()/SizeUtils.dp2px(320f)
+        banner.layoutParams.height= SizeUtils.dp2px(230f)* ScreenUtils.getScreenWidth()/SizeUtils.dp2px(320f)
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         //设置图片加载器
         banner.setImageLoader(BannerImageLoader())
@@ -89,6 +89,7 @@ class GoodsDetailActivity : BaseActivity(), View.OnClickListener {
 
     }
     private fun initData() {
+        DataCtrlClass.browseAction(this,"1",intent.getStringExtra("id") ?: "","1"){}
         DataCtrlClass.getTabDetail(this, Urls.getSellInfo, "sellId", intent.getStringExtra("id") ?: "") {
             if (it != null) {
                 goodsBean = it

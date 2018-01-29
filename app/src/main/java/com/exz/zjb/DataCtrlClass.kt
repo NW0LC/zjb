@@ -1,11 +1,13 @@
 package com.exz.zjb
 
 import android.content.Context
+import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.FileIOUtils
 import com.exz.zjb.bean.*
 import com.exz.zjb.config.Urls
+import com.exz.zjb.config.Urls.browseAction
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 import com.lzy.okgo.request.PostRequest
@@ -28,13 +30,13 @@ object DataCtrlClass {
     /**
      * 登录
      * */
-    fun loginNoDialog(mobile: String, pwd: String, listener: (userId: NetEntity<User>?) -> Unit) {
+    fun loginNoDialog(context: Context,mobile: String, pwd: String, listener: (userId: NetEntity<User>?) -> Unit) {
 
         val params = HashMap<String, String>()
         params["mobile"] = mobile
         params["password"] = pwd
         params["deviceType"] = "1"
-//      params.put("jpushToken", JPushInterface.getRegistrationID(this))
+        params["jpushToken"] = JPushInterface.getRegistrationID(context)
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile + pwd, salt).toLowerCase()
         OkGo.post<NetEntity<User>>(Urls.Login)
                 .params(params)
@@ -70,7 +72,7 @@ object DataCtrlClass {
         params["mobile"] = mobile
         params["password"] = pwd
         params["deviceType"] = "1"
-//      params.put("jpushToken", JPushInterface.getRegistrationID(this))
+        params["jpushToken"] = JPushInterface.getRegistrationID(context)
         params["requestCheck"] = EncryptUtils.encryptMD5ToString(mobile + pwd, salt).toLowerCase()
         OkGo.post<NetEntity<User>>(Urls.Login)
                 .params(params)
@@ -198,6 +200,7 @@ object DataCtrlClass {
                         } else {
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -618,6 +621,40 @@ object DataCtrlClass {
 
                 })
     }
+    /**
+     *新增或删除浏览记录
+     * */
+    fun browseAction(context: Context, typeId: String, objectId: String, collectType: String, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
+//        userId	string	必填	用户id
+//        typeId	string	必填	类型：1出售信息 2求购信息 3出租信息 4求租信息 5招聘信息 6求职信息
+//        objectId	string	必填	收藏对象id
+//        collectType	string	必填	0:删除 1新增
+//        requestCheck	string	必填	验证请求
+        val params = HashMap<String, String>()
+        params["userId"] = MyApplication.loginUserId
+        params["typeId"] = typeId
+        params["objectId"] = objectId
+        params["collectType"] = collectType
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString(MyApplication.loginUserId+typeId, salt).toLowerCase()
+        OkGo.post<NetEntity<Void>>(browseAction)
+                .params(params)
+                .tag(this)
+                .execute(object : DialogCallback<NetEntity<Void>>(context) {
+                    override fun onSuccess(response: Response<NetEntity<Void>>) {
+                        if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                            listener.invoke(response.body())
+                        } else {
+                            listener.invoke(null)
+                        }
+                    }
+
+                    override fun onError(response: Response<NetEntity<Void>>) {
+                        super.onError(response)
+                        listener.invoke(null)
+                    }
+
+                })
+    }
 
     /**
      *  push 编辑
@@ -666,13 +703,13 @@ object DataCtrlClass {
     /**
      *  push 删除
      * */
-    fun pushDelete(context: Context?,postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, listener: (goodsBean: Void?) -> Unit) {
+    fun pushDelete(context: Context?,postRequest: Request<NetEntity<Void>, PostRequest<NetEntity<Void>>>, listener: (goodsBean: NetEntity<Void>?) -> Unit) {
         if (context!=null)
         postRequest.tag(this)
                 .execute(object : DialogCallback<NetEntity<Void>>(context) {
                     override fun onSuccess(response: Response<NetEntity<Void>>) {
                         if (response.body().getCode() == Constants.NetCode.SUCCESS) {
-                            listener.invoke(response.body().data)
+                            listener.invoke(response.body())
                         } else {
                             listener.invoke(null)
                         }

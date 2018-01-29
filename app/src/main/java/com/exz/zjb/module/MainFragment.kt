@@ -22,6 +22,7 @@ import com.exz.zjb.imageloader.BannerImageLoader
 import com.exz.zjb.module.MainActivity.Companion.checkPass
 import com.exz.zjb.module.SearchActivity.Companion.Intent_isShowSoft
 import com.exz.zjb.module.TabActivity.Companion.Intent_Tab
+import com.exz.zjb.utils.SZWUtils
 import com.exz.zjb.widget.MyWebActivity
 import com.exz.zjb.widget.MyWebActivity.Intent_Title
 import com.exz.zjb.widget.MyWebActivity.Intent_Url
@@ -138,6 +139,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                if (SZWUtils.checkLogin(activity))
                 checkPass(context) {
                     startActivity(Intent(context,GoodsDetailActivity::class.java).putExtra("id",mAdapter.data[position].id))
                 }
@@ -175,7 +177,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         headerView.banner.setDelayTime(3000)
         //设置指示器位置（当banner模式中有指示器时）
         headerView.banner.setIndicatorGravity(BannerConfig.CENTER)
-
+        headerView.banner.setOnBannerListener(this)
 
         headerView.banner2.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         //设置图片加载器

@@ -41,7 +41,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minEms="3"
+                        android:minEms="4"
                         android:text="手机号"
                         android:textColor="@color/MaterialGrey700"
                         android:textSize="@dimen/sp_14" />
@@ -50,7 +50,7 @@
                         android:id="@+id/ed_phone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:background="@drawable/ed_bg"
                         android:hint="请输入手机号码"
                         android:textCursorDrawable="@drawable/color_cursor"
@@ -73,7 +73,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minEms="3"
+                        android:minEms="4"
                         android:text="密码"
                         android:textColor="@color/MaterialGrey700"
                         android:textSize="@dimen/sp_14" />
@@ -82,11 +82,43 @@
                         android:id="@+id/ed_pwd"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:background="@drawable/ed_bg"
                         android:hint="请输入新密码"
                         android:textCursorDrawable="@drawable/color_cursor"
                         android:textColorHint="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lay_pwdConfirm"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_pwd">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minEms="4"
+                        android:text="确认密码"
+                        android:textColor="@color/MaterialGrey700"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.szw.framelibrary.view.ClearWriteEditText
+                        android:id="@+id/ed_pwdConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/margin_5"
+                        android:background="@drawable/ed_bg"
+                        android:hint="请再次输入新密码"
+                        android:textColorHint="@color/MaterialGrey400"
+                        android:textCursorDrawable="@drawable/color_cursor"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
                 <LinearLayout
@@ -104,7 +136,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minEms="3"
+                        android:minEms="4"
                         android:text="验证码"
                         android:textColor="@color/MaterialGrey700"
                         android:textSize="@dimen/sp_14" />
@@ -114,7 +146,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginStart="@dimen/margin_5"
                         android:background="@drawable/ed_bg"
                         android:textCursorDrawable="@drawable/color_cursor"
                         android:hint="请输入验证码"
@@ -155,9 +187,9 @@
                     android:text="确定找回"
                     android:textColor="@color/MaterialGrey700"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/lay_pwd"
-                    app:layout_constraintStart_toStartOf="@+id/lay_pwd"
-                    app:layout_constraintTop_toBottomOf="@+id/lay_pwd"
+                    app:layout_constraintEnd_toEndOf="@+id/lay_pwdConfirm"
+                    app:layout_constraintStart_toStartOf="@+id/lay_pwdConfirm"
+                    app:layout_constraintTop_toBottomOf="@+id/lay_pwdConfirm"
                     app:rv_backgroundColor="@color/colorPrimaryDark"
                     app:rv_backgroundPressColor="@color/Orange"
                     app:rv_cornerRadius="20dp" />

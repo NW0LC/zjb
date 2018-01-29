@@ -8,8 +8,10 @@ import android.util.TypedValue
 import android.view.View
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.RegexUtils
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
+import com.exz.zjb.bean.CheckAuthenticationBean
 import com.exz.zjb.pop.SchemePop
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
@@ -30,7 +32,7 @@ import org.jetbrains.anko.toast
 class IDProveActivity : BaseActivity(), View.OnClickListener {
     private var imgOn = ""
     private var imgOff = ""
-    private var checkState = ""
+    private var checkAuthenticationBean: CheckAuthenticationBean? = null
     override fun onClick(p0: View?) {
         if (p0 == img_on) {
             PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), 100, false)
@@ -81,7 +83,7 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
         img_off.setOnClickListener(this)
         DataCtrlClass.checkAuthentication(this) {
             if (it != null) {
-                checkState = it.checkState
+                checkAuthenticationBean = it
                 when (it.checkState) {//'-1:未提交审核信息 0未审核(审核中) 1审核通过 2拒绝
                     "-1" -> {
 
@@ -106,12 +108,12 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                         }
                         ed_name.setText(it.checkResult?.userName?.value ?: "")
                         ed_id.setText(it.checkResult?.IDNumber?.value ?: "")
-                        if (it.checkResult?.IDCardPositive?.check != "1")
-                            GlideApp.with(this).load(it.checkResult?.IDCardPositive?.value
-                                    ?: "").into(img_on)
-                        if (it.checkResult?.IDCardReverse?.check != "1")
-                            GlideApp.with(this).load(it.checkResult?.IDCardReverse?.value
-                                    ?: "").into(img_off)
+                        GlideApp.with(this).load(it.checkResult?.IDCardPositive?.value
+                                ?: "").into(img_on)
+                        GlideApp.with(this).load(it.checkResult?.IDCardReverse?.value
+                                ?: "").into(img_off)
+                        tv_imgOnPass.visibility = if (it.checkResult?.IDCardPositive?.check == "2") View.VISIBLE else View.GONE
+                        tv_imgOffPass.visibility = if (it.checkResult?.IDCardReverse?.check == "2") View.VISIBLE else View.GONE
                         ed_name.addTextChangedListener(object : TextWatcher {
                             override fun afterTextChanged(p0: Editable?) {
                                 ed_name.setTextColor(ContextCompat.getColor(this@IDProveActivity, R.color.MaterialGrey700))
@@ -144,16 +146,17 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
 
     fun submit(view: View) {
         when {
-            ed_name.text.isEmpty() -> ed_name.setShakeAnimation()
-            ed_id.text.isEmpty() -> ed_id.setShakeAnimation()
-            checkState == "1"&&imgOn.isEmpty() -> toast("请传入身份证正面")
-            checkState == "1"&&imgOff.isEmpty() -> toast("请传入身份证正面")
+            ed_name.text.isEmpty()||ed_name.currentTextColor ==ContextCompat.getColor(this, R.color.MaterialRed400) -> ed_name.setShakeAnimation()
+            ed_id.text.isEmpty()||ed_name.currentTextColor ==ContextCompat.getColor(this, R.color.MaterialRed400) -> ed_id.setShakeAnimation()
+            RegexUtils.isIDCard18(ed_id.text.toString())-> toast("请输入正确的身份证号码")
+            checkAuthenticationBean == null && imgOn.isEmpty() || checkAuthenticationBean?.checkResult?.IDCardPositive?.check != "1" && imgOn.isEmpty() -> toast("请传入身份证正面")
+            checkAuthenticationBean == null && imgOff.isEmpty() || checkAuthenticationBean?.checkResult?.IDCardReverse?.check != "1" && imgOff.isEmpty() -> toast("请传入身份证正面")
             else -> {
-                if (checkState == "2") {
+                if (checkAuthenticationBean?.checkState == "2") {
 
-                    DataCtrlClass.editAuthentication(this, ed_name.text.toString(), ed_id.text.toString(),
-                           if (imgOn.isEmpty()) "" else  EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
-                            if (imgOff.isEmpty()) "" else   EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
+                    DataCtrlClass.editAuthentication(this, if (checkAuthenticationBean?.checkResult?.userName?.check == "2") ed_name.text.toString() else "", if (checkAuthenticationBean?.checkResult?.IDNumber?.check == "2") ed_id.text.toString() else "",
+                            if (imgOn.isEmpty()) "" else EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOn.replace("file://", ""))),
+                            if (imgOff.isEmpty()) "" else EncodeUtils.base64Encode2String(FileIOUtils.readFile2BytesByStream(imgOff.replace("file://", "")))) {
                         if (it != null) {
                             finish()
                         }
@@ -180,9 +183,12 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
                 if (requestCode == 100) {
                     imgOn = ("file:///" + (images[0] as ImageItem).path)
                     GlideApp.with(this).load(imgOn).into(img_on)
+                    tv_imgOnPass.visibility = View.GONE
+
                 } else if (requestCode == 200) {
                     imgOff = ("file:///" + (images[0] as ImageItem).path)
                     GlideApp.with(this).load(imgOff).into(img_off)
+                    tv_imgOffPass.visibility =View.GONE
                 }
             }
         } catch (e: Exception) {

@@ -1,17 +1,11 @@
 package com.exz.zjb.module
 
-import android.content.Intent
 import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.view.View
 import com.exz.zjb.DataCtrlClass
 import com.exz.zjb.R
-import com.exz.zjb.config.Urls
-import com.exz.zjb.widget.MyWebActivity
-import com.exz.zjb.widget.MyWebActivity.Intent_Title
-import com.exz.zjb.widget.MyWebActivity.Intent_Url
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.PreferencesService
 import com.szw.framelibrary.observer.SmsContentObserver
@@ -19,7 +13,7 @@ import com.szw.framelibrary.utils.SZWUtils
 import com.szw.framelibrary.utils.StatusBarUtil
 import com.szw.framelibrary.utils.StringUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_forget_pwd.*
 import org.jetbrains.anko.toast
 
 /**
@@ -44,7 +38,7 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
         return false
     }
 
-    override fun setInflateId() = R.layout.activity_register
+    override fun setInflateId() = R.layout.activity_forget_pwd
     override fun init() {
         smsContentObserver = SZWUtils.registerSMS(this, SZWUtils.patternCode(this, ed_code, 4))
         val currentTime = System.currentTimeMillis()
@@ -58,8 +52,6 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
 
         bt_register.setOnClickListener(this)
         bt_code.setOnClickListener(this)
-        tv_check.setOnClickListener(this)
-        bt_protocol.setOnClickListener(this)
     }
 
     private fun downTimer(l: Long) {
@@ -119,10 +111,12 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
             return
         } else if (TextUtils.isEmpty(ed_pwd.text.toString().trim())) {
             ed_pwd.setShakeAnimation()
-            toast("请输入密码!")
             return
-        } else if (tv_check.tag == false) {
-            toast("请同意桩机宝用户协议")
+        }else if (TextUtils.isEmpty(ed_pwdConfirm.text.toString().trim())) {
+            ed_pwdConfirm.setShakeAnimation()
+            return
+        } else if (ed_pwd.text.toString().trim()!=ed_pwdConfirm.text.toString().trim()) {
+            toast("两次密码不一致！")
             return
         } else {
             DataCtrlClass.forgetPassword(this, ed_phone.text.toString(), ed_code.text.toString(), ed_pwd.text.toString()) {
@@ -135,28 +129,13 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when (p0) {
-            bt_register -> {//注册
+            bt_register -> {
                 checkRegister()
             }
             bt_code -> {//获取验证码
                 getSecurityCode()
             }
-            tv_check -> {
-                if (tv_check.tag == true) {
-                    tv_check.tag = false
-                    tv_check.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.ic_check_gray), null, null, null)
-                } else {
-                    tv_check.tag = true
-                    tv_check.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.ic_check_yellow), null, null, null)
-                }
-            }
-            bt_protocol -> {
-                //协议
-                val intent = Intent(this, MyWebActivity::class.java)
-                intent.putExtra(Intent_Url, "")
-                intent.putExtra(Intent_Title, "用户使用协议")
-                startActivity(intent)
-            }
+
             else -> {
             }
         }

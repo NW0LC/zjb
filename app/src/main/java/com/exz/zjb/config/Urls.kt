@@ -301,4 +301,9 @@ object Urls{
      */
     var deleteMessage = url + "App/Account/DeleteMessage.aspx"
 
+    /**
+     * 新增或删除浏览记录
+     */
+    var browseAction = url + "App/Account/BrowseAction.aspx"
+
 }

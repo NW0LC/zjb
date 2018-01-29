@@ -75,6 +75,7 @@
                         android:id="@+id/ed_phone"
                         android:textCursorDrawable="@drawable/color_cursor"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/margin_15"
                         android:background="@drawable/ed_bg"

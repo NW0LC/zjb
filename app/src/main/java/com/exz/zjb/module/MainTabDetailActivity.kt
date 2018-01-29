@@ -33,7 +33,7 @@ class MainTabDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshLis
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, scrollView)
         StatusBarUtil.setMargin(this, header)
-        mTitle.text = "商品详情"
+        mTitle.text = "信息详情"
         toolbar.setNavigationOnClickListener { finish() }
         SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         return false
@@ -78,6 +78,7 @@ class MainTabDetailActivity : BaseActivity(), View.OnClickListener, OnRefreshLis
     }
 
     private fun initData() {
+        DataCtrlClass.browseAction(this,typeId,intent.getStringExtra("id") ?: "","1"){}
         DataCtrlClass.getTabDetail(this, url, key, intent.getStringExtra("id") ?: "") {
             refreshLayout?.finishRefresh()
             if (it != null) {

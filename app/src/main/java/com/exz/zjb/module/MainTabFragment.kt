@@ -102,6 +102,7 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, SizeUtils.dp2px(1f), ContextCompat.getColor(context!!, R.color.MaterialGrey400)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                if (SZWUtils.checkLogin(activity))
                 checkPass(context) {
                     startActivity(Intent(context, MainTabDetailActivity::class.java).putExtra("id", mAdapter.data[position].id)
                             .putExtra(Intent_Type, arguments?.get(Intent_Type).toString()))
@@ -113,6 +114,7 @@ class MainTabFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.Re
                 val mEntity = mAdapter.data[position]
                 when (view.id) {
                     R.id.img -> {
+                        if (SZWUtils.checkLogin(activity))
                         checkPass(context) {
                             DialogUtils.Call(context as BaseActivity, mEntity.mobile)
                         }

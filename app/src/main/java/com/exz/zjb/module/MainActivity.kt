@@ -28,7 +28,7 @@ class MainActivity : BaseActivity() {
     private val mIconSelectIds = intArrayOf(R.mipmap.icon_main_on, R.mipmap.icon_main_push, R.mipmap.icon_mine_on)
     private val mTabEntities = ArrayList<CustomTabEntity>()
     private val mFragments = ArrayList<Fragment>()
-    private var oldPosition = 0
+    var oldPosition = 0
     private var newPosition = 0
 
     private var pop: MenuPop? = null
@@ -57,6 +57,7 @@ class MainActivity : BaseActivity() {
                         if (SZWUtils.checkLogin(this@MainActivity))
                             pop = MenuPop(this@MainActivity) {
                                 val viewId = it.id
+                                if (SZWUtils.checkLogin(this@MainActivity))
                                 checkPass(this@MainActivity) {
                                     when (viewId) {
                                         R.id.bt_tab1 -> {
