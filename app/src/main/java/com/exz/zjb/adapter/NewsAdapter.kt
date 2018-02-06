@@ -12,7 +12,7 @@ class NewsAdapter<T : HotNewsBean> : BaseQuickAdapter<T, BaseViewHolder>(R.layou
 
     override fun convert(helper: BaseViewHolder, item: T) {
         val itemView=helper.itemView
-        GlideApp.with(mContext).load(item.url).into(itemView.img)
+        GlideApp.with(mContext).load(item.image).into(itemView.img)
         itemView.tv_title.text=item.title
         itemView.tv_count.text=item.clickRate
         itemView.tv_date.text=item.date

@@ -143,8 +143,13 @@ class PushActivity : BaseActivity(), View.OnClickListener {
                     provinceId = it.provinceId
                     cityId = it.cityId
                     optionsAddress1 = listAddress?.indexOfFirst { it.key == provinceId } ?: 0
-                    optionsAddress2 = listAddress?.get(optionsAddress1)?.CityList?.indexOfFirst { it.key == cityId } ?: 0
+                    if (optionsAddress1 != -1){
+                        optionsAddress2 = listAddress?.get(optionsAddress1)?.CityList?.indexOfFirst { it.key == cityId } ?: 0
                     tv_address.text = String.format(listAddress?.get(optionsAddress1)?.value + "-" + listAddress?.get(optionsAddress1)?.CityList?.get(optionsAddress2)?.value)
+                }else{
+                        optionsAddress1=0
+                        optionsAddress2=0
+                    }
                     ed_date.setText(it.factoryYear)
                     ed_type.setText(it.modelName)
                     ed_description.setText(it.description)

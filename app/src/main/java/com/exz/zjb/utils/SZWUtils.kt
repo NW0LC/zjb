@@ -267,7 +267,7 @@ object SZWUtils {
     fun getYearSortData(): ArrayList<ListFilterBean> {
         val filterBeans = ArrayList<ListFilterBean>()
         filterBeans.add(ListFilterBean("", "不限"))
-        filterBeans.add(ListFilterBean("1", "一年以下"))
+        filterBeans.add(ListFilterBean("0,1", "一年以下"))
         filterBeans.add(ListFilterBean("1,2", "1(含)-2年"))
         filterBeans.add(ListFilterBean("2,3", "2(含)-3年"))
         filterBeans.add(ListFilterBean("3", "3年以上"))

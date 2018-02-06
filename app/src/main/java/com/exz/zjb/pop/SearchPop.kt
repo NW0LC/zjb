@@ -34,6 +34,8 @@ class SearchPop(context: Activity, private val listener: (str: String,title:Stri
         inflate.tab_4.setOnClickListener(this)
         inflate.tab_5.setOnClickListener(this)
         inflate.tab_6.setOnClickListener(this)
+        inflate.tab_7.setOnClickListener(this)
+        inflate.tab_8.setOnClickListener(this)
         return inflate
     }
 

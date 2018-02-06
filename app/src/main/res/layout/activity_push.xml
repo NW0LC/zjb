@@ -223,7 +223,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="请输入"
+                        android:hint="请输入(必填)"
                         android:inputType="phone"
                         android:paddingBottom="15dp"
                         android:paddingTop="15dp"

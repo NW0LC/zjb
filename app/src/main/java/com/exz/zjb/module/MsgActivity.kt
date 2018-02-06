@@ -46,7 +46,7 @@ class MsgActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
         SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         initRecycler()
         initEvent()
-//        refreshLayout.autoRefresh()
+        refreshLayout.autoRefresh()
     }
 
     private fun initEvent() {

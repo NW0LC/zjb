@@ -29,7 +29,7 @@ class AddressPop(context: Activity?, listener: (title: String, provinceId: Strin
             if (firstSetData) {//只走一次
                 firstSetData=false
                 for (provinceBean in value) {
-                    provinceBean.CityList?.add(0,ProvincesBean.CitiesBean("0","不限"))
+                    provinceBean.CityList?.add(0,ProvincesBean.CitiesBean("","不限"))
                 }
                 val provinceBean = ProvincesBean()
                 provinceBean.ProvinceName = "全部"

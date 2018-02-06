@@ -1,6 +1,8 @@
 package com.exz.zjb
 
+import android.app.Activity
 import android.content.Context
+import android.view.View
 import cn.jpush.android.api.JPushInterface
 import com.blankj.utilcode.util.EncodeUtils
 import com.blankj.utilcode.util.EncryptUtils
@@ -241,6 +243,7 @@ object DataCtrlClass {
                         } else {
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -281,6 +284,7 @@ object DataCtrlClass {
                         } else {
                             listener.invoke(null)
                         }
+                        context.toast(response.body().message)
                     }
 
                     override fun onError(response: Response<NetEntity<Void>>) {
@@ -338,6 +342,32 @@ object DataCtrlClass {
                         }
 
                         override fun onError(response: Response<NetEntity<ArrayList<BannersBean>>>) {
+                            super.onError(response)
+                            listener.invoke(null)
+                        }
+
+                    })
+    }
+    /**
+     * 首页_Banner
+     * */
+    fun banner2(context: Context?, listener: (userId: BannersBean?) -> Unit) {
+        val params = HashMap<String, String>()
+        params["requestCheck"] = EncryptUtils.encryptMD5ToString("HomeBanner", salt).toLowerCase()
+        if (context != null)
+            OkGo.post<NetEntity<BannersBean>>(Urls.homeBanner)
+                    .params(params)
+                    .tag(this)
+                    .execute(object : DialogCallback<NetEntity<BannersBean>>(context) {
+                        override fun onSuccess(response: Response<NetEntity<BannersBean>>) {
+                            if (response.body().getCode() == Constants.NetCode.SUCCESS) {
+                                listener.invoke(response.body().data)
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<NetEntity<BannersBean>>) {
                             super.onError(response)
                             listener.invoke(null)
                         }
@@ -440,6 +470,7 @@ object DataCtrlClass {
         params["keyword"] = keyword
         params["factoryYear"] = factoryYear
         params["provinceId"] = provinceId
+        if (cityId.isNotEmpty())
         params["cityId"] = cityId
         params["sortType"] = sortType
         params["page"] = currentPage.toString()
@@ -594,7 +625,7 @@ object DataCtrlClass {
      * tab详情
      * tab详情
      * */
-    fun getTabDetail(context: Context, url: String, key: String, id: String, listener: (goodsBean: GoodsBean?) -> Unit) {
+    fun getTabDetail(context: Activity, url: String, key: String, id: String, listener: (goodsBean: GoodsBean?) -> Unit) {
 //        userId	string	必填	用户id
 //        sellId	string	必填	出售id
 //        requestCheck	string	必填	验证请求
@@ -611,6 +642,7 @@ object DataCtrlClass {
                             listener.invoke(response.body().data)
                         } else {
                             listener.invoke(null)
+                            com.szw.framelibrary.utils.DialogUtils.WarningWithListener(context,response.body().message, View.OnClickListener { context.finish() })
                         }
                     }
 

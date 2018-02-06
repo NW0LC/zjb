@@ -81,6 +81,7 @@
                 <ImageView
                     android:src="@mipmap/icon_main_msg_off"
                     android:id="@+id/mRightImg"
+                    android:clickable="true"
                     android:textColor="@color/color_toolBar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,7 +94,8 @@
                     android:maxEms="10"
                     android:text=""
 
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:focusable="true" />
 
             </android.support.v7.widget.ButtonBarLayout>
         </LinearLayout>

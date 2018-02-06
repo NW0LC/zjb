@@ -12,39 +12,42 @@ import kotlinx.android.synthetic.main.layout_mine_center_bt.view.*
 
 
 class MainTabAdapter<T : GoodsBean> : BaseMultiItemQuickAdapter<T, BaseViewHolder>(ArrayList<T>()) {
-    var isDelete=false
-    var isEdit=false
-    var isPhone=true
+    var isDelete = false
+    var isEdit = false
+    var isPhone = true
+
     init {
         addItemType(GoodsBean.TYPE_1, R.layout.item_main_tab)
         addItemType(GoodsBean.TYPE_2, R.layout.item_main_tab_sale)
     }
 
     override fun convert(helper: BaseViewHolder, item: T) {
-        val itemView=helper.itemView
-        itemView.lay_btn.visibility= View.GONE
-        itemView.lay_btn.visibility=if (isDelete||isEdit)View.VISIBLE else View.GONE
-        itemView.tv_left.visibility=if (isDelete)View.VISIBLE else View.GONE
-        itemView.tv_right.visibility=if (isEdit)View.VISIBLE else View.GONE
+        val itemView = helper.itemView
+        itemView.lay_btn.visibility = View.GONE
+        itemView.lay_btn.visibility = if (isDelete || isEdit) View.VISIBLE else View.GONE
+        itemView.tv_left.visibility = if (isDelete) View.VISIBLE else View.GONE
+        itemView.tv_right.visibility = if (isEdit) View.VISIBLE else View.GONE
+        itemView.tv_state.visibility=if (item.state=="2")View.VISIBLE else View.GONE
         helper.addOnClickListener(R.id.tv_left)
         helper.addOnClickListener(R.id.tv_right)
 
 
 
         when (helper.itemViewType) {
-            GoodsBean.TYPE_1-> {
-                itemView.line.visibility=if (isPhone)View.VISIBLE else View.GONE
-                itemView.img.visibility=if (isPhone)View.VISIBLE else View.GONE
-                itemView.tv_title.text=item.title
-                itemView.tv_address.text=item.provinceCity
-                itemView.tv_date.text=item.date
+            GoodsBean.TYPE_1 -> {
+                itemView.line.visibility = if (isPhone) View.VISIBLE else View.GONE
+                itemView.img.visibility = if (isPhone) View.VISIBLE else View.GONE
+                itemView.tv_title.text = item.title
+                itemView.tv_address.text = item.provinceCity
+                itemView.tv_date.text = item.date
                 helper.addOnClickListener(R.id.img)
             }
-            GoodsBean.TYPE_2-> {
+            GoodsBean.TYPE_2 -> {
                 GlideApp.with(mContext).load(item.image).into(itemView.sale_img)
-                itemView.sale_tv_title.text=item.title
-                itemView.sale_tv_address.text=item.provinceCity
-                itemView.sale_tv_date.text=item.date
+                itemView.sale_tv_title.text = item.title
+                itemView.sale_tv_address.text = item.provinceCity
+                itemView.sale_tv_date.text = item.date
+
             }
             else -> {
             }

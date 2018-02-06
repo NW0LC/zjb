@@ -75,7 +75,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                }).setNegativeButton("取消", { materialDialog.dismiss() }).setMessage("要清楚缓存吗？").show()
+                }).setNegativeButton("取消", { materialDialog.dismiss() }).setMessage("要清除缓存吗？").show()
                 }
 
             bt_help -> {

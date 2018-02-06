@@ -12,6 +12,26 @@
     android:orientation="horizontal">
 
     <com.flyco.roundview.RoundTextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:drawablePadding="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:gravity="center"
+        android:minEms="3"
+        android:text="已下架"
+        android:textColor="@color/Red"
+        android:textSize="@dimen/sp_14" />
+    <com.flyco.roundview.RoundTextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+       />
+    <com.flyco.roundview.RoundTextView
         android:id="@+id/tv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

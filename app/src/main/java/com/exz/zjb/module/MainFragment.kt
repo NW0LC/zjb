@@ -70,6 +70,11 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 headerView.banner.setImages(banners).start()
             }
         }
+        DataCtrlClass.banner2(context){
+            if (it != null) {
+                headerView.banner2.setImages(arrayListOf(it)).start()
+            }
+        }
         DataCtrlClass.topNews(context){
             if (it != null) {
                 newsStr.clear()
@@ -84,7 +89,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
 
                     val intent = Intent(context, MyWebActivity::class.java)
                     intent.putExtra(Intent_Url, it[position].url)
-                    intent.putExtra(Intent_Title, it[position].title)
+                    intent.putExtra(Intent_Title, "信息详情")
                     startActivity(intent)
                 }
             }
@@ -188,7 +193,7 @@ class MainFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
         headerView.banner2.setDelayTime(3000)
         //设置指示器位置（当banner模式中有指示器时）
         headerView.banner2.setIndicatorGravity(BannerConfig.CENTER)
-        headerView.banner2.setImages(array2).start()
+//        headerView.banner2.setImages(array2).start()
     }
 
     override fun OnBannerClick(position: Int) {

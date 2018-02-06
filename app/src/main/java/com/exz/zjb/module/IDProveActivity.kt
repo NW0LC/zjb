@@ -148,9 +148,9 @@ class IDProveActivity : BaseActivity(), View.OnClickListener {
         when {
             ed_name.text.isEmpty()||ed_name.currentTextColor ==ContextCompat.getColor(this, R.color.MaterialRed400) -> ed_name.setShakeAnimation()
             ed_id.text.isEmpty()||ed_name.currentTextColor ==ContextCompat.getColor(this, R.color.MaterialRed400) -> ed_id.setShakeAnimation()
-            RegexUtils.isIDCard18(ed_id.text.toString())-> toast("请输入正确的身份证号码")
+            !RegexUtils.isIDCard18(ed_id.text.toString())-> toast("请输入正确的身份证号码")
             checkAuthenticationBean == null && imgOn.isEmpty() || checkAuthenticationBean?.checkResult?.IDCardPositive?.check != "1" && imgOn.isEmpty() -> toast("请传入身份证正面")
-            checkAuthenticationBean == null && imgOff.isEmpty() || checkAuthenticationBean?.checkResult?.IDCardReverse?.check != "1" && imgOff.isEmpty() -> toast("请传入身份证正面")
+            checkAuthenticationBean == null && imgOff.isEmpty() || checkAuthenticationBean?.checkResult?.IDCardReverse?.check != "1" && imgOff.isEmpty() -> toast("请传入身份证反面")
             else -> {
                 if (checkAuthenticationBean?.checkState == "2") {
 

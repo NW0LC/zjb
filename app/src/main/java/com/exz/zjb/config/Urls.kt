@@ -41,6 +41,10 @@ object Urls{
       */
     var banner =url+ "App/Home/Banner.aspx"
     /**
+     *  首页_Banner
+      */
+    var homeBanner =url+ "App/Home/HomeBanner.aspx"
+    /**
      *  首页_热点新闻(5条)
       */
     var topNews =url+ "App/Home/TopNews.aspx"

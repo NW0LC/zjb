@@ -61,6 +61,7 @@ public class MyWebActivity extends BaseActivity implements Listener {
                 }
             }
         });
+        mTitle.setText(getIntent().getStringExtra(Intent_Title));
         return false;
     }
 

@@ -57,7 +57,7 @@ class MineFragment : MyBaseFragment(), OnRefreshListener, View.OnClickListener, 
                 refreshLayout.finishRefresh()
                 if (it != null) {
                     img_head.setImageURI(it.data?.headImg)
-                    tv_userName.text = it.data?.nickname
+                    tv_userName.text = it.data?.mobile
 
                     //vip年费开启模式：0关闭 1开启
                     if (it.data?.modeState == "1") {
